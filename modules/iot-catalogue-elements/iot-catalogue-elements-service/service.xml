@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
+
+<service-builder dependency-injector="ds"
+	auto-namespace-tables="true" package-path="com.iot_catalogue">
+	<namespace>IoTCatalogue</namespace>
+	<!--<entity data-source="sampleDataSource" local-service="true" name="Foo" 
+		remote-service="false" session-factory="sampleSessionFactory" table="foo" 
+		tx-manager="sampleTransactionManager uuid="true""> -->
+
+	<entity name="IoTComponent" local-service="true" uuid="true">
+
+
+
+
+		<column name="iotComponentId" primary="true" type="long" />
+
+
+		<column name="groupId" type="long" />
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Status fields -->
+
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<column name="originalId" type="String" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="embeddedUrl" type="String" />
+		<column name="imageUrl" type="String" />
+		<column name="subscriptionId" type="long" />
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+
+		<finder name="OriginalId" return-type="IoTComponent">
+			<finder-column name="originalId" />
+		</finder>
+		<finder name="OID_S" return-type="IoTComponent">
+			<finder-column name="originalId" />
+			<finder-column name="subscriptionId" />
+		</finder>
+
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status" />
+		</finder>
+
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="SubscriptionId" return-type="Collection">
+			<finder-column name="subscriptionId" />
+		</finder>
+		<reference package-path="com.liferay.portlet.asset"
+			entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.asset"
+			entity="AssetLink" />
+
+	</entity>
+	<entity name="IoTValidation" local-service="true" uuid="true">
+
+
+
+
+		<column name="iotValidationId" primary="true" type="long" />
+
+
+		<column name="groupId" type="long" />
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+
+		<!-- Status fields -->
+
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+
+		<column name="originalId" type="String" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="embeddedUrl" type="String" />
+		<column name="imageUrl" type="String" />
+		<column name="subscriptionId" type="long" />
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+
+		<finder name="OriginalId" return-type="IoTValidation">
+			<finder-column name="originalId" />
+		</finder>
+		<finder name="OID_S" return-type="IoTValidation">
+			<finder-column name="originalId" />
+			<finder-column name="subscriptionId" />
+		</finder>
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="SubscriptionId" return-type="Collection">
+			<finder-column name="subscriptionId" />
+		</finder>
+
+		<reference package-path="com.liferay.portlet.asset"
+			entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.asset"
+			entity="AssetLink" />
+
+	</entity>
+	<entity name="Subscription" local-service="true" uuid="true">
+		<column name="subscriptionId" primary="true" type="long" />
+
+		<column name="groupId" type="long" />
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<!-- Status fields -->
+
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<column name="connectionId" type="String" />
+		<column name="connectionState" type="String" />
+
+		<column name="token" type="String" />
+		<column name="host" type="String" />
+		<column name="componentPagePath" type="String" />
+		<column name="validationPagePath" type="String" />
+		<column name="port" type="Integer" />
+		<column name="useSSL" type="boolean" />
+		<finder name="groupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="subscriptionId" return-type="Subscription">
+			<finder-column name="subscriptionId" />
+		</finder>
+	</entity>
+
+	<exceptions>
+		<exception>IoTComponentName</exception>
+		<exception>IoTComponentDescription</exception>
+		<exception>IoTComponentOriginalId</exception>
+
+		<exception>IoTValidationName</exception>
+		<exception>IoTValidationDescription</exception>
+		<exception>IoTValidationOriginalId</exception>
+
+		<exception>SubscriptionToken</exception>
+		<exception>SubscriptionHost</exception>
+		<exception>SubscriptionPort</exception>
+		<exception>SubscriptionUseSSL</exception>
+		<exception>SubscriptionConnectionId</exception>
+		<exception>SubscriptionConnectionState</exception>
+
+	</exceptions>
+</service-builder>

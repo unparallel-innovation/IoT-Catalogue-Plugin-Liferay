@@ -1,0 +1,10 @@
+Bundle-Name: iot-catalogue-elements-api
+Bundle-SymbolicName: com.iot_catalogue.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.iot_catalogue.exception,\
+	com.iot_catalogue.model,\
+	com.iot_catalogue.service,\
+	com.iot_catalogue.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../iot-catalogue-elements-service/service.xml
