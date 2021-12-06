@@ -76,6 +76,7 @@ public class Connection extends DDPClient{
 		DDPListener ddpListener = new DDPListener() {
 			@Override
 			 public void onResult(Map<String, Object> resultFields) {
+				System.out.println("************************");
 				onConnected(sessionId, resultFields.get("result"));
 			}
 		};

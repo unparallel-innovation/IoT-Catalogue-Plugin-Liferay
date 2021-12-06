@@ -83,10 +83,7 @@ public class SubscriptionModelImpl
 		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
 		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP},
 		{"connectionId", Types.VARCHAR}, {"connectionState", Types.VARCHAR},
-		{"token", Types.VARCHAR}, {"host", Types.VARCHAR},
-		{"componentPagePath", Types.VARCHAR},
-		{"validationPagePath", Types.VARCHAR}, {"port", Types.INTEGER},
-		{"useSSL", Types.BOOLEAN}
+		{"token", Types.VARCHAR}, {"socketAddress", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -108,15 +105,11 @@ public class SubscriptionModelImpl
 		TABLE_COLUMNS_MAP.put("connectionId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("connectionState", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("token", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("host", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("componentPagePath", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("validationPagePath", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("port", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("useSSL", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("socketAddress", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table IoTCatalogue_Subscription (uuid_ VARCHAR(75) null,subscriptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,connectionId VARCHAR(75) null,connectionState VARCHAR(75) null,token VARCHAR(75) null,host VARCHAR(75) null,componentPagePath VARCHAR(75) null,validationPagePath VARCHAR(75) null,port INTEGER,useSSL BOOLEAN)";
+		"create table IoTCatalogue_Subscription (uuid_ VARCHAR(75) null,subscriptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,connectionId VARCHAR(75) null,connectionState VARCHAR(75) null,token VARCHAR(75) null,socketAddress VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table IoTCatalogue_Subscription";
@@ -201,11 +194,7 @@ public class SubscriptionModelImpl
 		model.setConnectionId(soapModel.getConnectionId());
 		model.setConnectionState(soapModel.getConnectionState());
 		model.setToken(soapModel.getToken());
-		model.setHost(soapModel.getHost());
-		model.setComponentPagePath(soapModel.getComponentPagePath());
-		model.setValidationPagePath(soapModel.getValidationPagePath());
-		model.setPort(soapModel.getPort());
-		model.setUseSSL(soapModel.isUseSSL());
+		model.setSocketAddress(soapModel.getSocketAddress());
 
 		return model;
 	}
@@ -421,28 +410,11 @@ public class SubscriptionModelImpl
 		attributeGetterFunctions.put("token", Subscription::getToken);
 		attributeSetterBiConsumers.put(
 			"token", (BiConsumer<Subscription, String>)Subscription::setToken);
-		attributeGetterFunctions.put("host", Subscription::getHost);
-		attributeSetterBiConsumers.put(
-			"host", (BiConsumer<Subscription, String>)Subscription::setHost);
 		attributeGetterFunctions.put(
-			"componentPagePath", Subscription::getComponentPagePath);
+			"socketAddress", Subscription::getSocketAddress);
 		attributeSetterBiConsumers.put(
-			"componentPagePath",
-			(BiConsumer<Subscription, String>)
-				Subscription::setComponentPagePath);
-		attributeGetterFunctions.put(
-			"validationPagePath", Subscription::getValidationPagePath);
-		attributeSetterBiConsumers.put(
-			"validationPagePath",
-			(BiConsumer<Subscription, String>)
-				Subscription::setValidationPagePath);
-		attributeGetterFunctions.put("port", Subscription::getPort);
-		attributeSetterBiConsumers.put(
-			"port", (BiConsumer<Subscription, Integer>)Subscription::setPort);
-		attributeGetterFunctions.put("useSSL", Subscription::getUseSSL);
-		attributeSetterBiConsumers.put(
-			"useSSL",
-			(BiConsumer<Subscription, Boolean>)Subscription::setUseSSL);
+			"socketAddress",
+			(BiConsumer<Subscription, String>)Subscription::setSocketAddress);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -783,98 +755,22 @@ public class SubscriptionModelImpl
 
 	@JSON
 	@Override
-	public String getHost() {
-		if (_host == null) {
+	public String getSocketAddress() {
+		if (_socketAddress == null) {
 			return "";
 		}
 		else {
-			return _host;
+			return _socketAddress;
 		}
 	}
 
 	@Override
-	public void setHost(String host) {
+	public void setSocketAddress(String socketAddress) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_host = host;
-	}
-
-	@JSON
-	@Override
-	public String getComponentPagePath() {
-		if (_componentPagePath == null) {
-			return "";
-		}
-		else {
-			return _componentPagePath;
-		}
-	}
-
-	@Override
-	public void setComponentPagePath(String componentPagePath) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_componentPagePath = componentPagePath;
-	}
-
-	@JSON
-	@Override
-	public String getValidationPagePath() {
-		if (_validationPagePath == null) {
-			return "";
-		}
-		else {
-			return _validationPagePath;
-		}
-	}
-
-	@Override
-	public void setValidationPagePath(String validationPagePath) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_validationPagePath = validationPagePath;
-	}
-
-	@JSON
-	@Override
-	public Integer getPort() {
-		return _port;
-	}
-
-	@Override
-	public void setPort(Integer port) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_port = port;
-	}
-
-	@JSON
-	@Override
-	public boolean getUseSSL() {
-		return _useSSL;
-	}
-
-	@JSON
-	@Override
-	public boolean isUseSSL() {
-		return _useSSL;
-	}
-
-	@Override
-	public void setUseSSL(boolean useSSL) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_useSSL = useSSL;
+		_socketAddress = socketAddress;
 	}
 
 	@Override
@@ -1032,11 +928,7 @@ public class SubscriptionModelImpl
 		subscriptionImpl.setConnectionId(getConnectionId());
 		subscriptionImpl.setConnectionState(getConnectionState());
 		subscriptionImpl.setToken(getToken());
-		subscriptionImpl.setHost(getHost());
-		subscriptionImpl.setComponentPagePath(getComponentPagePath());
-		subscriptionImpl.setValidationPagePath(getValidationPagePath());
-		subscriptionImpl.setPort(getPort());
-		subscriptionImpl.setUseSSL(isUseSSL());
+		subscriptionImpl.setSocketAddress(getSocketAddress());
 
 		subscriptionImpl.resetOriginalValues();
 
@@ -1204,39 +1096,13 @@ public class SubscriptionModelImpl
 			subscriptionCacheModel.token = null;
 		}
 
-		subscriptionCacheModel.host = getHost();
+		subscriptionCacheModel.socketAddress = getSocketAddress();
 
-		String host = subscriptionCacheModel.host;
+		String socketAddress = subscriptionCacheModel.socketAddress;
 
-		if ((host != null) && (host.length() == 0)) {
-			subscriptionCacheModel.host = null;
+		if ((socketAddress != null) && (socketAddress.length() == 0)) {
+			subscriptionCacheModel.socketAddress = null;
 		}
-
-		subscriptionCacheModel.componentPagePath = getComponentPagePath();
-
-		String componentPagePath = subscriptionCacheModel.componentPagePath;
-
-		if ((componentPagePath != null) && (componentPagePath.length() == 0)) {
-			subscriptionCacheModel.componentPagePath = null;
-		}
-
-		subscriptionCacheModel.validationPagePath = getValidationPagePath();
-
-		String validationPagePath = subscriptionCacheModel.validationPagePath;
-
-		if ((validationPagePath != null) &&
-			(validationPagePath.length() == 0)) {
-
-			subscriptionCacheModel.validationPagePath = null;
-		}
-
-		Integer port = getPort();
-
-		if (port != null) {
-			subscriptionCacheModel.port = port;
-		}
-
-		subscriptionCacheModel.useSSL = isUseSSL();
 
 		return subscriptionCacheModel;
 	}
@@ -1327,11 +1193,7 @@ public class SubscriptionModelImpl
 	private String _connectionId;
 	private String _connectionState;
 	private String _token;
-	private String _host;
-	private String _componentPagePath;
-	private String _validationPagePath;
-	private Integer _port;
-	private boolean _useSSL;
+	private String _socketAddress;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1377,11 +1239,7 @@ public class SubscriptionModelImpl
 		_columnOriginalValues.put("connectionId", _connectionId);
 		_columnOriginalValues.put("connectionState", _connectionState);
 		_columnOriginalValues.put("token", _token);
-		_columnOriginalValues.put("host", _host);
-		_columnOriginalValues.put("componentPagePath", _componentPagePath);
-		_columnOriginalValues.put("validationPagePath", _validationPagePath);
-		_columnOriginalValues.put("port", _port);
-		_columnOriginalValues.put("useSSL", _useSSL);
+		_columnOriginalValues.put("socketAddress", _socketAddress);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1435,15 +1293,7 @@ public class SubscriptionModelImpl
 
 		columnBitmasks.put("token", 16384L);
 
-		columnBitmasks.put("host", 32768L);
-
-		columnBitmasks.put("componentPagePath", 65536L);
-
-		columnBitmasks.put("validationPagePath", 131072L);
-
-		columnBitmasks.put("port", 262144L);
-
-		columnBitmasks.put("useSSL", 524288L);
+		columnBitmasks.put("socketAddress", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

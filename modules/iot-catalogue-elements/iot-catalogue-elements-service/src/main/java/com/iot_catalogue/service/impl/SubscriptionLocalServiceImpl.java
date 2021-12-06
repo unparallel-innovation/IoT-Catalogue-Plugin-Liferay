@@ -57,13 +57,13 @@ public class SubscriptionLocalServiceImpl
 	extends SubscriptionLocalServiceBaseImpl {
 
 	
-	public Subscription addSubscription(long userId, long groupId, String token, String host, String componentPagePath, String validationPagePath, Integer port, boolean useSSL, ServiceContext serviceContext) throws PortalException {
+	public Subscription addSubscription(long userId, long groupId, String token, String socketAddress, ServiceContext serviceContext) throws PortalException {
 		
 
 		
 		User user = userLocalService.getUserById(userId);
 
-		validate(token, host, port, useSSL);
+		validate(token, socketAddress);
 		
 	    Date now = new Date();
 	    long subscriptionId = counterLocalService.increment();
@@ -82,11 +82,8 @@ public class SubscriptionLocalServiceImpl
 		
 		
 		subscription.setToken(token);
-		subscription.setHost(host);
-		subscription.setComponentPagePath(componentPagePath);
-		subscription.setValidationPagePath(validationPagePath);
-		subscription.setPort(port);
-		subscription.setUseSSL(useSSL);
+		subscription.setSocketAddress(socketAddress);
+
 		
 		subscriptionPersistence.update(subscription);
 		return subscription;
@@ -163,33 +160,16 @@ public class SubscriptionLocalServiceImpl
 		return subscriptionPersistence.findBygroupId(groupId).get(0);
 	}
 	
-	protected void validate(String token, String host, Integer port, boolean useSSL)
-		    throws PortalException {
 
-		    if (Validator.isNull(token)) {
-		        throw new SubscriptionTokenException();
-		    }
 	
-		    if (Validator.isNull(host)) {
-		        throw new SubscriptionHostException();
-		    }
-
-		    if (Validator.isNull(port)) {
-		        throw new SubscriptionPortException();
-		    }
-		    if(useSSL!=true && useSSL!= false) {
-		    	throw new SubscriptionUseSSLException();
-		    }
-		}
-	
-	protected void validate(String connectionId, String connectionState)
+	protected void validate(String connectionId, String host)
 		    throws PortalException {
 
 		   if (Validator.isNull(connectionId)) {
 		        throw new SubscriptionConnectionIdException();
 		    }
 	
-		    if (Validator.isNull(connectionState)) {
+		    if (Validator.isNull(host)) {
 		        throw new SubscriptionConnectionStateException();
 		    }
 

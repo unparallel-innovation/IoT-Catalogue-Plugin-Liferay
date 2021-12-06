@@ -58,11 +58,7 @@ public class SubscriptionWrapper
 		attributes.put("connectionId", getConnectionId());
 		attributes.put("connectionState", getConnectionState());
 		attributes.put("token", getToken());
-		attributes.put("host", getHost());
-		attributes.put("componentPagePath", getComponentPagePath());
-		attributes.put("validationPagePath", getValidationPagePath());
-		attributes.put("port", getPort());
-		attributes.put("useSSL", isUseSSL());
+		attributes.put("socketAddress", getSocketAddress());
 
 		return attributes;
 	}
@@ -159,35 +155,10 @@ public class SubscriptionWrapper
 			setToken(token);
 		}
 
-		String host = (String)attributes.get("host");
+		String socketAddress = (String)attributes.get("socketAddress");
 
-		if (host != null) {
-			setHost(host);
-		}
-
-		String componentPagePath = (String)attributes.get("componentPagePath");
-
-		if (componentPagePath != null) {
-			setComponentPagePath(componentPagePath);
-		}
-
-		String validationPagePath = (String)attributes.get(
-			"validationPagePath");
-
-		if (validationPagePath != null) {
-			setValidationPagePath(validationPagePath);
-		}
-
-		Integer port = (Integer)attributes.get("port");
-
-		if (port != null) {
-			setPort(port);
-		}
-
-		Boolean useSSL = (Boolean)attributes.get("useSSL");
-
-		if (useSSL != null) {
-			setUseSSL(useSSL);
+		if (socketAddress != null) {
+			setSocketAddress(socketAddress);
 		}
 	}
 
@@ -199,16 +170,6 @@ public class SubscriptionWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
-	}
-
-	/**
-	 * Returns the component page path of this subscription.
-	 *
-	 * @return the component page path of this subscription
-	 */
-	@Override
-	public String getComponentPagePath() {
-		return model.getComponentPagePath();
 	}
 
 	/**
@@ -252,16 +213,6 @@ public class SubscriptionWrapper
 	}
 
 	/**
-	 * Returns the host of this subscription.
-	 *
-	 * @return the host of this subscription
-	 */
-	@Override
-	public String getHost() {
-		return model.getHost();
-	}
-
-	/**
 	 * Returns the modified date of this subscription.
 	 *
 	 * @return the modified date of this subscription
@@ -272,16 +223,6 @@ public class SubscriptionWrapper
 	}
 
 	/**
-	 * Returns the port of this subscription.
-	 *
-	 * @return the port of this subscription
-	 */
-	@Override
-	public Integer getPort() {
-		return model.getPort();
-	}
-
-	/**
 	 * Returns the primary key of this subscription.
 	 *
 	 * @return the primary key of this subscription
@@ -289,6 +230,16 @@ public class SubscriptionWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the socket address of this subscription.
+	 *
+	 * @return the socket address of this subscription
+	 */
+	@Override
+	public String getSocketAddress() {
+		return model.getSocketAddress();
 	}
 
 	/**
@@ -392,16 +343,6 @@ public class SubscriptionWrapper
 	}
 
 	/**
-	 * Returns the use ssl of this subscription.
-	 *
-	 * @return the use ssl of this subscription
-	 */
-	@Override
-	public boolean getUseSSL() {
-		return model.getUseSSL();
-	}
-
-	/**
 	 * Returns the uuid of this subscription.
 	 *
 	 * @return the uuid of this subscription
@@ -409,16 +350,6 @@ public class SubscriptionWrapper
 	@Override
 	public String getUuid() {
 		return model.getUuid();
-	}
-
-	/**
-	 * Returns the validation page path of this subscription.
-	 *
-	 * @return the validation page path of this subscription
-	 */
-	@Override
-	public String getValidationPagePath() {
-		return model.getValidationPagePath();
 	}
 
 	/**
@@ -501,16 +432,6 @@ public class SubscriptionWrapper
 		return model.isScheduled();
 	}
 
-	/**
-	 * Returns <code>true</code> if this subscription is use ssl.
-	 *
-	 * @return <code>true</code> if this subscription is use ssl; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isUseSSL() {
-		return model.isUseSSL();
-	}
-
 	@Override
 	public void persist() {
 		model.persist();
@@ -524,16 +445,6 @@ public class SubscriptionWrapper
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
-	}
-
-	/**
-	 * Sets the component page path of this subscription.
-	 *
-	 * @param componentPagePath the component page path of this subscription
-	 */
-	@Override
-	public void setComponentPagePath(String componentPagePath) {
-		model.setComponentPagePath(componentPagePath);
 	}
 
 	/**
@@ -577,16 +488,6 @@ public class SubscriptionWrapper
 	}
 
 	/**
-	 * Sets the host of this subscription.
-	 *
-	 * @param host the host of this subscription
-	 */
-	@Override
-	public void setHost(String host) {
-		model.setHost(host);
-	}
-
-	/**
 	 * Sets the modified date of this subscription.
 	 *
 	 * @param modifiedDate the modified date of this subscription
@@ -597,16 +498,6 @@ public class SubscriptionWrapper
 	}
 
 	/**
-	 * Sets the port of this subscription.
-	 *
-	 * @param port the port of this subscription
-	 */
-	@Override
-	public void setPort(Integer port) {
-		model.setPort(port);
-	}
-
-	/**
 	 * Sets the primary key of this subscription.
 	 *
 	 * @param primaryKey the primary key of this subscription
@@ -614,6 +505,16 @@ public class SubscriptionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the socket address of this subscription.
+	 *
+	 * @param socketAddress the socket address of this subscription
+	 */
+	@Override
+	public void setSocketAddress(String socketAddress) {
+		model.setSocketAddress(socketAddress);
 	}
 
 	/**
@@ -717,16 +618,6 @@ public class SubscriptionWrapper
 	}
 
 	/**
-	 * Sets whether this subscription is use ssl.
-	 *
-	 * @param useSSL the use ssl of this subscription
-	 */
-	@Override
-	public void setUseSSL(boolean useSSL) {
-		model.setUseSSL(useSSL);
-	}
-
-	/**
 	 * Sets the uuid of this subscription.
 	 *
 	 * @param uuid the uuid of this subscription
@@ -734,16 +625,6 @@ public class SubscriptionWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
-	}
-
-	/**
-	 * Sets the validation page path of this subscription.
-	 *
-	 * @param validationPagePath the validation page path of this subscription
-	 */
-	@Override
-	public void setValidationPagePath(String validationPagePath) {
-		model.setValidationPagePath(validationPagePath);
 	}
 
 	@Override

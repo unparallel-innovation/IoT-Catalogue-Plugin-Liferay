@@ -143,11 +143,8 @@
 		<column name="connectionState" type="String" />
 
 		<column name="token" type="String" />
-		<column name="host" type="String" />
-		<column name="componentPagePath" type="String" />
-		<column name="validationPagePath" type="String" />
-		<column name="port" type="Integer" />
-		<column name="useSSL" type="boolean" />
+		<column name="socketAddress" type="String" />
+
 		<finder name="groupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>

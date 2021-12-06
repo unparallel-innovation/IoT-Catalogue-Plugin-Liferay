@@ -48,11 +48,7 @@ public class SubscriptionSoap implements Serializable {
 		soapModel.setConnectionId(model.getConnectionId());
 		soapModel.setConnectionState(model.getConnectionState());
 		soapModel.setToken(model.getToken());
-		soapModel.setHost(model.getHost());
-		soapModel.setComponentPagePath(model.getComponentPagePath());
-		soapModel.setValidationPagePath(model.getValidationPagePath());
-		soapModel.setPort(model.getPort());
-		soapModel.setUseSSL(model.isUseSSL());
+		soapModel.setSocketAddress(model.getSocketAddress());
 
 		return soapModel;
 	}
@@ -226,48 +222,12 @@ public class SubscriptionSoap implements Serializable {
 		_token = token;
 	}
 
-	public String getHost() {
-		return _host;
+	public String getSocketAddress() {
+		return _socketAddress;
 	}
 
-	public void setHost(String host) {
-		_host = host;
-	}
-
-	public String getComponentPagePath() {
-		return _componentPagePath;
-	}
-
-	public void setComponentPagePath(String componentPagePath) {
-		_componentPagePath = componentPagePath;
-	}
-
-	public String getValidationPagePath() {
-		return _validationPagePath;
-	}
-
-	public void setValidationPagePath(String validationPagePath) {
-		_validationPagePath = validationPagePath;
-	}
-
-	public Integer getPort() {
-		return _port;
-	}
-
-	public void setPort(Integer port) {
-		_port = port;
-	}
-
-	public boolean getUseSSL() {
-		return _useSSL;
-	}
-
-	public boolean isUseSSL() {
-		return _useSSL;
-	}
-
-	public void setUseSSL(boolean useSSL) {
-		_useSSL = useSSL;
+	public void setSocketAddress(String socketAddress) {
+		_socketAddress = socketAddress;
 	}
 
 	private String _uuid;
@@ -285,10 +245,6 @@ public class SubscriptionSoap implements Serializable {
 	private String _connectionId;
 	private String _connectionState;
 	private String _token;
-	private String _host;
-	private String _componentPagePath;
-	private String _validationPagePath;
-	private Integer _port;
-	private boolean _useSSL;
+	private String _socketAddress;
 
 }

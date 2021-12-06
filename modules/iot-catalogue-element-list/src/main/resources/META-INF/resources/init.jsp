@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchEntry" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %>
 
+
 <%@ page import="com.iot_catalogue.model.IoTComponent" %>
 <%@ page import="com.iot_catalogue.service.IoTComponentLocalServiceUtil" %>
 

@@ -35,15 +35,12 @@ public class SubscriptionLocalServiceWrapper
 
 	@Override
 	public com.iot_catalogue.model.Subscription addSubscription(
-			long userId, long groupId, String token, String host,
-			String componentPagePath, String validationPagePath, Integer port,
-			boolean useSSL,
+			long userId, long groupId, String token, String socketAddress,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _subscriptionLocalService.addSubscription(
-			userId, groupId, token, host, componentPagePath, validationPagePath,
-			port, useSSL, serviceContext);
+			userId, groupId, token, socketAddress, serviceContext);
 	}
 
 	/**

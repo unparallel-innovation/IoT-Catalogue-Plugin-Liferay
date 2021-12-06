@@ -63,7 +63,7 @@ public class SubscriptionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -95,16 +95,8 @@ public class SubscriptionCacheModel
 		sb.append(connectionState);
 		sb.append(", token=");
 		sb.append(token);
-		sb.append(", host=");
-		sb.append(host);
-		sb.append(", componentPagePath=");
-		sb.append(componentPagePath);
-		sb.append(", validationPagePath=");
-		sb.append(validationPagePath);
-		sb.append(", port=");
-		sb.append(port);
-		sb.append(", useSSL=");
-		sb.append(useSSL);
+		sb.append(", socketAddress=");
+		sb.append(socketAddress);
 		sb.append("}");
 
 		return sb.toString();
@@ -185,29 +177,12 @@ public class SubscriptionCacheModel
 			subscriptionImpl.setToken(token);
 		}
 
-		if (host == null) {
-			subscriptionImpl.setHost("");
+		if (socketAddress == null) {
+			subscriptionImpl.setSocketAddress("");
 		}
 		else {
-			subscriptionImpl.setHost(host);
+			subscriptionImpl.setSocketAddress(socketAddress);
 		}
-
-		if (componentPagePath == null) {
-			subscriptionImpl.setComponentPagePath("");
-		}
-		else {
-			subscriptionImpl.setComponentPagePath(componentPagePath);
-		}
-
-		if (validationPagePath == null) {
-			subscriptionImpl.setValidationPagePath("");
-		}
-		else {
-			subscriptionImpl.setValidationPagePath(validationPagePath);
-		}
-
-		subscriptionImpl.setPort(port);
-		subscriptionImpl.setUseSSL(useSSL);
 
 		subscriptionImpl.resetOriginalValues();
 
@@ -237,13 +212,7 @@ public class SubscriptionCacheModel
 		connectionId = objectInput.readUTF();
 		connectionState = objectInput.readUTF();
 		token = objectInput.readUTF();
-		host = objectInput.readUTF();
-		componentPagePath = objectInput.readUTF();
-		validationPagePath = objectInput.readUTF();
-
-		port = objectInput.readInt();
-
-		useSSL = objectInput.readBoolean();
+		socketAddress = objectInput.readUTF();
 	}
 
 	@Override
@@ -307,30 +276,12 @@ public class SubscriptionCacheModel
 			objectOutput.writeUTF(token);
 		}
 
-		if (host == null) {
+		if (socketAddress == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(host);
+			objectOutput.writeUTF(socketAddress);
 		}
-
-		if (componentPagePath == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(componentPagePath);
-		}
-
-		if (validationPagePath == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(validationPagePath);
-		}
-
-		objectOutput.writeInt(port);
-
-		objectOutput.writeBoolean(useSSL);
 	}
 
 	public String uuid;
@@ -348,10 +299,6 @@ public class SubscriptionCacheModel
 	public String connectionId;
 	public String connectionState;
 	public String token;
-	public String host;
-	public String componentPagePath;
-	public String validationPagePath;
-	public int port;
-	public boolean useSSL;
+	public String socketAddress;
 
 }

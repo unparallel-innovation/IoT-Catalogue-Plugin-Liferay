@@ -130,9 +130,5 @@ create table IoTCatalogue_Subscription (
 	connectionId VARCHAR(75) null,
 	connectionState VARCHAR(75) null,
 	token VARCHAR(75) null,
-	host VARCHAR(75) null,
-	componentPagePath VARCHAR(75) null,
-	validationPagePath VARCHAR(75) null,
-	port INTEGER,
-	useSSL BOOLEAN
+	socketAddress VARCHAR(75) null
 );

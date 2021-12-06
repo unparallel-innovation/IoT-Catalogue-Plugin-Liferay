@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+
+
 import java.util.Date;
 import java.util.List;
 
@@ -95,7 +97,6 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId, IoTComponent.class.getName(),
 				iotComponentId, false, true, true);
 		updateAsset(userId, groupId, iotComponent);
-
 		return iotComponent;
 
 	}

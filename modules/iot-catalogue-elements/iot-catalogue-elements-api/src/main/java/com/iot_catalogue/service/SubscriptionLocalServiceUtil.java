@@ -45,15 +45,12 @@ public class SubscriptionLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.iot_catalogue.service.impl.SubscriptionLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static Subscription addSubscription(
-			long userId, long groupId, String token, String host,
-			String componentPagePath, String validationPagePath, Integer port,
-			boolean useSSL,
+			long userId, long groupId, String token, String socketAddress,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSubscription(
-			userId, groupId, token, host, componentPagePath, validationPagePath,
-			port, useSSL, serviceContext);
+			userId, groupId, token, socketAddress, serviceContext);
 	}
 
 	/**

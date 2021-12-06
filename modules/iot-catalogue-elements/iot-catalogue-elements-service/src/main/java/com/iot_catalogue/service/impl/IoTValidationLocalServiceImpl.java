@@ -61,6 +61,8 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 			String imageUrl, String originalId, long subscriptionId, ServiceContext serviceContext)
 			throws PortalException {
 		long groupId = serviceContext.getScopeGroupId();
+		
+		System.out.println(groupId);
 		User user = userLocalService.getUserById(userId);
 
 		Date now = new Date();

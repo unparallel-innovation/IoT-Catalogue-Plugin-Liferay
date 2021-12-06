@@ -22,9 +22,12 @@ try {
 </portlet:renderURL>
 
 
+
+
 <div class="closed sidenav-container sidenav-right"
 	id="<%=liferayPortletResponse.getNamespace() + "infoPanelId"%>">
-
+	    <aui:button onClick="<%= testVar.toString() %>" value="Test"></aui:button>
+	
 	<div class="sidenav-content">
 
 		<clay:container-fluid cssClass="container-view">
@@ -44,10 +47,7 @@ try {
 						modelVar="subscriptionModel">
 
 						<liferay-ui:search-container-column-text property="connectionId" />
-						<liferay-ui:search-container-column-text
-							property="componentPagePath" />
-						<liferay-ui:search-container-column-text
-							property="validationPagePath" />
+
 						<liferay-ui:search-container-column-text
 							property="connectionState" />
 

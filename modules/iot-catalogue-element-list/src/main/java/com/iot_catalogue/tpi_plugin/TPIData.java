@@ -92,7 +92,7 @@ public class TPIData {
 			@Override
 			public void onResult(Map<String, Object> resultFields) {
 				collectionNames =(ArrayList<String>) resultFields.get("result");
-				
+				System.out.println(collectionNames);
 				DDPListener ddpListener = new DDPListener() {
 					@Override
 					public void onReady(String callId) {

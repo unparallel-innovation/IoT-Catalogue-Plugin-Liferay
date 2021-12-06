@@ -8,11 +8,12 @@ ArrayList<Group> sites = (ArrayList<Group>) renderRequest.getAttribute("sites");
 
 List<Map<String, Object>> options = new ArrayList<>();
 
-boolean hideInputs = true;
+boolean hideInputs = false;
 
-String host = "www.iot-catalogue.com";
-String port = "443";
-boolean useSSL = true;
+
+String socketAddress = "https://www.iot-catalogue.com";
+
+
 %>
 
 
@@ -43,10 +44,8 @@ boolean useSSL = true;
 					<liferay-frontend:fieldset>
 						<aui:model-context model="<%=Subscription.class%>" />
 						<aui:input helpMessage="tokenHelpMessage"  name="token" />
-						<aui:input type="<%=hideInputs?"hidden":"text" %>"  name="host"   value="<%= host %>" />
-						<aui:input    name="port" type="<%=hideInputs?"hidden":"text" %>" value="<%= port %>" />
-						<aui:input title="Component page path" name="componentPagePath" helpMessage="componentPagePathHelp" />
-						<aui:input title="Validation page path" name="validationPagePath"  helpMessage="validationPagePathHelp"  />
+						<aui:input type="<%=hideInputs?"hidden":"text" %>"  name="socketAddress"   value="<%= socketAddress %>" />
+	
 						<aui:select name="User" helpMessage="userHelp">
 							<%
 							for (User usr: users) {
@@ -63,7 +62,6 @@ boolean useSSL = true;
 							<aui:option value="<%= site.getGroupId() %>"><%=site.getGroupKey() %></aui:option>
 							<%}%>
 						</aui:select>
-						<aui:input   name="useSSL" type="<%=hideInputs?"hidden":"checkbox" %>" value="<%= useSSL %>"/>
 					</liferay-frontend:fieldset>
 					<aui:button-row>
 

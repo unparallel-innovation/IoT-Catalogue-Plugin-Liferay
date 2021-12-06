@@ -332,84 +332,19 @@ public interface SubscriptionModel
 	public void setToken(String token);
 
 	/**
-	 * Returns the host of this subscription.
+	 * Returns the socket address of this subscription.
 	 *
-	 * @return the host of this subscription
+	 * @return the socket address of this subscription
 	 */
 	@AutoEscape
-	public String getHost();
+	public String getSocketAddress();
 
 	/**
-	 * Sets the host of this subscription.
+	 * Sets the socket address of this subscription.
 	 *
-	 * @param host the host of this subscription
+	 * @param socketAddress the socket address of this subscription
 	 */
-	public void setHost(String host);
-
-	/**
-	 * Returns the component page path of this subscription.
-	 *
-	 * @return the component page path of this subscription
-	 */
-	@AutoEscape
-	public String getComponentPagePath();
-
-	/**
-	 * Sets the component page path of this subscription.
-	 *
-	 * @param componentPagePath the component page path of this subscription
-	 */
-	public void setComponentPagePath(String componentPagePath);
-
-	/**
-	 * Returns the validation page path of this subscription.
-	 *
-	 * @return the validation page path of this subscription
-	 */
-	@AutoEscape
-	public String getValidationPagePath();
-
-	/**
-	 * Sets the validation page path of this subscription.
-	 *
-	 * @param validationPagePath the validation page path of this subscription
-	 */
-	public void setValidationPagePath(String validationPagePath);
-
-	/**
-	 * Returns the port of this subscription.
-	 *
-	 * @return the port of this subscription
-	 */
-	public Integer getPort();
-
-	/**
-	 * Sets the port of this subscription.
-	 *
-	 * @param port the port of this subscription
-	 */
-	public void setPort(Integer port);
-
-	/**
-	 * Returns the use ssl of this subscription.
-	 *
-	 * @return the use ssl of this subscription
-	 */
-	public boolean getUseSSL();
-
-	/**
-	 * Returns <code>true</code> if this subscription is use ssl.
-	 *
-	 * @return <code>true</code> if this subscription is use ssl; <code>false</code> otherwise
-	 */
-	public boolean isUseSSL();
-
-	/**
-	 * Sets whether this subscription is use ssl.
-	 *
-	 * @param useSSL the use ssl of this subscription
-	 */
-	public void setUseSSL(boolean useSSL);
+	public void setSocketAddress(String socketAddress);
 
 	/**
 	 * Returns <code>true</code> if this subscription is approved.

@@ -73,10 +73,6 @@
 		<field name="connectionId" type="String" />
 		<field name="connectionState" type="String" />
 		<field name="token" type="String" />
-		<field name="host" type="String" />
-		<field name="componentPagePath" type="String" />
-		<field name="validationPagePath" type="String" />
-		<field name="port" type="Integer" />
-		<field name="useSSL" type="boolean" />
+		<field name="socketAddress" type="String" />
 	</model>
 </model-hints>

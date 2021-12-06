@@ -66,9 +66,8 @@ public interface SubscriptionLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.iot_catalogue.service.impl.SubscriptionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the subscription local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SubscriptionLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public Subscription addSubscription(
-			long userId, long groupId, String token, String host,
-			String componentPagePath, String validationPagePath, Integer port,
-			boolean useSSL, ServiceContext serviceContext)
+			long userId, long groupId, String token, String socketAddress,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
