@@ -8,4 +8,5 @@ Export-Package: \
 	com.iot_catalogue.asset,\
 	com.iot_catalogue.search,\
 	com.iot_catalogue.service.permission,\
-	com.iot_catalogue.service
+	com.iot_catalogue.service,\
+	com.iot_catalogue.service.util

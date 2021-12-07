@@ -18,8 +18,11 @@ import com.iot_catalogue.exception.NoSuchIoTValidationException;
 import com.iot_catalogue.model.IoTComponent;
 import com.iot_catalogue.model.IoTValidation;
 import com.iot_catalogue.service.base.IoTValidationLocalServiceBaseImpl;
+import com.iot_catalogue.service.util.TagManager;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -35,6 +38,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the iot validation local service.
@@ -58,7 +62,7 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 
 	@Indexable(type = IndexableType.REINDEX)
 	public IoTValidation addIoTValidation(long userId, String name, String description, String embeddedUrl,
-			String imageUrl, String originalId, long subscriptionId, ServiceContext serviceContext)
+			String imageUrl, List<String> tagNames, String originalId, long subscriptionId, ServiceContext serviceContext)
 			throws PortalException {
 		long groupId = serviceContext.getScopeGroupId();
 		
@@ -90,13 +94,13 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 		ioTValidationPersistence.update(iotValidation);
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId, IoTValidation.class.getName(),
 				iotValidationId, false, true, true);
-		updateAsset(userId, groupId, iotValidation);
-
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotValidation);
+		tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		return iotValidation;
 
 	}
 
-	private void updateAsset(long userId, long groupId, IoTValidation iotValidation) throws PortalException {
+	private AssetEntry updateAsset(long userId, long groupId, IoTValidation iotValidation) throws PortalException {
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId, // userId
 				groupId, // groupId
 				iotValidation.getCreateDate(), // createDate
@@ -124,7 +128,7 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 				null// priority
 		);
 		assetLinkLocalService.updateLinks(userId, assetEntry.getEntryId(), null, AssetLinkConstants.TYPE_RELATED);
-
+		return assetEntry;
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -150,7 +154,7 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 
 	@Indexable(type = IndexableType.REINDEX)
 	public IoTValidation updateIoTValidation(long userId, long iotValidationId, String name, String description,
-			String embeddedUrl, String imageUrl, ServiceContext serviceContext) throws PortalException {
+			String embeddedUrl, String imageUrl,List<String> tagNames,  ServiceContext serviceContext) throws PortalException {
 		Date now = new Date();
 		long groupId = serviceContext.getScopeGroupId();
 		IoTValidation iotValidation = getIoTValidation(iotValidationId);
@@ -183,8 +187,8 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 		 * PLACEHOLDER_DEFAULT_GROUP_ROLE),
 		 * serviceContext.getModelPermissions().getActionIds(RoleConstants.GUEST));
 		 */
-		updateAsset(userId, groupId, iotValidation);
-
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotValidation);
+		tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		return iotValidation;
 
 	}
@@ -231,6 +235,29 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 	public List<IoTValidation> getIoTValidationsBySubscriptionId(long subscriptionId, int start, int end) {
 		return ioTValidationPersistence.findBySubscriptionId(subscriptionId, start, end);
 	}
+	
+	
+	@Reference(unbind = "-")
+	protected void setAssetTagLocalService(AssetTagLocalService assetTagLocalService) {
+
+		_assetTagLocalService = assetTagLocalService;
+		tagManager.setAssetTagLocalService(_assetTagLocalService);
+
+	}
+	
+	
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+		tagManager.setAssetEntryLocalService(_assetEntryLocalService);
+	}
+	
+	private AssetTagLocalService _assetTagLocalService = null;
+	
+	private AssetEntryLocalService _assetEntryLocalService = null;
+	
+	private TagManager tagManager = new TagManager();
 
 	/*
 	 * NOTE FOR DEVELOPERS:

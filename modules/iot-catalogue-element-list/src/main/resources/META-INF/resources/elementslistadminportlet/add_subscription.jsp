@@ -11,7 +11,7 @@ List<Map<String, Object>> options = new ArrayList<>();
 boolean hideInputs = false;
 
 
-String socketAddress = "https://www.iot-catalogue.com";
+String socketAddress = "http://127.0.0.1:3000";// "https://www.iot-catalogue.com";
 
 
 %>
