@@ -387,22 +387,24 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 		}
 
-		Map<String, String> hashMap = (Map<String, String>) fields;
+		Map<String, Object> hashMap = (Map<String, Object>) fields;
 
-		String name = hashMap.get("name");
-		String embeddedUrl = hashMap.get("_embeddedUrl");
-		String imageUrl = hashMap.get("_imageUrl");
-		String description = hashMap.get("description");
-
+		String name = (String)hashMap.get("name");
+		String embeddedUrl = (String)hashMap.get("_embeddedUrl");
+		String imageUrl = (String)hashMap.get("_imageUrl");
+		String description = (String)hashMap.get("description");
+		List<String> tagNames = (List<String>)hashMap.get("_tagNames");
+		
 		long userId = subscription.getUserId();
+
 		if (iotComponent == null) {
-			_ioTComponentLocalService.addIoTComponent(userId, name, description, embeddedUrl, imageUrl, id,
+			_ioTComponentLocalService.addIoTComponent(userId, name, description, embeddedUrl, imageUrl,tagNames, id,
 					subscription.getSubscriptionId(), serviceContext);
 
 		} else {
 			long iotComponentId = iotComponent.getIotComponentId();
 			_ioTComponentLocalService.updateIoTComponent(userId, iotComponentId, name, description,
-					embeddedUrl, imageUrl, serviceContext);
+					embeddedUrl, imageUrl,tagNames, serviceContext);
 		}
 
 	}
@@ -420,23 +422,25 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 		}
 
-		Map<String, String> hashMap = (Map<String, String>) fields;
+		Map<String, Object> hashMap = (Map<String, Object>) fields;
 
-		String name = hashMap.get("name");
-		String embeddedUrl = hashMap.get("_embeddedUrl");
-		String imageUrl = hashMap.get("_imageUrl");
-		String description = hashMap.get("description");
-
+		String name = (String)hashMap.get("name");
+		String embeddedUrl = (String)hashMap.get("_embeddedUrl");
+		String imageUrl = (String)hashMap.get("_imageUrl");
+		String description = (String)hashMap.get("description");
+		List<String> tagNames = (List<String>)hashMap.get("_tagNames");
+		
 		long userId = subscription.getUserId();
+	
 		if (iotValidation == null) {
 
-			_iotValidationLocalService.addIoTValidation(userId, name, description, embeddedUrl, imageUrl, id,
+			_iotValidationLocalService.addIoTValidation(userId, name, description, embeddedUrl, imageUrl, tagNames, id,
 					subscription.getSubscriptionId(), serviceContext);
 
 		} else {
 			long iotValidationId = iotValidation.getIotValidationId();
 			_iotValidationLocalService.updateIoTValidation(userId, iotValidationId, name, description,
-					embeddedUrl, imageUrl, serviceContext);
+					embeddedUrl, imageUrl,tagNames, serviceContext);
 		}
 
 	}
