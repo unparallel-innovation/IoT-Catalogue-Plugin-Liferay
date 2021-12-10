@@ -6,26 +6,11 @@ Object notAuthorized =  request.getAttribute("not_authorized");
 if (iotComponent != null) {
 	iotComponent = iotComponent.toEscapedModel();
 }
+System.out.println(iotComponent.getEmbeddedUrl());
 %>
 
 
 
-<div style="border: 1px solid red">
-	<div>Tags</div>
-	<liferay-asset:asset-categories-error />
-	<liferay-asset:asset-tags-error />
-	<liferay-asset:asset-categories-selector
-		className="<%= IoTComponent.class.getName() %>"
-		classPK="<%= iotComponent.getIotComponentId() %>"
-		
-	/>
-	
-	<liferay-asset:asset-tags-selector
-		className="<%= IoTComponent.class.getName() %>"
-		classPK="<%= iotComponent.getIotComponentId() %>"
-	/>
-
-</div>
 <script>
 	function receiveMessage(event) {
 		const data = event.data

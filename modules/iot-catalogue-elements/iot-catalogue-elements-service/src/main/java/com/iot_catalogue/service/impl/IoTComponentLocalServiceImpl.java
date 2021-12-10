@@ -97,6 +97,9 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId, IoTComponent.class.getName(),
 				iotComponentId, false, true, true);
 		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent);
+		
+		
+		
 		tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		
 		//_assetTagLocalService.addTag(userId, groupId, originalId, serviceContext);

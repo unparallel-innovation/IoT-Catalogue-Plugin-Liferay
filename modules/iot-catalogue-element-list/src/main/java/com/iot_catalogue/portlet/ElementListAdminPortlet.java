@@ -1,7 +1,6 @@
 package com.iot_catalogue.portlet;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,12 +26,6 @@ import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
 import com.iot_catalogue.service.IoTComponentLocalService;
 import com.iot_catalogue.service.IoTValidationLocalService;
 import com.iot_catalogue.service.SubscriptionLocalService;
-import com.iot_catalogue.service.util.TagManager;
-import com.iot_catalogue.tpi_plugin.TPIData;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -71,45 +64,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(renderRequest);
-			List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getAssetEntries(0,
-					AssetEntryLocalServiceUtil.getAssetEntriesCount());
-			/*
-			 * System.out.println("Asset names");
-			 * System.out.println("********************** Adding new tag"); ServiceContext
-			 * sc =
-			 * getServiceContextFromSubscription(_subscriptionLocalService.getSubscriptions(
-			 * ).get(0));
-			 * AssetTagServiceUtil.addTag(serviceContext.getScopeGroupId(),"tag from init 3"
-			 * ,sc);
-			 */
-			// System.out.println(TagManager.getTagByName(
-			// _subscriptionLocalService.getSubscriptions().get(0).getGroupId(),
-			// "newtag3"));
-			// List<AssetTag> tags =
-			// AssetTagServiceUtil.getTags(serviceContext.getScopeGroup().getGroupId(),"newtag3",0,20);
-			// System.out.println(tags);
-			for (int i = 0; i < assetEntries.size(); i++) {
-				AssetEntry assetEntry = assetEntries.get(i);
-				// TagManager.addTagNameToAsset(serviceContext, "new tag from renderxxx",
-				// assetEntry.getEntryId());
-				// System.out.println(assetEntry.getTitle());
-				// AssetEntryLocalServiceUtil.addAssetTagAssetEntry(33, assetEntry.getEntryId())
-				// ;
-			}
-			/*
-			 * AssetTag assetTag =
-			 * AssetTagServiceUtil.addTag(serviceContext.getScopeGroup().getGroupId(),
-			 * "newtag3",serviceContext); System.out.println( assetTag.getPrimaryKey());
-			 * for(int i = 0; i< assetEntries.size();i++) { if(i%2 == 0 ) {
-			 * System.out.println("even"); AssetEntry assetEntry = assetEntries.get(i);
-			 * //System.out.println(assetEntry.getTitle());
-			 * AssetEntryLocalServiceUtil.addAssetTagAssetEntry(assetTag.getPrimaryKey(),
-			 * assetEntry.getEntryId()) ; }else { System.out.println("odd"); }
-			 * 
-			 * }
-			 */
 
-			// System.out.println( AssetTagServiceUtil.getTag(1));
 			ArrayList<User> users = getActiveUsers(serviceContext);
 			ArrayList<Group> sites = getSites(serviceContext);
 			renderRequest.setAttribute("users", users);
@@ -152,7 +107,6 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	public void init() throws PortletException {
 
 		super.init();
-		tagManager = new TagManager(_assetTagLocalService, _assetEntryLocalService);
 		_log.info("Starting IoT Catalogue plugin");
 		
 		List<Subscription> subscriptions = _subscriptionLocalService.getSubscriptions();
@@ -177,13 +131,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			Connector connection = entry.getValue();
 			connection.disconnect();
 		}
-		
-		/*
-		 * for (Entry<String, TPIData> entry : connections.entrySet()) { TPIData tpiData
-		 * = entry.getValue(); tpiData.disconnect();
-		 * 
-		 * }
-		 */
+
 
 	}
 
@@ -205,7 +153,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	}
 
 	public void test(ActionRequest request, ActionResponse response) {
-		tagManager.printAllAssets();
+
 		/*ServiceContext serviceContext;
 		try {
 			serviceContext = ServiceContextFactory.getInstance(request);
@@ -332,6 +280,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 				dataFields.put("name", 1);
 				dataFields.put("tags", 1);
 				dataFields.put("description", 1);
+				dataFields.put("images",1);
 				props.put("dataFields", dataFields);
 				Connector connection = new Connector(socketAddress, token, null,props ) {
 					@Override
@@ -375,7 +324,6 @@ public class ElementListAdminPortlet extends MVCPortlet {
 					public void onDataChange(String collectionName, String actionName, String id, Object obj) {
 						// TODO Auto-generated method stub
 						super.onDataChange(collectionName, actionName, id, obj);
-						System.out.println(obj);
 						try {
 							ServiceContext serviceContext = getServiceContextFromSubscription(subscription);
 							if(collectionName.equals(componentsCollectionName)) {
@@ -400,80 +348,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 					}
 				};
-				/*TPIData tpiData = new TPIData(host, port, useSSL, token, props) {
 
-					@Override
-					public void onConnected(String sessionId, Object serviceInfo) {
-						super.onConnected(sessionId, serviceInfo);
-						_log.info("Connected to IoTCatalogue, host:" + host + " port:" + port);
-						try {
-
-							_subscriptionLocalService.setSubscriptionConnectionInfo(subscription.getSubscriptionId(),
-									sessionId, String.valueOf(this.getConnectionState()));
-						} catch (PortalException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-
-					@Override
-					public void onDisconnectedFromRemote() {
-						_log.info("Disconnected from IoT Catalogue");
-						try {
-							_subscriptionLocalService.setSubscriptionConnectionState(subscription.getSubscriptionId(),
-									String.valueOf(this.getConnectionState()));
-						} catch (PortalException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-			
-					}
-
-					@Override
-					public void onTPIChanged(Map<String, Object> data, String action,
-							ArrayList<String> collectionNames) {
-						ServiceContext serviceContext;
-						try {
-							serviceContext = getServiceContextFromSubscription(subscription);
-							checkIoTComponentsToDelete(data, subscription, serviceContext);
-							checkIoTValidationsToDelete(data, subscription, serviceContext);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						_log.info("Subscribe to collections on IoT Catalogue");
-						this.subscribeToCollections();
-
-					}
-
-					@Override
-					public void onElementChanged(String collectionName, String id, Object fields, String action) {
-						_log.info("Element " + action + " on IoT Catalogue collection: " + collectionName + ", id: "
-								+ id);
-						try {
-							ServiceContext serviceContext = getServiceContextFromSubscription(subscription);
-							if (collectionName.equals(componentsCollectionName)) {
-								if (action.equals(TPIData.ADDED) || action.equals(TPIData.CHANGED)) {
-									updateIoTComponent(id, fields, serviceContext, subscription);
-								} else if (action.equals(TPIData.REMOVED)) {
-									deleteIoTComponent(id, subscription, serviceContext);
-								}
-							}
-							if (collectionName.equals(validationsCollectionName)) {
-								if (action.equals(TPIData.ADDED) || action.equals(TPIData.CHANGED)) {
-									updateIoTValidation(id, fields, serviceContext, subscription);
-								} else if (action.equals(TPIData.REMOVED)) {
-									deleteIoTValidation(id, subscription, serviceContext);
-								}
-							}
-
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
-
-					}
-				};*/
 				connections.put(key, connection);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -489,6 +364,18 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	private static String removeHTMLTags(String str) {
+		if(str!=null) {
+			String  text = str.replaceAll("\\<.*?\\>", "");
+			return text;
+		}
+		return str;
+
+	}
+	
+	
+	
+	
 	private ServiceContext getServiceContextFromSubscription(Subscription subscription) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 		long userId = subscription.getUserId();
@@ -548,31 +435,26 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 		Map<String, Object> hashMap = (Map<String, Object>)fields;
 
-		String name = (String)hashMap.get("name");
+		String name =  (String)hashMap.get("name");
 		String embeddedUrl = (String)hashMap.get("_iframeURL");
-		String imageUrl = (String)hashMap.get("_imageUrl");
-		String description = (String)hashMap.get("description");
+
+		String imageUrl = (String)hashMap.get("_imageURL");
+		String description = removeHTMLTags((String)hashMap.get("description"));
 	
 		List<String> tagNames = (List<String>)hashMap.get("_tagNames");
-		System.out.println("tag names");
-		System.out.println(tagNames);
+
 		
 		long userId = subscription.getUserId();
 		if (iotComponent == null) {
-			System.out.println("Adding new component " + name);
-			IoTComponent newIoTComponent = _ioTComponentLocalService.addIoTComponent(userId, name, description, embeddedUrl, imageUrl, tagNames, id,
+			_ioTComponentLocalService.addIoTComponent(userId, name, description, embeddedUrl, imageUrl, tagNames, id,
 					subscription.getSubscriptionId(), serviceContext);
-			AssetEntry assetEntry  = _assetEntryLocalService.fetchEntry(IoTComponent.class.getName(), newIoTComponent.getIotComponentId());
-			//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
-			System.out.println("Reindex");
+
 
 		} else {
-			System.out.println("Updating component " + name);
 			long iotComponentId = iotComponent.getIotComponentId();
 			_ioTComponentLocalService.updateIoTComponent(userId, iotComponentId, name, description, embeddedUrl,
 					imageUrl, tagNames, serviceContext);
-			AssetEntry assetEntry  = _assetEntryLocalService.fetchEntry(IoTComponent.class.getName(), iotComponentId);
-			//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
+
 			
 		}
 
@@ -594,25 +476,22 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		Map<String, Object> hashMap = (Map<String, Object>) fields;
 
 		String name = (String)hashMap.get("name");
-		String embeddedUrl = (String)hashMap.get("_embeddedUrl");
-		String imageUrl = (String)hashMap.get("_imageUrl");
-		String description = (String)hashMap.get("description");
+		String embeddedUrl = (String)hashMap.get("_iframeURL");
+		String imageUrl = (String)hashMap.get("_imageURL");
+		String description =  removeHTMLTags((String)hashMap.get("description"));
 		List<String> tagNames = (List<String>)hashMap.get("_tagNames");
 		long userId = subscription.getUserId();
 		if (iotValidation == null) {
 
-			IoTValidation newIoTValidation = _iotValidationLocalService.addIoTValidation(userId, name, description, embeddedUrl, imageUrl,tagNames, id,
+			_iotValidationLocalService.addIoTValidation(userId, name, description, embeddedUrl, imageUrl,tagNames, id,
 					subscription.getSubscriptionId(), serviceContext);
-			AssetEntry assetEntry  = _assetEntryLocalService.fetchEntry(IoTValidation.class.getName(), newIoTValidation.getIotValidationId());
-			//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 
 
 		} else {
 			long iotValidationId = iotValidation.getIotValidationId();
 			_iotValidationLocalService.updateIoTValidation(userId, iotValidationId, name, description, embeddedUrl,
 					imageUrl, tagNames, serviceContext);
-			AssetEntry assetEntry  = _assetEntryLocalService.fetchEntry(IoTValidation.class.getName(), iotValidationId);
-			//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
+
 		}
 
 	}
@@ -773,15 +652,6 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 	}
 
-	public void deleteAllSubscriptions(ActionRequest request, ActionResponse response) throws PortalException {
-		/*
-		 * _log.info("Deleting all subscriptions"); ServiceContext serviceContext =
-		 * ServiceContextFactory.getInstance(request); List<Subscription> subscriptions
-		 * = _subscriptionLocalService.getSubscriptions(); for (Subscription
-		 * subscription : subscriptions) { deleteSubscription(subscription,
-		 * serviceContext, false); }
-		 */
-	}
 
 	@Reference(unbind = "-")
 	protected void setIoTComponentLocalService(IoTComponentLocalService ioTComponentLocalService) {
@@ -803,33 +673,13 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		_subscriptionLocalService = subscriptionLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetTagLocalService(AssetTagLocalService assetTagLocalService) {
 
-		_assetTagLocalService = assetTagLocalService;
-	}
-	
-	
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-	
-	private AssetTagLocalService _assetTagLocalService;
-	
-	private AssetEntryLocalService _assetEntryLocalService;
 	
 	private SubscriptionLocalService _subscriptionLocalService;
 
-	private TagManager tagManager;
-
-	
-	// private TPIData tpiData = null;
 
 	private HashMap<String, Connector> connections = new HashMap<String, Connector>();
 
-	// private Subscription currentSubscription = null;
 
 	private final String componentsCollectionName = "components";
 	private final String validationsCollectionName = "validations";

@@ -2,6 +2,7 @@ package com.iot_catalogue.service.util;
 
 import java.util.List;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
@@ -11,7 +12,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.petra.string.StringBundler;
 
 public class TagManager {
 
@@ -52,6 +52,15 @@ public class TagManager {
 
 	}
 
+	public void deleteAllAssetTags(long entryId) throws PortalException {
+		AssetEntry assetEntry = _assetEntryLocalService.getAssetEntry(entryId);
+		List<AssetTag> assetTags = assetEntry.getTags();
+		if(assetTags != null) {
+			for(AssetTag assetTag: assetTags) {
+				_assetEntryLocalService.deleteAssetTagAssetEntry(assetTag.getTagId(), entryId);
+			}
+		}
+	}
 
 
 
@@ -62,22 +71,19 @@ public class TagManager {
 		if(assetTag == null) {
 			assetTag = _assetTagLocalService.addTag(serviceContext.getUserId(), groupId,sanitizedTagName,serviceContext);
 		}
-		_log.info("Adding tag " + assetTag.getTagId() + " to entry "+ entryId);
+		_log.info("Adding tag " + assetTag.getName() + " to entry id: "+ entryId);
 		_assetEntryLocalService.addAssetTagAssetEntry(assetTag.getTagId(), entryId);
 		
 		return assetTag;
 	}
 	
 	public void addTagNamesToAsset(ServiceContext serviceContext, List<String> tagNames, long entryId) throws PortalException {
+		deleteAllAssetTags(entryId);
 		if(tagNames!=null) {
 			for(String tagName: tagNames) {
 				addTagNameToAsset(serviceContext, tagName, entryId);
 			}
 		}
-	}
-	
-	public void printAllAssets() {
-		System.out.println(_assetEntryLocalService.getAssetEntriesCount());
 	}
 	
 
