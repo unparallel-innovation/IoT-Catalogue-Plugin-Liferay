@@ -1,25 +1,7 @@
 package com.iot_catalogue.asset;
 
-import com.iot_catalogue.model.IoTComponent;
-import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
-import com.iot_catalogue.service.permission.IoTComponentPermission;
-import com.iot_catalogue.service.permission.IoTValidationPermission;
-import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import java.util.Locale;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -27,7 +9,17 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.iot_catalogue.model.IoTComponent;
+import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
+import com.iot_catalogue.service.permission.IoTComponentPermission;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent> {
 
@@ -51,6 +43,9 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 
 	}
 
+	
+	
+	
 	@Override
 	public IoTComponent getAssetObject() {
 		return _iotComponent;

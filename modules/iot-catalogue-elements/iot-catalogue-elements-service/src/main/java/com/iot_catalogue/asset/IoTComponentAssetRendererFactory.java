@@ -59,6 +59,9 @@ public class IoTComponentAssetRendererFactory extends BaseAssetRendererFactory<I
 		return CLASS_NAME;
 	}
 
+	
+	
+	
 	@Override
 	public String getType() {
 		return TYPE;

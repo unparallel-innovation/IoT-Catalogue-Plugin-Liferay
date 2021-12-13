@@ -18,16 +18,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import com.iot_catalogue.exception.NoSuchIoTComponentException;
 import com.iot_catalogue.model.IoTComponent;
 import com.iot_catalogue.service.base.IoTComponentLocalServiceBaseImpl;
-import com.iot_catalogue.service.util.TagManager;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -92,8 +88,8 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 		ioTComponentPersistence.update(iotComponent);
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId, IoTComponent.class.getName(),
 				iotComponentId, false, true, true);
-		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent);
-		tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent, tagNames);
+		//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		return iotComponent;
 
 	}
@@ -120,8 +116,11 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 		return super.deleteIoTComponent(iotComponent.getIotComponentId());
 	}
 
-	private AssetEntry updateAsset(long userId, long groupId, IoTComponent iotComponent) throws PortalException {
-
+	private AssetEntry updateAsset(long userId, long groupId, IoTComponent iotComponent, List<String> tagNames) throws PortalException {
+		String[] tagArray = null;
+		if(tagNames!=null) {
+			tagArray = tagNames.toArray(new String[0]);
+		}
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId, // userId
 				groupId, // groupId
 				iotComponent.getCreateDate(), // createDate
@@ -131,7 +130,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 				iotComponent.getUserUuid(), // classUuid
 				0, // classTypeId
 				null, // categoryIds
-				null, // tagNames
+				tagArray, // tagNames
 				true, // listable
 				true, // visible
 				null, // startDate
@@ -181,8 +180,8 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 		iotComponent.setExpandoBridgeAttributes(serviceContext);
 
 		ioTComponentPersistence.update(iotComponent);
-		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent);
-		tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent, tagNames);
+		//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		/*
 		 * resourceLocalService.updateResources(serviceContext.getCompanyId(),
 		 * serviceContext.getScopeGroupId(), IoTComponent.class.getName(),
@@ -250,26 +249,5 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 	 * <code>com.iot_catalogue.service.IoTComponentLocalServiceUtil</code>.
 	 */
 	
-	@Reference(unbind = "-")
-	protected void setAssetTagLocalService(AssetTagLocalService assetTagLocalService) {
 
-		_assetTagLocalService = assetTagLocalService;
-		tagManager.setAssetTagLocalService(_assetTagLocalService);
-
-	}
-	
-	
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-		tagManager.setAssetEntryLocalService(_assetEntryLocalService);
-	}
-	
-	private AssetTagLocalService _assetTagLocalService = null;
-	
-	private AssetEntryLocalService _assetEntryLocalService = null;
-	
-	private TagManager tagManager = new TagManager();
-	
 }

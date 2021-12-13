@@ -18,16 +18,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import com.iot_catalogue.exception.NoSuchIoTValidationException;
 import com.iot_catalogue.model.IoTValidation;
 import com.iot_catalogue.service.base.IoTValidationLocalServiceBaseImpl;
-import com.iot_catalogue.service.util.TagManager;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -90,13 +86,17 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 		ioTValidationPersistence.update(iotValidation);
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId, IoTValidation.class.getName(),
 				iotValidationId, false, true, true);
-		AssetEntry assetEntry = updateAsset(userId, groupId, iotValidation);
-		tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotValidation, tagNames);
+		//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		return iotValidation;
 
 	}
 
-	private AssetEntry updateAsset(long userId, long groupId, IoTValidation iotValidation) throws PortalException {
+	private AssetEntry updateAsset(long userId, long groupId, IoTValidation iotValidation, List<String> tagNames) throws PortalException {
+		String[] tagArray = null;
+		if(tagNames!=null) {
+			tagArray = tagNames.toArray(new String[0]);
+		}
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId, // userId
 				groupId, // groupId
 				iotValidation.getCreateDate(), // createDate
@@ -106,7 +106,7 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 				iotValidation.getUserUuid(), // classUuid
 				0, // classTypeId
 				null, // categoryIds
-				null, // tagNames
+				tagArray, // tagNames
 				true, // listable
 				true, // visible
 				null, // startDate
@@ -184,8 +184,8 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 		 * PLACEHOLDER_DEFAULT_GROUP_ROLE),
 		 * serviceContext.getModelPermissions().getActionIds(RoleConstants.GUEST));
 		 */
-		AssetEntry assetEntry = updateAsset(userId, groupId, iotValidation);
-		tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotValidation, tagNames);
+		//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		return iotValidation;
 
 	}
@@ -241,28 +241,6 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 	 * injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use
 	 * <code>com.iot_catalogue.service.IoTValidationLocalServiceUtil</code>.
 	 */
-	
-	@Reference(unbind = "-")
-	protected void setAssetTagLocalService(AssetTagLocalService assetTagLocalService) {
-
-		_assetTagLocalService = assetTagLocalService;
-		tagManager.setAssetTagLocalService(_assetTagLocalService);
-
-	}
-	
-	
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-		tagManager.setAssetEntryLocalService(_assetEntryLocalService);
-	}
-	
-	private AssetTagLocalService _assetTagLocalService = null;
-	
-	private AssetEntryLocalService _assetEntryLocalService = null;
-	
-	private TagManager tagManager = new TagManager();
 
 	
 	
