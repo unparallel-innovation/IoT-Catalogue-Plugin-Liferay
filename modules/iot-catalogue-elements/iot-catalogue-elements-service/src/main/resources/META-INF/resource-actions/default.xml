@@ -45,11 +45,11 @@ Mapping 7.0.0//EN" "https://www.liferay.com/dtd/liferay-resource-action-mapping_
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
 			<guest-defaults>
-				<action-key>VIEW</action-key>
+				<!-- <action-key>VIEW</action-key> -->
 			</guest-defaults>
 			<guest-unsupported>
 				<action-key>UPDATE</action-key>
-				<!-- <action-key>VIEW</action-key> -->
+				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
@@ -70,12 +70,12 @@ Mapping 7.0.0//EN" "https://www.liferay.com/dtd/liferay-resource-action-mapping_
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
 			<guest-defaults>
-				<action-key>VIEW</action-key>
+				<!--<action-key>VIEW</action-key>-->
 
 			</guest-defaults>
 			<guest-unsupported>
 				<action-key>UPDATE</action-key>
-				<!-- <action-key>VIEW</action-key> -->
+				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

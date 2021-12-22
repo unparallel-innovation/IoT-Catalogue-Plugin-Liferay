@@ -2,3 +2,9 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "release.portal.api"
 
 }
+
+
+jar {
+
+ archiveFileName = "com.iot_catalogue.api.jar"
+}

@@ -22,6 +22,7 @@ import org.osgi.service.component.annotations.Component;
 import com.iot_catalogue.exception.NoSuchIoTValidationException;
 import com.iot_catalogue.model.IoTValidation;
 import com.iot_catalogue.service.base.IoTValidationLocalServiceBaseImpl;
+import com.iot_catalogue.utils.TagUtils;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.portal.aop.AopService;
@@ -86,7 +87,8 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 		ioTValidationPersistence.update(iotValidation);
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId, IoTValidation.class.getName(),
 				iotValidationId, false, true, true);
-		AssetEntry assetEntry = updateAsset(userId, groupId, iotValidation, tagNames);
+		List<String> validTagNames = TagUtils.getValidTagNames(tagNames);
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotValidation, validTagNames);
 		//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		return iotValidation;
 
@@ -184,7 +186,8 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 		 * PLACEHOLDER_DEFAULT_GROUP_ROLE),
 		 * serviceContext.getModelPermissions().getActionIds(RoleConstants.GUEST));
 		 */
-		AssetEntry assetEntry = updateAsset(userId, groupId, iotValidation, tagNames);
+		List<String> validTagNames = TagUtils.getValidTagNames(tagNames);
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotValidation, validTagNames);
 		//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		return iotValidation;
 

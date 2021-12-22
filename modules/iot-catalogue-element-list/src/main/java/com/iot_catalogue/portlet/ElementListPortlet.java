@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 		"mvc.command.name=/",
 		"mvc.command.name=/components/view",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
+		"javax.portlet.security-role-ref=power-user,user,guest"
 	},
 	service = Portlet.class
 )

@@ -36,10 +36,7 @@ public class IoTComponentListHeader extends MVCPortlet {
 			throws IOException, PortletException {
 		HttpServletRequest httpReq = PortalUtil
 				.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
-		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-		ColorScheme colorScheme = themeDisplay.getColorScheme();
-		
-		_log.info(colorScheme.getSettingsProperties());
+
 		if (httpReq.getPathInfo().contains("-/asset_publisher/")) {
 			renderRequest.setAttribute("showing_asset", true);
 

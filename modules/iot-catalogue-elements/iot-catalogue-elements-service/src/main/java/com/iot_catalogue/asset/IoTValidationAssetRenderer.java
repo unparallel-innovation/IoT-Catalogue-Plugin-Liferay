@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.iot_catalogue.model.IoTValidation;
+import com.iot_catalogue.model.Subscription;
 import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
+import com.iot_catalogue.service.SubscriptionLocalServiceUtil;
 import com.iot_catalogue.service.permission.IoTValidationPermission;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -153,6 +155,28 @@ public class IoTValidationAssetRenderer extends BaseJSPAssetRenderer<IoTValidati
 		return noSuchEntryRedirect;
 	}
 */
+	
+	@Override
+	public String getURLViewInContext(LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, String noSuchEntryRedirect) { // IOT_COMPONENT_FULL_CONTENT
+																							// try {
+		
+		try {
+			String originalId = _iotValidation.getOriginalId();
+			Subscription subscription = SubscriptionLocalServiceUtil.getSubscriptionById(_iotValidation.getSubscriptionId());
+			if(subscription!=null) {
+				return subscription.getValidationPagePath() + "?pageId=" + originalId;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+
+
+
+	}
 	@Override
 	public PortletURL getURLEdit(LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse) throws Exception {

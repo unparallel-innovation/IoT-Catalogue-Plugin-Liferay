@@ -1,0 +1,4 @@
+jar {
+
+ archiveFileName = "iot.catalogue.asset.tags.jar"
+}

@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
+import com.iot_catalogue.utils.TagUtils;
 /**
  * The implementation of the io t component local service.
  *
@@ -88,7 +88,8 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 		ioTComponentPersistence.update(iotComponent);
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId, IoTComponent.class.getName(),
 				iotComponentId, false, true, true);
-		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent, tagNames);
+		List<String> validTagNames = TagUtils.getValidTagNames(tagNames);
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent, validTagNames);
 		//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		return iotComponent;
 
@@ -180,7 +181,8 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 		iotComponent.setExpandoBridgeAttributes(serviceContext);
 
 		ioTComponentPersistence.update(iotComponent);
-		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent, tagNames);
+		List<String> validTagNames = TagUtils.getValidTagNames(tagNames);
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent, validTagNames);
 		//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		/*
 		 * resourceLocalService.updateResources(serviceContext.getCompanyId(),

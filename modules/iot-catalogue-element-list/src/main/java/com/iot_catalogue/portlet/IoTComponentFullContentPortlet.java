@@ -42,11 +42,16 @@ import com.liferay.portal.kernel.util.WebKeys;
 		},
 		service = Portlet.class
 	)
+
+
+
+
+
 public class IoTComponentFullContentPortlet extends MVCPortlet {
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 	        throws IOException, PortletException {
-
+			
 			HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
 			String originalComponentId = httpReq.getParameter("pageId");
 			if(originalComponentId != null) {

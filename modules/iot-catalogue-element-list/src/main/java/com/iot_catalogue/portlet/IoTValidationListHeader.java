@@ -24,7 +24,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 		"javax.portlet.name=" + ElementListPortletKeys.IOT_VALIDATION_LIST_HEADER,
 
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
+		"javax.portlet.security-role-ref=power-user,user" 
+		}, service = Portlet.class)
 public class IoTValidationListHeader extends MVCPortlet {
 
 	private final static String title = "Validations";

@@ -13,3 +13,13 @@ buildService {
 }
 
 group = "com.iot_catalogue"
+
+
+
+
+
+
+jar {
+
+ archiveFileName = "com.iot_catalogue.service.jar"
+}
