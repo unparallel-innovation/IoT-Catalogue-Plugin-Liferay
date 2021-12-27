@@ -395,7 +395,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param groupId the group ID
 	 * @return the matching subscriptions
 	 */
-	public java.util.List<Subscription> findBygroupId(long groupId);
+	public java.util.List<Subscription> findByGroupId(long groupId);
 
 	/**
 	 * Returns a range of all the subscriptions where groupId = &#63;.
@@ -409,7 +409,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @return the range of matching subscriptions
 	 */
-	public java.util.List<Subscription> findBygroupId(
+	public java.util.List<Subscription> findByGroupId(
 		long groupId, int start, int end);
 
 	/**
@@ -425,7 +425,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching subscriptions
 	 */
-	public java.util.List<Subscription> findBygroupId(
+	public java.util.List<Subscription> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator);
@@ -444,7 +444,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching subscriptions
 	 */
-	public java.util.List<Subscription> findBygroupId(
+	public java.util.List<Subscription> findByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator,
@@ -458,7 +458,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @return the first matching subscription
 	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
 	 */
-	public Subscription findBygroupId_First(
+	public Subscription findByGroupId_First(
 			long groupId,
 			com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 				orderByComparator)
@@ -471,7 +471,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching subscription, or <code>null</code> if a matching subscription could not be found
 	 */
-	public Subscription fetchBygroupId_First(
+	public Subscription fetchByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator);
@@ -484,7 +484,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @return the last matching subscription
 	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
 	 */
-	public Subscription findBygroupId_Last(
+	public Subscription findByGroupId_Last(
 			long groupId,
 			com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 				orderByComparator)
@@ -497,7 +497,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
 	 */
-	public Subscription fetchBygroupId_Last(
+	public Subscription fetchByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 			orderByComparator);
@@ -511,7 +511,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @return the previous, current, and next subscription
 	 * @throws NoSuchSubscriptionException if a subscription with the primary key could not be found
 	 */
-	public Subscription[] findBygroupId_PrevAndNext(
+	public Subscription[] findByGroupId_PrevAndNext(
 			long subscriptionId, long groupId,
 			com.liferay.portal.kernel.util.OrderByComparator<Subscription>
 				orderByComparator)
@@ -522,7 +522,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 *
 	 * @param groupId the group ID
 	 */
-	public void removeBygroupId(long groupId);
+	public void removeByGroupId(long groupId);
 
 	/**
 	 * Returns the number of subscriptions where groupId = &#63;.
@@ -530,7 +530,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param groupId the group ID
 	 * @return the number of matching subscriptions
 	 */
-	public int countBygroupId(long groupId);
+	public int countByGroupId(long groupId);
 
 	/**
 	 * Returns the subscription where subscriptionId = &#63; or throws a <code>NoSuchSubscriptionException</code> if it could not be found.
@@ -539,7 +539,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @return the matching subscription
 	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
 	 */
-	public Subscription findBysubscriptionId(long subscriptionId)
+	public Subscription findBySubscriptionId(long subscriptionId)
 		throws NoSuchSubscriptionException;
 
 	/**
@@ -548,7 +548,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param subscriptionId the subscription ID
 	 * @return the matching subscription, or <code>null</code> if a matching subscription could not be found
 	 */
-	public Subscription fetchBysubscriptionId(long subscriptionId);
+	public Subscription fetchBySubscriptionId(long subscriptionId);
 
 	/**
 	 * Returns the subscription where subscriptionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -557,7 +557,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching subscription, or <code>null</code> if a matching subscription could not be found
 	 */
-	public Subscription fetchBysubscriptionId(
+	public Subscription fetchBySubscriptionId(
 		long subscriptionId, boolean useFinderCache);
 
 	/**
@@ -566,7 +566,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param subscriptionId the subscription ID
 	 * @return the subscription that was removed
 	 */
-	public Subscription removeBysubscriptionId(long subscriptionId)
+	public Subscription removeBySubscriptionId(long subscriptionId)
 		throws NoSuchSubscriptionException;
 
 	/**
@@ -575,7 +575,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	 * @param subscriptionId the subscription ID
 	 * @return the number of matching subscriptions
 	 */
-	public int countBysubscriptionId(long subscriptionId);
+	public int countBySubscriptionId(long subscriptionId);
 
 	/**
 	 * Caches the subscription in the entity cache if it is enabled.

@@ -148,14 +148,71 @@
 		<column name="validationPagePath" type="String" />
 		<column name="port" type="Integer" />
 		<column name="useSSL" type="boolean" />
-		<finder name="groupId" return-type="Collection">
+		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="subscriptionId" return-type="Subscription">
+		<finder name="SubscriptionId" return-type="Subscription">
 			<finder-column name="subscriptionId" />
 		</finder>
 	</entity>
-
+	<entity name="ComponentChild" local-service="true" uuid="true">
+		<column name="id" primary="true" type="long" />
+	
+		<column name="groupId" type="long" />
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<!-- Status fields -->
+	
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+	
+		<column name="componentOrignalId" type="String" />
+		<column name="childComponentOriginalId" type="String" />
+		<column name="subscriptionId" type="long" />
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="ComponentOrignalId" return-type="Collection">
+			<finder-column name="componentOrignalId" />
+		</finder>
+		<finder name="SubscriptionId" return-type="Collection">
+			<finder-column name="subscriptionId" />
+		</finder>
+	</entity>
+	<entity name="ValidationChild" local-service="true" uuid="true">
+		<column name="id" primary="true" type="long" />
+	
+		<column name="groupId" type="long" />
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<!-- Status fields -->
+	
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+	
+		<column name="validationOrignalId" type="String" />
+		<column name="childValidationOriginalId" type="String" />
+		<column name="subscriptionId" type="long" />
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="ValidationOrignalId" return-type="Collection">
+			<finder-column name="validationOrignalId" />
+		</finder>
+		<finder name="SubscriptionId" return-type="Collection">
+			<finder-column name="subscriptionId" />
+		</finder>
+	</entity>
 	<exceptions>
 		<exception>IoTComponentName</exception>
 		<exception>IoTComponentDescription</exception>

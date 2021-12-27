@@ -56,6 +56,24 @@ create table IoTCatalogue_Category (
 	iotCatalogueId VARCHAR(75) null
 );
 
+create table IoTCatalogue_ComponentChild (
+	uuid_ VARCHAR(75) null,
+	id_ LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null,
+	componentOrignalId VARCHAR(75) null,
+	childComponentOriginalId VARCHAR(75) null,
+	subscriptionId LONG
+);
+
 create table IoTCatalogue_Element (
 	uuid_ VARCHAR(75) null,
 	elementId LONG not null primary key,
@@ -135,4 +153,22 @@ create table IoTCatalogue_Subscription (
 	validationPagePath VARCHAR(75) null,
 	port INTEGER,
 	useSSL BOOLEAN
+);
+
+create table IoTCatalogue_ValidationChild (
+	uuid_ VARCHAR(75) null,
+	id_ LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null,
+	validationOrignalId VARCHAR(75) null,
+	childValidationOriginalId VARCHAR(75) null,
+	subscriptionId LONG
 );

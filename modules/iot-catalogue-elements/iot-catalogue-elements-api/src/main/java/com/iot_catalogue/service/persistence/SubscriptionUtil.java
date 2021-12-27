@@ -541,8 +541,8 @@ public class SubscriptionUtil {
 	 * @param groupId the group ID
 	 * @return the matching subscriptions
 	 */
-	public static List<Subscription> findBygroupId(long groupId) {
-		return getPersistence().findBygroupId(groupId);
+	public static List<Subscription> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
 	}
 
 	/**
@@ -557,10 +557,10 @@ public class SubscriptionUtil {
 	 * @param end the upper bound of the range of subscriptions (not inclusive)
 	 * @return the range of matching subscriptions
 	 */
-	public static List<Subscription> findBygroupId(
+	public static List<Subscription> findByGroupId(
 		long groupId, int start, int end) {
 
-		return getPersistence().findBygroupId(groupId, start, end);
+		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
 	/**
@@ -576,11 +576,11 @@ public class SubscriptionUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching subscriptions
 	 */
-	public static List<Subscription> findBygroupId(
+	public static List<Subscription> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<Subscription> orderByComparator) {
 
-		return getPersistence().findBygroupId(
+		return getPersistence().findByGroupId(
 			groupId, start, end, orderByComparator);
 	}
 
@@ -598,12 +598,12 @@ public class SubscriptionUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching subscriptions
 	 */
-	public static List<Subscription> findBygroupId(
+	public static List<Subscription> findByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<Subscription> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findBygroupId(
+		return getPersistence().findByGroupId(
 			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
@@ -615,11 +615,11 @@ public class SubscriptionUtil {
 	 * @return the first matching subscription
 	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
 	 */
-	public static Subscription findBygroupId_First(
+	public static Subscription findByGroupId_First(
 			long groupId, OrderByComparator<Subscription> orderByComparator)
 		throws com.iot_catalogue.exception.NoSuchSubscriptionException {
 
-		return getPersistence().findBygroupId_First(groupId, orderByComparator);
+		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
 	/**
@@ -629,10 +629,10 @@ public class SubscriptionUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching subscription, or <code>null</code> if a matching subscription could not be found
 	 */
-	public static Subscription fetchBygroupId_First(
+	public static Subscription fetchByGroupId_First(
 		long groupId, OrderByComparator<Subscription> orderByComparator) {
 
-		return getPersistence().fetchBygroupId_First(
+		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
 	}
 
@@ -644,11 +644,11 @@ public class SubscriptionUtil {
 	 * @return the last matching subscription
 	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
 	 */
-	public static Subscription findBygroupId_Last(
+	public static Subscription findByGroupId_Last(
 			long groupId, OrderByComparator<Subscription> orderByComparator)
 		throws com.iot_catalogue.exception.NoSuchSubscriptionException {
 
-		return getPersistence().findBygroupId_Last(groupId, orderByComparator);
+		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -658,10 +658,10 @@ public class SubscriptionUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching subscription, or <code>null</code> if a matching subscription could not be found
 	 */
-	public static Subscription fetchBygroupId_Last(
+	public static Subscription fetchByGroupId_Last(
 		long groupId, OrderByComparator<Subscription> orderByComparator) {
 
-		return getPersistence().fetchBygroupId_Last(groupId, orderByComparator);
+		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
 	/**
@@ -673,12 +673,12 @@ public class SubscriptionUtil {
 	 * @return the previous, current, and next subscription
 	 * @throws NoSuchSubscriptionException if a subscription with the primary key could not be found
 	 */
-	public static Subscription[] findBygroupId_PrevAndNext(
+	public static Subscription[] findByGroupId_PrevAndNext(
 			long subscriptionId, long groupId,
 			OrderByComparator<Subscription> orderByComparator)
 		throws com.iot_catalogue.exception.NoSuchSubscriptionException {
 
-		return getPersistence().findBygroupId_PrevAndNext(
+		return getPersistence().findByGroupId_PrevAndNext(
 			subscriptionId, groupId, orderByComparator);
 	}
 
@@ -687,8 +687,8 @@ public class SubscriptionUtil {
 	 *
 	 * @param groupId the group ID
 	 */
-	public static void removeBygroupId(long groupId) {
-		getPersistence().removeBygroupId(groupId);
+	public static void removeByGroupId(long groupId) {
+		getPersistence().removeByGroupId(groupId);
 	}
 
 	/**
@@ -697,8 +697,8 @@ public class SubscriptionUtil {
 	 * @param groupId the group ID
 	 * @return the number of matching subscriptions
 	 */
-	public static int countBygroupId(long groupId) {
-		return getPersistence().countBygroupId(groupId);
+	public static int countByGroupId(long groupId) {
+		return getPersistence().countByGroupId(groupId);
 	}
 
 	/**
@@ -708,10 +708,10 @@ public class SubscriptionUtil {
 	 * @return the matching subscription
 	 * @throws NoSuchSubscriptionException if a matching subscription could not be found
 	 */
-	public static Subscription findBysubscriptionId(long subscriptionId)
+	public static Subscription findBySubscriptionId(long subscriptionId)
 		throws com.iot_catalogue.exception.NoSuchSubscriptionException {
 
-		return getPersistence().findBysubscriptionId(subscriptionId);
+		return getPersistence().findBySubscriptionId(subscriptionId);
 	}
 
 	/**
@@ -720,8 +720,8 @@ public class SubscriptionUtil {
 	 * @param subscriptionId the subscription ID
 	 * @return the matching subscription, or <code>null</code> if a matching subscription could not be found
 	 */
-	public static Subscription fetchBysubscriptionId(long subscriptionId) {
-		return getPersistence().fetchBysubscriptionId(subscriptionId);
+	public static Subscription fetchBySubscriptionId(long subscriptionId) {
+		return getPersistence().fetchBySubscriptionId(subscriptionId);
 	}
 
 	/**
@@ -731,10 +731,10 @@ public class SubscriptionUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching subscription, or <code>null</code> if a matching subscription could not be found
 	 */
-	public static Subscription fetchBysubscriptionId(
+	public static Subscription fetchBySubscriptionId(
 		long subscriptionId, boolean useFinderCache) {
 
-		return getPersistence().fetchBysubscriptionId(
+		return getPersistence().fetchBySubscriptionId(
 			subscriptionId, useFinderCache);
 	}
 
@@ -744,10 +744,10 @@ public class SubscriptionUtil {
 	 * @param subscriptionId the subscription ID
 	 * @return the subscription that was removed
 	 */
-	public static Subscription removeBysubscriptionId(long subscriptionId)
+	public static Subscription removeBySubscriptionId(long subscriptionId)
 		throws com.iot_catalogue.exception.NoSuchSubscriptionException {
 
-		return getPersistence().removeBysubscriptionId(subscriptionId);
+		return getPersistence().removeBySubscriptionId(subscriptionId);
 	}
 
 	/**
@@ -756,8 +756,8 @@ public class SubscriptionUtil {
 	 * @param subscriptionId the subscription ID
 	 * @return the number of matching subscriptions
 	 */
-	public static int countBysubscriptionId(long subscriptionId) {
-		return getPersistence().countBysubscriptionId(subscriptionId);
+	public static int countBySubscriptionId(long subscriptionId) {
+		return getPersistence().countBySubscriptionId(subscriptionId);
 	}
 
 	/**

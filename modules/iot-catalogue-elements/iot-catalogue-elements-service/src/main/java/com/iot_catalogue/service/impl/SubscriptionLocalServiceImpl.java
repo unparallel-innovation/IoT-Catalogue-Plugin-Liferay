@@ -137,7 +137,7 @@ public class SubscriptionLocalServiceImpl
 		return subscriptionPersistence.countAll();
 	}
 	public int getSubscriptionCount(long groupId) {
-		return subscriptionPersistence.countBygroupId(groupId);
+		return subscriptionPersistence.countByGroupId(groupId);
 	}
 	
 	
@@ -151,16 +151,16 @@ public class SubscriptionLocalServiceImpl
 	}
 	
 	public List<Subscription> getSubscriptions(long groupId, int start, int end){
-		return subscriptionPersistence.findBygroupId(groupId, start, end);
+		return subscriptionPersistence.findByGroupId(groupId, start, end);
 	}
 	
 	public Subscription getSubscriptionById(long subscriptionId) throws NoSuchSubscriptionException {
-		return subscriptionPersistence.findBysubscriptionId(subscriptionId);
+		return subscriptionPersistence.findBySubscriptionId(subscriptionId);
 	}
 	
 	
 	public Subscription getSubscriptionByGroupId(long groupId) throws NoSuchSubscriptionException {
-		return subscriptionPersistence.findBygroupId(groupId).get(0);
+		return subscriptionPersistence.findByGroupId(groupId).get(0);
 	}
 	
 	protected void validate(String token, String host, Integer port, boolean useSSL)

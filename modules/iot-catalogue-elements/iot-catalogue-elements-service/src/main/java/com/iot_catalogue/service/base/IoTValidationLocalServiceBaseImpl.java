@@ -17,9 +17,11 @@ package com.iot_catalogue.service.base;
 import com.iot_catalogue.model.IoTValidation;
 import com.iot_catalogue.service.IoTValidationLocalService;
 import com.iot_catalogue.service.IoTValidationLocalServiceUtil;
+import com.iot_catalogue.service.persistence.ComponentChildPersistence;
 import com.iot_catalogue.service.persistence.IoTComponentPersistence;
 import com.iot_catalogue.service.persistence.IoTValidationPersistence;
 import com.iot_catalogue.service.persistence.SubscriptionPersistence;
+import com.iot_catalogue.service.persistence.ValidationChildPersistence;
 
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -624,6 +626,9 @@ public abstract class IoTValidationLocalServiceBaseImpl
 	}
 
 	@Reference
+	protected ComponentChildPersistence componentChildPersistence;
+
+	@Reference
 	protected IoTComponentPersistence ioTComponentPersistence;
 
 	protected IoTValidationLocalService ioTValidationLocalService;
@@ -633,6 +638,9 @@ public abstract class IoTValidationLocalServiceBaseImpl
 
 	@Reference
 	protected SubscriptionPersistence subscriptionPersistence;
+
+	@Reference
+	protected ValidationChildPersistence validationChildPersistence;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

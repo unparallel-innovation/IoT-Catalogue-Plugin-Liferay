@@ -7,11 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -29,28 +31,19 @@ import com.iot_catalogue.service.IoTComponentLocalService;
 import com.iot_catalogue.service.IoTValidationLocalService;
 import com.iot_catalogue.service.SubscriptionLocalService;
 import com.iot_catalogue.tpi_plugin.TPIData;
-import com.keysolutions.ddpclient.DDPClient.CONNSTATE;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.model.LayoutConstants;
 
 @Component(immediate = true, property = { "com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.scopeable=true", "javax.portlet.display-name=IoT Catalogue Element List",
@@ -217,6 +210,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	}
 
 	private void syncDataWithIoTCatalogue(Subscription subscription, long delay) {
+		ResettableTimer timer = getTimer(subscription);
 
 		String key = String.valueOf(subscription.getSubscriptionId());
 		if (connections.get(key) == null) {
@@ -292,6 +286,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 						try {
 							ServiceContext serviceContext = getServiceContextFromSubscription(subscription);
 							if (collectionName.equals(componentsCollectionName)) {
+								timer.reset(false);
 								if (action.equals(TPIData.ADDED) || action.equals(TPIData.CHANGED)) {
 									updateIoTComponent(id, fields, serviceContext, subscription);
 								} else if (action.equals(TPIData.REMOVED)) {
@@ -299,6 +294,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 								}
 							}
 							if (collectionName.equals(validationsCollectionName)) {
+								timer.reset(false);
 								if (action.equals(TPIData.ADDED) || action.equals(TPIData.CHANGED)) {
 									updateIoTValidation(id, fields, serviceContext, subscription);
 								} else if (action.equals(TPIData.REMOVED)) {
@@ -329,6 +325,19 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	private ResettableTimer getTimer(Subscription subscription) {
+		ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(1);
+        final ResettableTimer timer = new ResettableTimer(scheduler, 
+                timeout, TimeUnit.MILLISECONDS,
+                new Runnable() { 
+                    public void run() { System.out.println("timeout! for " + subscription.getSubscriptionId()); }
+                }
+        );
+        return timer;
+	}
+	
 
 	private ServiceContext getServiceContextFromSubscription(Subscription subscription) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
@@ -635,6 +644,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 	private HashMap<String, TPIData> connections = new HashMap<String, TPIData>();
 
+	private HashMap<String, ResettableTimer> timers = new HashMap<String, ResettableTimer>();
+	
 	// private Subscription currentSubscription = null;
 
 	private final String componentsCollectionName = "components";
@@ -642,4 +653,6 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(ElementListAdminPortlet.class);
 
+	private static final int timeout = 5000;
+	
 }
