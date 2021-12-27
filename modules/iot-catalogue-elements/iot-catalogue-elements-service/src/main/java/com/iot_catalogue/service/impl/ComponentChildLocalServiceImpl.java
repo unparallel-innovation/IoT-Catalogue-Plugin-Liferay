@@ -76,9 +76,16 @@ public class ComponentChildLocalServiceImpl
 		
 	}
 	
-	public List<ComponentChild> getComponentChilds(){
+	
+	public List<ComponentChild> getComponentChilds(String componentOriginalId){
+		return componentChildPersistence.findByComponentOrignalId(componentOriginalId);
+		
+	}
+	
+	public List<ComponentChild> getComponentChildsBySubscriptionId(long subscriptionId){
 		//componentChildPersistence.findS
-		return null;
+		return componentChildPersistence.findBySubscriptionId(subscriptionId);
+
 		
 	}
 	

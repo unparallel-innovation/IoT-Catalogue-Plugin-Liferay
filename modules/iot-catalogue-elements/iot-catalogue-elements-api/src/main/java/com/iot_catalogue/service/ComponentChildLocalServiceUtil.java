@@ -263,10 +263,6 @@ public class ComponentChildLocalServiceUtil {
 		return getService().getComponentChildByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static List<ComponentChild> getComponentChilds() {
-		return getService().getComponentChilds();
-	}
-
 	/**
 	 * Returns a range of all the component childs.
 	 *
@@ -280,6 +276,18 @@ public class ComponentChildLocalServiceUtil {
 	 */
 	public static List<ComponentChild> getComponentChilds(int start, int end) {
 		return getService().getComponentChilds(start, end);
+	}
+
+	public static List<ComponentChild> getComponentChilds(
+		String componentOriginalId) {
+
+		return getService().getComponentChilds(componentOriginalId);
+	}
+
+	public static List<ComponentChild> getComponentChildsBySubscriptionId(
+		long subscriptionId) {
+
+		return getService().getComponentChildsBySubscriptionId(subscriptionId);
 	}
 
 	/**

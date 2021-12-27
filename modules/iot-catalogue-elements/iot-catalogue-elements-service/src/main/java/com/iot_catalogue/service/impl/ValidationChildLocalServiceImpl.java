@@ -14,11 +14,17 @@
 
 package com.iot_catalogue.service.impl;
 
-import com.iot_catalogue.service.base.ValidationChildLocalServiceBaseImpl;
-
-import com.liferay.portal.aop.AopService;
+import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+
+import com.iot_catalogue.model.ValidationChild;
+import com.iot_catalogue.service.base.ValidationChildLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * The implementation of the validation child local service.
@@ -39,7 +45,50 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ValidationChildLocalServiceImpl
 	extends ValidationChildLocalServiceBaseImpl {
+	
+	
+	public ValidationChild addValidationChild(long userId, String validationOriginalId, String childValidationOriginalId, long subscriptionId, ServiceContext serviceContext) throws PortalException {
+		long groupId = serviceContext.getScopeGroupId();
 
+		User user = userLocalService.getUserById(userId);
+
+		Date now = new Date();
+		long validationChildId = counterLocalService.increment();
+		
+		ValidationChild validationChild = validationChildPersistence.create(validationChildId);
+		
+		validationChild.setUuid(serviceContext.getUuid());
+		validationChild.setUserId(userId);
+		validationChild.setGroupId(groupId);
+		validationChild.setCompanyId(user.getCompanyId());
+		validationChild.setUserName(user.getFullName());
+		validationChild.setCreateDate(serviceContext.getCreateDate(now));
+		validationChild.setCreateDate(serviceContext.getModifiedDate(now));
+		validationChild.setExpandoBridgeAttributes(serviceContext);
+		
+
+		validationChild.setValidationOrignalId(validationOriginalId);
+		validationChild.setChildValidationOriginalId(childValidationOriginalId);
+		
+		validationChildPersistence.update(validationChild);
+			
+			
+		return validationChild;
+		
+	}
+	
+	
+	public List<ValidationChild> getValidationChilds(String validationOriginalId){
+		return validationChildPersistence.findByValidationOrignalId(validationOriginalId);
+		
+	}
+	
+	public List<ValidationChild> getValidationChildsBySubscriptionId(long subscriptionId){
+		//componentChildPersistence.findS
+		return validationChildPersistence.findBySubscriptionId(subscriptionId);
+
+		
+	}
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

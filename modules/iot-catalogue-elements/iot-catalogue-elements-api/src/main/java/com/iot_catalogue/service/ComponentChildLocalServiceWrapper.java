@@ -281,13 +281,6 @@ public class ComponentChildLocalServiceWrapper
 			uuid, groupId);
 	}
 
-	@Override
-	public java.util.List<com.iot_catalogue.model.ComponentChild>
-		getComponentChilds() {
-
-		return _componentChildLocalService.getComponentChilds();
-	}
-
 	/**
 	 * Returns a range of all the component childs.
 	 *
@@ -304,6 +297,22 @@ public class ComponentChildLocalServiceWrapper
 		getComponentChilds(int start, int end) {
 
 		return _componentChildLocalService.getComponentChilds(start, end);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ComponentChild>
+		getComponentChilds(String componentOriginalId) {
+
+		return _componentChildLocalService.getComponentChilds(
+			componentOriginalId);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ComponentChild>
+		getComponentChildsBySubscriptionId(long subscriptionId) {
+
+		return _componentChildLocalService.getComponentChildsBySubscriptionId(
+			subscriptionId);
 	}
 
 	/**

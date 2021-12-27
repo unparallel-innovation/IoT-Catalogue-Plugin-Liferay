@@ -239,9 +239,6 @@ public interface ComponentChildLocalService
 			String uuid, long groupId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ComponentChild> getComponentChilds();
-
 	/**
 	 * Returns a range of all the component childs.
 	 *
@@ -255,6 +252,13 @@ public interface ComponentChildLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ComponentChild> getComponentChilds(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ComponentChild> getComponentChilds(String componentOriginalId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ComponentChild> getComponentChildsBySubscriptionId(
+		long subscriptionId);
 
 	/**
 	 * Returns all the component childs matching the UUID and company.

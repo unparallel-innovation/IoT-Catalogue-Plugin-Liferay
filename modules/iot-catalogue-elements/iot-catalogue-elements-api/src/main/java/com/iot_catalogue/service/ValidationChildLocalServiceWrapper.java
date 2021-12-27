@@ -33,6 +33,18 @@ public class ValidationChildLocalServiceWrapper
 		_validationChildLocalService = validationChildLocalService;
 	}
 
+	@Override
+	public com.iot_catalogue.model.ValidationChild addValidationChild(
+			long userId, String validationOriginalId,
+			String childValidationOriginalId, long subscriptionId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _validationChildLocalService.addValidationChild(
+			userId, validationOriginalId, childValidationOriginalId,
+			subscriptionId, serviceContext);
+	}
+
 	/**
 	 * Adds the validation child to the database. Also notifies the appropriate model listeners.
 	 *
@@ -329,6 +341,22 @@ public class ValidationChildLocalServiceWrapper
 		getValidationChilds(int start, int end) {
 
 		return _validationChildLocalService.getValidationChilds(start, end);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ValidationChild>
+		getValidationChilds(String validationOriginalId) {
+
+		return _validationChildLocalService.getValidationChilds(
+			validationOriginalId);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ValidationChild>
+		getValidationChildsBySubscriptionId(long subscriptionId) {
+
+		return _validationChildLocalService.getValidationChildsBySubscriptionId(
+			subscriptionId);
 	}
 
 	/**

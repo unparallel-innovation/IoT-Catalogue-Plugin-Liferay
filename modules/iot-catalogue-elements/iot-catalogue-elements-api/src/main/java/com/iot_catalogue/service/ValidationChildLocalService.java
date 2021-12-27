@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -63,6 +64,11 @@ public interface ValidationChildLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.iot_catalogue.service.impl.ValidationChildLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the validation child local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ValidationChildLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public ValidationChild addValidationChild(
+			long userId, String validationOriginalId,
+			String childValidationOriginalId, long subscriptionId,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the validation child to the database. Also notifies the appropriate model listeners.
@@ -269,6 +275,14 @@ public interface ValidationChildLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ValidationChild> getValidationChilds(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ValidationChild> getValidationChilds(
+		String validationOriginalId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ValidationChild> getValidationChildsBySubscriptionId(
+		long subscriptionId);
 
 	/**
 	 * Returns all the validation childs matching the UUID and company.

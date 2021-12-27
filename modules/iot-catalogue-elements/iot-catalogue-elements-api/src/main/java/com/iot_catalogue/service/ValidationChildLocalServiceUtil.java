@@ -44,6 +44,16 @@ public class ValidationChildLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.iot_catalogue.service.impl.ValidationChildLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ValidationChild addValidationChild(
+			long userId, String validationOriginalId,
+			String childValidationOriginalId, long subscriptionId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addValidationChild(
+			userId, validationOriginalId, childValidationOriginalId,
+			subscriptionId, serviceContext);
+	}
 
 	/**
 	 * Adds the validation child to the database. Also notifies the appropriate model listeners.
@@ -300,6 +310,18 @@ public class ValidationChildLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getValidationChilds(start, end);
+	}
+
+	public static List<ValidationChild> getValidationChilds(
+		String validationOriginalId) {
+
+		return getService().getValidationChilds(validationOriginalId);
+	}
+
+	public static List<ValidationChild> getValidationChildsBySubscriptionId(
+		long subscriptionId) {
+
+		return getService().getValidationChildsBySubscriptionId(subscriptionId);
 	}
 
 	/**
