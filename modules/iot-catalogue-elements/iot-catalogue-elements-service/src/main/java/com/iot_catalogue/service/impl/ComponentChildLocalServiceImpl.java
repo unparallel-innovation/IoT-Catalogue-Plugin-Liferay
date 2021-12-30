@@ -65,10 +65,10 @@ public class ComponentChildLocalServiceImpl
 			componentChild.setCreateDate(serviceContext.getModifiedDate(now));
 			componentChild.setExpandoBridgeAttributes(serviceContext);
 			
-
+			
 			componentChild.setComponentOrignalId(componentOriginalId);
 			componentChild.setChildComponentOriginalId(childComponentOriginalId);
-			
+			componentChild.setSubscriptionId(subscriptionId);
 			componentChildPersistence.update(componentChild);
 			
 			
@@ -82,10 +82,26 @@ public class ComponentChildLocalServiceImpl
 		
 	}
 	
+	public List<ComponentChild> getComponentChilds(String componentOriginalId, long subcriptionId){
+		return componentChildPersistence.findByCOID_S(componentOriginalId, subcriptionId);
+		
+	}
+	
 	public List<ComponentChild> getComponentChildsBySubscriptionId(long subscriptionId){
 		//componentChildPersistence.findS
 		return componentChildPersistence.findBySubscriptionId(subscriptionId);
 
+		
+	}
+	
+	
+	public List<ComponentChild> getComponentChildsByChild(String childId){
+		return componentChildPersistence.findByChildComponentOrignalId(childId);
+		
+	}
+	
+	public List<ComponentChild> getComponentChildsByChild(String childId, long subscriptionId){
+		return componentChildPersistence.findByCCOID_S(childId, subscriptionId);
 		
 	}
 	

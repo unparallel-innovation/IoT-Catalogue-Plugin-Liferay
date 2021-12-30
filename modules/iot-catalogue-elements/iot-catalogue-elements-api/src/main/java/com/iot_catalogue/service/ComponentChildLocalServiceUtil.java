@@ -284,6 +284,25 @@ public class ComponentChildLocalServiceUtil {
 		return getService().getComponentChilds(componentOriginalId);
 	}
 
+	public static List<ComponentChild> getComponentChilds(
+		String componentOriginalId, long subcriptionId) {
+
+		return getService().getComponentChilds(
+			componentOriginalId, subcriptionId);
+	}
+
+	public static List<ComponentChild> getComponentChildsByChild(
+		String childId) {
+
+		return getService().getComponentChildsByChild(childId);
+	}
+
+	public static List<ComponentChild> getComponentChildsByChild(
+		String childId, long subscriptionId) {
+
+		return getService().getComponentChildsByChild(childId, subscriptionId);
+	}
+
 	public static List<ComponentChild> getComponentChildsBySubscriptionId(
 		long subscriptionId) {
 

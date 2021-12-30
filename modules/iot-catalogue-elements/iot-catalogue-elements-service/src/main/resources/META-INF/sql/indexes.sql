@@ -18,7 +18,8 @@ create index IX_5FDDC5C2 on IoTCatalogue_Category (groupId);
 create index IX_E9CFEBDC on IoTCatalogue_Category (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_72D9B95E on IoTCatalogue_Category (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create index IX_CB82A433 on IoTCatalogue_ComponentChild (componentOrignalId[$COLUMN_LENGTH:75$]);
+create index IX_EF6ABBB6 on IoTCatalogue_ComponentChild (childComponentOriginalId[$COLUMN_LENGTH:75$], subscriptionId);
+create index IX_189A48BF on IoTCatalogue_ComponentChild (componentOrignalId[$COLUMN_LENGTH:75$], subscriptionId);
 create index IX_EA87E101 on IoTCatalogue_ComponentChild (groupId);
 create index IX_B3ABE55 on IoTCatalogue_ComponentChild (subscriptionId);
 create index IX_9B67077D on IoTCatalogue_ComponentChild (uuid_[$COLUMN_LENGTH:75$], companyId);
@@ -49,8 +50,9 @@ create index IX_41F96243 on IoTCatalogue_Subscription (groupId);
 create index IX_1005D07B on IoTCatalogue_Subscription (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_9C2E39BD on IoTCatalogue_Subscription (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_7F2A4A38 on IoTCatalogue_ValidationChild (childValidationOriginalId[$COLUMN_LENGTH:75$], subscriptionId);
 create index IX_EA5D1E45 on IoTCatalogue_ValidationChild (groupId);
 create index IX_C146CC91 on IoTCatalogue_ValidationChild (subscriptionId);
 create index IX_FEA876B9 on IoTCatalogue_ValidationChild (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_7B21577B on IoTCatalogue_ValidationChild (uuid_[$COLUMN_LENGTH:75$], groupId);
-create index IX_979E56C5 on IoTCatalogue_ValidationChild (validationOrignalId[$COLUMN_LENGTH:75$]);
+create index IX_6BF29751 on IoTCatalogue_ValidationChild (validationOrignalId[$COLUMN_LENGTH:75$], subscriptionId);

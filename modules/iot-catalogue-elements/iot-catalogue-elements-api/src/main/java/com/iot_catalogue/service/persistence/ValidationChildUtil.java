@@ -880,6 +880,581 @@ public class ValidationChildUtil {
 	}
 
 	/**
+	 * Returns all the validation childs where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @return the matching validation childs
+	 */
+	public static List<ValidationChild> findByVOID_S(
+		String validationOrignalId, long subscriptionId) {
+
+		return getPersistence().findByVOID_S(
+			validationOrignalId, subscriptionId);
+	}
+
+	/**
+	 * Returns a range of all the validation childs where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @return the range of matching validation childs
+	 */
+	public static List<ValidationChild> findByVOID_S(
+		String validationOrignalId, long subscriptionId, int start, int end) {
+
+		return getPersistence().findByVOID_S(
+			validationOrignalId, subscriptionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the validation childs where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching validation childs
+	 */
+	public static List<ValidationChild> findByVOID_S(
+		String validationOrignalId, long subscriptionId, int start, int end,
+		OrderByComparator<ValidationChild> orderByComparator) {
+
+		return getPersistence().findByVOID_S(
+			validationOrignalId, subscriptionId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the validation childs where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching validation childs
+	 */
+	public static List<ValidationChild> findByVOID_S(
+		String validationOrignalId, long subscriptionId, int start, int end,
+		OrderByComparator<ValidationChild> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByVOID_S(
+			validationOrignalId, subscriptionId, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first validation child in the ordered set where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching validation child
+	 * @throws NoSuchValidationChildException if a matching validation child could not be found
+	 */
+	public static ValidationChild findByVOID_S_First(
+			String validationOrignalId, long subscriptionId,
+			OrderByComparator<ValidationChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchValidationChildException {
+
+		return getPersistence().findByVOID_S_First(
+			validationOrignalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first validation child in the ordered set where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching validation child, or <code>null</code> if a matching validation child could not be found
+	 */
+	public static ValidationChild fetchByVOID_S_First(
+		String validationOrignalId, long subscriptionId,
+		OrderByComparator<ValidationChild> orderByComparator) {
+
+		return getPersistence().fetchByVOID_S_First(
+			validationOrignalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last validation child in the ordered set where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching validation child
+	 * @throws NoSuchValidationChildException if a matching validation child could not be found
+	 */
+	public static ValidationChild findByVOID_S_Last(
+			String validationOrignalId, long subscriptionId,
+			OrderByComparator<ValidationChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchValidationChildException {
+
+		return getPersistence().findByVOID_S_Last(
+			validationOrignalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last validation child in the ordered set where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching validation child, or <code>null</code> if a matching validation child could not be found
+	 */
+	public static ValidationChild fetchByVOID_S_Last(
+		String validationOrignalId, long subscriptionId,
+		OrderByComparator<ValidationChild> orderByComparator) {
+
+		return getPersistence().fetchByVOID_S_Last(
+			validationOrignalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the validation childs before and after the current validation child in the ordered set where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param id the primary key of the current validation child
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next validation child
+	 * @throws NoSuchValidationChildException if a validation child with the primary key could not be found
+	 */
+	public static ValidationChild[] findByVOID_S_PrevAndNext(
+			long id, String validationOrignalId, long subscriptionId,
+			OrderByComparator<ValidationChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchValidationChildException {
+
+		return getPersistence().findByVOID_S_PrevAndNext(
+			id, validationOrignalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the validation childs where validationOrignalId = &#63; and subscriptionId = &#63; from the database.
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 */
+	public static void removeByVOID_S(
+		String validationOrignalId, long subscriptionId) {
+
+		getPersistence().removeByVOID_S(validationOrignalId, subscriptionId);
+	}
+
+	/**
+	 * Returns the number of validation childs where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @return the number of matching validation childs
+	 */
+	public static int countByVOID_S(
+		String validationOrignalId, long subscriptionId) {
+
+		return getPersistence().countByVOID_S(
+			validationOrignalId, subscriptionId);
+	}
+
+	/**
+	 * Returns all the validation childs where childValidationOriginalId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @return the matching validation childs
+	 */
+	public static List<ValidationChild> findByChildValidationOrignalId(
+		String childValidationOriginalId) {
+
+		return getPersistence().findByChildValidationOrignalId(
+			childValidationOriginalId);
+	}
+
+	/**
+	 * Returns a range of all the validation childs where childValidationOriginalId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @return the range of matching validation childs
+	 */
+	public static List<ValidationChild> findByChildValidationOrignalId(
+		String childValidationOriginalId, int start, int end) {
+
+		return getPersistence().findByChildValidationOrignalId(
+			childValidationOriginalId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the validation childs where childValidationOriginalId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching validation childs
+	 */
+	public static List<ValidationChild> findByChildValidationOrignalId(
+		String childValidationOriginalId, int start, int end,
+		OrderByComparator<ValidationChild> orderByComparator) {
+
+		return getPersistence().findByChildValidationOrignalId(
+			childValidationOriginalId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the validation childs where childValidationOriginalId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching validation childs
+	 */
+	public static List<ValidationChild> findByChildValidationOrignalId(
+		String childValidationOriginalId, int start, int end,
+		OrderByComparator<ValidationChild> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByChildValidationOrignalId(
+			childValidationOriginalId, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first validation child in the ordered set where childValidationOriginalId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching validation child
+	 * @throws NoSuchValidationChildException if a matching validation child could not be found
+	 */
+	public static ValidationChild findByChildValidationOrignalId_First(
+			String childValidationOriginalId,
+			OrderByComparator<ValidationChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchValidationChildException {
+
+		return getPersistence().findByChildValidationOrignalId_First(
+			childValidationOriginalId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first validation child in the ordered set where childValidationOriginalId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching validation child, or <code>null</code> if a matching validation child could not be found
+	 */
+	public static ValidationChild fetchByChildValidationOrignalId_First(
+		String childValidationOriginalId,
+		OrderByComparator<ValidationChild> orderByComparator) {
+
+		return getPersistence().fetchByChildValidationOrignalId_First(
+			childValidationOriginalId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last validation child in the ordered set where childValidationOriginalId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching validation child
+	 * @throws NoSuchValidationChildException if a matching validation child could not be found
+	 */
+	public static ValidationChild findByChildValidationOrignalId_Last(
+			String childValidationOriginalId,
+			OrderByComparator<ValidationChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchValidationChildException {
+
+		return getPersistence().findByChildValidationOrignalId_Last(
+			childValidationOriginalId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last validation child in the ordered set where childValidationOriginalId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching validation child, or <code>null</code> if a matching validation child could not be found
+	 */
+	public static ValidationChild fetchByChildValidationOrignalId_Last(
+		String childValidationOriginalId,
+		OrderByComparator<ValidationChild> orderByComparator) {
+
+		return getPersistence().fetchByChildValidationOrignalId_Last(
+			childValidationOriginalId, orderByComparator);
+	}
+
+	/**
+	 * Returns the validation childs before and after the current validation child in the ordered set where childValidationOriginalId = &#63;.
+	 *
+	 * @param id the primary key of the current validation child
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next validation child
+	 * @throws NoSuchValidationChildException if a validation child with the primary key could not be found
+	 */
+	public static ValidationChild[] findByChildValidationOrignalId_PrevAndNext(
+			long id, String childValidationOriginalId,
+			OrderByComparator<ValidationChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchValidationChildException {
+
+		return getPersistence().findByChildValidationOrignalId_PrevAndNext(
+			id, childValidationOriginalId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the validation childs where childValidationOriginalId = &#63; from the database.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 */
+	public static void removeByChildValidationOrignalId(
+		String childValidationOriginalId) {
+
+		getPersistence().removeByChildValidationOrignalId(
+			childValidationOriginalId);
+	}
+
+	/**
+	 * Returns the number of validation childs where childValidationOriginalId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @return the number of matching validation childs
+	 */
+	public static int countByChildValidationOrignalId(
+		String childValidationOriginalId) {
+
+		return getPersistence().countByChildValidationOrignalId(
+			childValidationOriginalId);
+	}
+
+	/**
+	 * Returns all the validation childs where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @return the matching validation childs
+	 */
+	public static List<ValidationChild> findByCVOID_S(
+		String childValidationOriginalId, long subscriptionId) {
+
+		return getPersistence().findByCVOID_S(
+			childValidationOriginalId, subscriptionId);
+	}
+
+	/**
+	 * Returns a range of all the validation childs where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @return the range of matching validation childs
+	 */
+	public static List<ValidationChild> findByCVOID_S(
+		String childValidationOriginalId, long subscriptionId, int start,
+		int end) {
+
+		return getPersistence().findByCVOID_S(
+			childValidationOriginalId, subscriptionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the validation childs where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching validation childs
+	 */
+	public static List<ValidationChild> findByCVOID_S(
+		String childValidationOriginalId, long subscriptionId, int start,
+		int end, OrderByComparator<ValidationChild> orderByComparator) {
+
+		return getPersistence().findByCVOID_S(
+			childValidationOriginalId, subscriptionId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the validation childs where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching validation childs
+	 */
+	public static List<ValidationChild> findByCVOID_S(
+		String childValidationOriginalId, long subscriptionId, int start,
+		int end, OrderByComparator<ValidationChild> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByCVOID_S(
+			childValidationOriginalId, subscriptionId, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first validation child in the ordered set where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching validation child
+	 * @throws NoSuchValidationChildException if a matching validation child could not be found
+	 */
+	public static ValidationChild findByCVOID_S_First(
+			String childValidationOriginalId, long subscriptionId,
+			OrderByComparator<ValidationChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchValidationChildException {
+
+		return getPersistence().findByCVOID_S_First(
+			childValidationOriginalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first validation child in the ordered set where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching validation child, or <code>null</code> if a matching validation child could not be found
+	 */
+	public static ValidationChild fetchByCVOID_S_First(
+		String childValidationOriginalId, long subscriptionId,
+		OrderByComparator<ValidationChild> orderByComparator) {
+
+		return getPersistence().fetchByCVOID_S_First(
+			childValidationOriginalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last validation child in the ordered set where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching validation child
+	 * @throws NoSuchValidationChildException if a matching validation child could not be found
+	 */
+	public static ValidationChild findByCVOID_S_Last(
+			String childValidationOriginalId, long subscriptionId,
+			OrderByComparator<ValidationChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchValidationChildException {
+
+		return getPersistence().findByCVOID_S_Last(
+			childValidationOriginalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last validation child in the ordered set where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching validation child, or <code>null</code> if a matching validation child could not be found
+	 */
+	public static ValidationChild fetchByCVOID_S_Last(
+		String childValidationOriginalId, long subscriptionId,
+		OrderByComparator<ValidationChild> orderByComparator) {
+
+		return getPersistence().fetchByCVOID_S_Last(
+			childValidationOriginalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the validation childs before and after the current validation child in the ordered set where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param id the primary key of the current validation child
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next validation child
+	 * @throws NoSuchValidationChildException if a validation child with the primary key could not be found
+	 */
+	public static ValidationChild[] findByCVOID_S_PrevAndNext(
+			long id, String childValidationOriginalId, long subscriptionId,
+			OrderByComparator<ValidationChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchValidationChildException {
+
+		return getPersistence().findByCVOID_S_PrevAndNext(
+			id, childValidationOriginalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the validation childs where childValidationOriginalId = &#63; and subscriptionId = &#63; from the database.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 */
+	public static void removeByCVOID_S(
+		String childValidationOriginalId, long subscriptionId) {
+
+		getPersistence().removeByCVOID_S(
+			childValidationOriginalId, subscriptionId);
+	}
+
+	/**
+	 * Returns the number of validation childs where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @return the number of matching validation childs
+	 */
+	public static int countByCVOID_S(
+		String childValidationOriginalId, long subscriptionId) {
+
+		return getPersistence().countByCVOID_S(
+			childValidationOriginalId, subscriptionId);
+	}
+
+	/**
 	 * Returns all the validation childs where subscriptionId = &#63;.
 	 *
 	 * @param subscriptionId the subscription ID

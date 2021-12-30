@@ -180,6 +180,19 @@
 		<finder name="ComponentOrignalId" return-type="Collection">
 			<finder-column name="componentOrignalId" />
 		</finder>
+		<finder name="COID_S" return-type="Collection">
+			<finder-column name="componentOrignalId" />
+			<finder-column name="subscriptionId" />
+		</finder>
+		
+		<finder name="ChildComponentOrignalId" return-type="Collection">
+			<finder-column name="childComponentOriginalId" />
+		</finder>
+		<finder name="CCOID_S" return-type="Collection">
+			<finder-column name="childComponentOriginalId" />
+			<finder-column name="subscriptionId" />
+		</finder>
+		
 		<finder name="SubscriptionId" return-type="Collection">
 			<finder-column name="subscriptionId" />
 		</finder>
@@ -209,6 +222,19 @@
 		<finder name="ValidationOrignalId" return-type="Collection">
 			<finder-column name="validationOrignalId" />
 		</finder>
+		<finder name="VOID_S" return-type="Collection">
+			<finder-column name="validationOrignalId" />
+			<finder-column name="subscriptionId" />
+		</finder>
+		
+		<finder name="ChildValidationOrignalId" return-type="Collection">
+			<finder-column name="childValidationOriginalId" />
+		</finder>
+		<finder name="CVOID_S" return-type="Collection">
+			<finder-column name="childValidationOriginalId" />
+			<finder-column name="subscriptionId" />
+		</finder>
+		
 		<finder name="SubscriptionId" return-type="Collection">
 			<finder-column name="subscriptionId" />
 		</finder>

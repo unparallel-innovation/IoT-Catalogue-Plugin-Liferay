@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 		"javax.portlet.display-name=IoT Component List Header", "javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/asset/iotcomponent/list_header.jsp",
 		"javax.portlet.name=" + ElementListPortletKeys.IOT_COMPONENT_LIST_HEADER,
-
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
 public class IoTComponentListHeader extends MVCPortlet {

@@ -23,14 +23,22 @@ import org.osgi.service.component.annotations.Reference;
 
 import com.iot_catalogue.exception.NoSuchIoTComponentException;
 import com.iot_catalogue.exception.NoSuchIoTValidationException;
+import com.iot_catalogue.model.ComponentChild;
 import com.iot_catalogue.model.IoTComponent;
 import com.iot_catalogue.model.IoTValidation;
 import com.iot_catalogue.model.Subscription;
+import com.iot_catalogue.model.ValidationChild;
 import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
+import com.iot_catalogue.portlet.utils.AssetRelationsPopulator;
+import com.iot_catalogue.service.ComponentChildLocalService;
 import com.iot_catalogue.service.IoTComponentLocalService;
 import com.iot_catalogue.service.IoTValidationLocalService;
 import com.iot_catalogue.service.SubscriptionLocalService;
+import com.iot_catalogue.service.ValidationChildLocalService;
 import com.iot_catalogue.tpi_plugin.TPIData;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,6 +52,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
+
 
 @Component(immediate = true, property = { "com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.scopeable=true", "javax.portlet.display-name=IoT Catalogue Element List",
@@ -111,11 +120,11 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 		super.init();
 		_log.info("Starting IoT Catalogue plugin");
-		List<Subscription> subscriptions = _subscriptionLocalService.getSubscriptions();
+		/*List<Subscription> subscriptions = _subscriptionLocalService.getSubscriptions();
 
 		for (Subscription subscription : subscriptions) {
 			syncDataWithIoTCatalogue(subscription);
-		}
+		}*/
 	}
 
 
@@ -252,14 +261,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 							e.printStackTrace();
 						}
 
-						/*
-						 * try {
-						 * 
-						 * //_subscriptionLocalService.setSubscriptionConnectionState(subscription.
-						 * getSubscriptionId(), String.valueOf(this.getConnectionState())); } catch
-						 * (PortalException e) { // TODO Auto-generated catch block e.printStackTrace();
-						 * }
-						 */
+						
 					}
 
 					@Override
@@ -332,10 +334,88 @@ public class ElementListAdminPortlet extends MVCPortlet {
         final ResettableTimer timer = new ResettableTimer(scheduler, 
                 timeout, TimeUnit.MILLISECONDS,
                 new Runnable() { 
-                    public void run() { System.out.println("timeout! for " + subscription.getSubscriptionId()); }
+                    public void run() { 
+                    	_log.info( "Processing asset relations"); 
+                    	addComponentAssetRelations(subscription);
+                    	addValidationAssetRelations(subscription);
+                    
+                    }
                 }
         );
         return timer;
+	}
+	
+	private void addValidationAssetRelations(Subscription subscription){
+		
+		AssetRelationsPopulator assetRelationsPopulator = new AssetRelationsPopulator(_assetLinkLocalService) {
+			@Override
+			public AssetEntry getAssetEntry(Object element) {
+				ValidationChild validationChild = (ValidationChild)element;
+				try {
+					IoTValidation ioTValidation =  _iotValidationLocalService.getIoTValidationByOriginalId(validationChild.getValidationOrignalId(),subscription.getSubscriptionId());
+	
+					return _assetEntryLocalService.getEntry(IoTValidation.class.getName(), ioTValidation.getPrimaryKey());
+				} catch (PortalException e) {
+				}
+				return null;
+			}
+			
+			@Override
+			public AssetEntry getChildAssetEntry(Object element) {
+				ValidationChild validationChild = (ValidationChild)element;
+				try {
+					IoTValidation ioTValidation =  _iotValidationLocalService.getIoTValidationByOriginalId(validationChild.getChildValidationOriginalId(),subscription.getSubscriptionId());
+					return _assetEntryLocalService.getEntry(IoTValidation.class.getName(), ioTValidation.getPrimaryKey());
+				} catch (PortalException e) {
+				}
+				return null;
+	
+			}
+			
+			@Override
+			public void assetProcessed(Long assetId, List<Long> childAssetIds) {
+			
+			}
+		};
+		List<ValidationChild> validationChilds = _validationChildLocalService.getValidationChildsBySubscriptionId(subscription.getSubscriptionId());
+		_log.info("Processing validations relations");
+		assetRelationsPopulator.addAssetRelations(validationChilds, subscription.getUserId());
+
+		
+	}
+	
+	private void addComponentAssetRelations(Subscription subscription) {
+		
+		AssetRelationsPopulator assetRelationsPopulator = new AssetRelationsPopulator(_assetLinkLocalService) {
+			@Override
+			public AssetEntry getAssetEntry(Object element) {
+				ComponentChild componentChild = (ComponentChild)element;
+				try {
+					IoTComponent iotComponent =  _ioTComponentLocalService.getIoTComponentByOriginalId(componentChild.getComponentOrignalId(),subscription.getSubscriptionId());
+	
+					return _assetEntryLocalService.getEntry(IoTComponent.class.getName(), iotComponent.getPrimaryKey());
+				} catch (PortalException e) {
+				}
+				return null;
+			}
+			
+			@Override
+			public AssetEntry getChildAssetEntry(Object element) {
+				ComponentChild componentChild = (ComponentChild)element;
+				try {
+					IoTComponent childComponent = _ioTComponentLocalService.getIoTComponentByOriginalId(componentChild.getChildComponentOriginalId(),subscription.getSubscriptionId());
+					return _assetEntryLocalService.getEntry(IoTComponent.class.getName(), childComponent.getPrimaryKey());
+				} catch (PortalException e) {
+				}
+				return null;
+	
+			}
+		};
+		List<ComponentChild> componentChilds = _componentChildLocalService.getComponentChildsBySubscriptionId(subscription.getSubscriptionId());
+		_log.info("Processing component relations");
+		assetRelationsPopulator.addAssetRelations(componentChilds, subscription.getUserId());
+
+    	
 	}
 	
 
@@ -402,8 +482,13 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		String embeddedUrl = (String)hashMap.get("_embeddedUrl");
 		String imageUrl = (String)hashMap.get("_imageUrl");
 		String description = (String)hashMap.get("description");
-		List<String> tagNames = (List<String>)hashMap.get("_tagNames");
 		
+		List<Object> components =  (List<Object> )hashMap.get("components");
+
+		List<String> tagNames = (List<String>)hashMap.get("_tagNames");
+		processComponentIds(id, components, subscription,serviceContext);
+		
+
 		long userId = subscription.getUserId();
 
 		if (iotComponent == null) {
@@ -417,6 +502,10 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		}
 
 	}
+	
+
+	
+	
 
 	private void updateIoTValidation(String id, Object fields, ServiceContext serviceContext, Subscription subscription)
 			throws PortalException {
@@ -438,7 +527,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		String imageUrl = (String)hashMap.get("_imageUrl");
 		String description = (String)hashMap.get("description");
 		List<String> tagNames = (List<String>)hashMap.get("_tagNames");
-		
+		String parent = (String)hashMap.get("parent");
+		processValidationParent(id, parent, subscription,serviceContext);
 		long userId = subscription.getUserId();
 	
 		if (iotValidation == null) {
@@ -453,7 +543,59 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		}
 
 	}
+	private void processComponentIds(String originalId , List<Object> components, Subscription subscription, ServiceContext serviceContext){
+
+		List<ComponentChild> componentChilds = _componentChildLocalService.getComponentChilds(originalId, subscription.getSubscriptionId());
+
+		for(ComponentChild componentChild : componentChilds) {
+			try {
+				_componentChildLocalService.deleteComponentChild(componentChild.getId());
+			} catch (PortalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		long userId = subscription.getUserId();
+		if(components!=null) {
+			for(Object element : components) {
+				Map<String, Object> hashMap = (Map<String, Object>)element;
+				List<String> newIds = (List<String> )hashMap.get("ids");
+				for(String id: newIds) {
+					try {
+						_componentChildLocalService.addComponentChild(userId, originalId, id, subscription.getSubscriptionId(), serviceContext);
+					} catch (PortalException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
 	
+	
+	private void processValidationParent(String id, String parent, Subscription subscription, ServiceContext serviceContext) {
+
+		List<ValidationChild> validationChilds = _validationChildLocalService.getValidationChildsByChild(id,  subscription.getSubscriptionId());
+		for(ValidationChild validationChild: validationChilds) {
+			try {
+				_validationChildLocalService.deleteValidationChild(validationChild.getId());
+			} catch (PortalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		long userId = subscription.getUserId();
+		if(parent!=null) {
+			try {
+				_validationChildLocalService.addValidationChild(userId, parent, id,subscription.getSubscriptionId(), serviceContext);
+			} catch (PortalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
 	private HashMap<String, Boolean> getIdsHashMap(ArrayList<String> ids){
 		HashMap<String, Boolean> idsHashMap = new HashMap<String, Boolean>();
 		if (ids != null) {
@@ -545,6 +687,12 @@ public class ElementListAdminPortlet extends MVCPortlet {
 						.getIoTComponentsBySubscriptionId(subscription.getSubscriptionId());
 				List<IoTValidation> iotValidations = _iotValidationLocalService
 						.getIoTValidationsBySubscriptionId(subscription.getSubscriptionId());
+				
+				List<ComponentChild> componentChilds = _componentChildLocalService.getComponentChildsBySubscriptionId(subscription.getSubscriptionId());
+				
+				
+				List<ValidationChild> validationChilds = _validationChildLocalService.getValidationChildsBySubscriptionId(subscription.getSubscriptionId());
+				
 				for (IoTComponent iotComponent : iotComponents) {
 					_ioTComponentLocalService.deleteIoTComponent(iotComponent, serviceContext);
 				}
@@ -553,6 +701,15 @@ public class ElementListAdminPortlet extends MVCPortlet {
 					_iotValidationLocalService.deleteIoTValidation(iotValidation, serviceContext);
 				}
 
+				for(ComponentChild componentChild:componentChilds) {
+					_componentChildLocalService.deleteComponentChild(componentChild);
+					
+				}
+				
+				for(ValidationChild validationChild: validationChilds) {
+					_validationChildLocalService.deleteValidationChild(validationChild);
+				}
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -626,6 +783,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	private IoTComponentLocalService _ioTComponentLocalService;
 
 	@Reference(unbind = "-")
+
 	protected void setIoTValidationLocalService(IoTValidationLocalService iotValidationLocalService) {
 		_iotValidationLocalService = iotValidationLocalService;
 	}
@@ -640,6 +798,44 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 	private SubscriptionLocalService _subscriptionLocalService;
 
+	@Reference(unbind = "-")
+	protected void setValidationChildLocalService(ValidationChildLocalService validationChildLocalService) {
+
+		_validationChildLocalService = validationChildLocalService;
+	}
+	
+	
+	private ValidationChildLocalService _validationChildLocalService= null;
+
+	@Reference(unbind = "-")
+	protected void setComponentChildLocalService(ComponentChildLocalService componentChildLocalService) {
+
+		_componentChildLocalService = componentChildLocalService;
+	}
+	
+	
+	
+	private ComponentChildLocalService _componentChildLocalService= null;
+	
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+	
+	
+	private AssetEntryLocalService _assetEntryLocalService= null;
+	
+	
+	@Reference(unbind = "-")
+	protected void setAssetLinkLocalService(AssetLinkLocalService assetLinkLocalService) {
+
+		_assetLinkLocalService = assetLinkLocalService;
+	}
+	
+	
+	private AssetLinkLocalService _assetLinkLocalService= null;
+	
 	// private TPIData tpiData = null;
 
 	private HashMap<String, TPIData> connections = new HashMap<String, TPIData>();

@@ -309,6 +309,29 @@ public class ComponentChildLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.iot_catalogue.model.ComponentChild>
+		getComponentChilds(String componentOriginalId, long subcriptionId) {
+
+		return _componentChildLocalService.getComponentChilds(
+			componentOriginalId, subcriptionId);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ComponentChild>
+		getComponentChildsByChild(String childId) {
+
+		return _componentChildLocalService.getComponentChildsByChild(childId);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ComponentChild>
+		getComponentChildsByChild(String childId, long subscriptionId) {
+
+		return _componentChildLocalService.getComponentChildsByChild(
+			childId, subscriptionId);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ComponentChild>
 		getComponentChildsBySubscriptionId(long subscriptionId) {
 
 		return _componentChildLocalService.getComponentChildsBySubscriptionId(

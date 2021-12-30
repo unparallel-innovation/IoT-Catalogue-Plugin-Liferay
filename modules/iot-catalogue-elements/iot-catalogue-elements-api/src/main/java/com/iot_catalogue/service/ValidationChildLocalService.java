@@ -281,6 +281,17 @@ public interface ValidationChildLocalService
 		String validationOriginalId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ValidationChild> getValidationChilds(
+		String componentOriginalId, long subcriptionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ValidationChild> getValidationChildsByChild(String childId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ValidationChild> getValidationChildsByChild(
+		String childId, long subscriptionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ValidationChild> getValidationChildsBySubscriptionId(
 		long subscriptionId);
 

@@ -257,6 +257,17 @@ public interface ComponentChildLocalService
 	public List<ComponentChild> getComponentChilds(String componentOriginalId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ComponentChild> getComponentChilds(
+		String componentOriginalId, long subcriptionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ComponentChild> getComponentChildsByChild(String childId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ComponentChild> getComponentChildsByChild(
+		String childId, long subscriptionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ComponentChild> getComponentChildsBySubscriptionId(
 		long subscriptionId);
 

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 			"javax.portlet.init-param.template-path=/",
 			"javax.portlet.init-param.view-template=/asset/iotcomponent/full_content.jsp",
 			"javax.portlet.name=" + ElementListPortletKeys.IOT_COMPONENT_FULL_CONTENT,
-
 			"javax.portlet.resource-bundle=content.Language",
 			"javax.portlet.security-role-ref=power-user,user"
 		},

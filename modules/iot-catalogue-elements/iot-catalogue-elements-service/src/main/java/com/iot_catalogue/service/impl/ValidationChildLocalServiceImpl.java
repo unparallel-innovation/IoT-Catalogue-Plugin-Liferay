@@ -69,6 +69,7 @@ public class ValidationChildLocalServiceImpl
 
 		validationChild.setValidationOrignalId(validationOriginalId);
 		validationChild.setChildValidationOriginalId(childValidationOriginalId);
+		validationChild.setSubscriptionId(subscriptionId);
 		
 		validationChildPersistence.update(validationChild);
 			
@@ -83,12 +84,29 @@ public class ValidationChildLocalServiceImpl
 		
 	}
 	
+	public List<ValidationChild> getValidationChilds(String componentOriginalId, long subcriptionId){
+		return validationChildPersistence.findByVOID_S(componentOriginalId, subcriptionId);
+		
+	}
+	
+	public List<ValidationChild> getValidationChildsByChild(String childId){
+		return validationChildPersistence.findByChildValidationOrignalId(childId);
+		
+	}
+	
+	public List<ValidationChild> getValidationChildsByChild(String childId, long subscriptionId){
+		return validationChildPersistence.findByCVOID_S(childId, subscriptionId);
+		
+	}
+	
 	public List<ValidationChild> getValidationChildsBySubscriptionId(long subscriptionId){
 		//componentChildPersistence.findS
 		return validationChildPersistence.findBySubscriptionId(subscriptionId);
 
 		
 	}
+	
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

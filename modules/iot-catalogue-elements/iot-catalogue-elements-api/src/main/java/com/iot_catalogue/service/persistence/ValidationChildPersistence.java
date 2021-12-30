@@ -678,6 +678,467 @@ public interface ValidationChildPersistence
 	public int countByValidationOrignalId(String validationOrignalId);
 
 	/**
+	 * Returns all the validation childs where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @return the matching validation childs
+	 */
+	public java.util.List<ValidationChild> findByVOID_S(
+		String validationOrignalId, long subscriptionId);
+
+	/**
+	 * Returns a range of all the validation childs where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @return the range of matching validation childs
+	 */
+	public java.util.List<ValidationChild> findByVOID_S(
+		String validationOrignalId, long subscriptionId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the validation childs where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching validation childs
+	 */
+	public java.util.List<ValidationChild> findByVOID_S(
+		String validationOrignalId, long subscriptionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the validation childs where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching validation childs
+	 */
+	public java.util.List<ValidationChild> findByVOID_S(
+		String validationOrignalId, long subscriptionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first validation child in the ordered set where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching validation child
+	 * @throws NoSuchValidationChildException if a matching validation child could not be found
+	 */
+	public ValidationChild findByVOID_S_First(
+			String validationOrignalId, long subscriptionId,
+			com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+				orderByComparator)
+		throws NoSuchValidationChildException;
+
+	/**
+	 * Returns the first validation child in the ordered set where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching validation child, or <code>null</code> if a matching validation child could not be found
+	 */
+	public ValidationChild fetchByVOID_S_First(
+		String validationOrignalId, long subscriptionId,
+		com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+			orderByComparator);
+
+	/**
+	 * Returns the last validation child in the ordered set where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching validation child
+	 * @throws NoSuchValidationChildException if a matching validation child could not be found
+	 */
+	public ValidationChild findByVOID_S_Last(
+			String validationOrignalId, long subscriptionId,
+			com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+				orderByComparator)
+		throws NoSuchValidationChildException;
+
+	/**
+	 * Returns the last validation child in the ordered set where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching validation child, or <code>null</code> if a matching validation child could not be found
+	 */
+	public ValidationChild fetchByVOID_S_Last(
+		String validationOrignalId, long subscriptionId,
+		com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+			orderByComparator);
+
+	/**
+	 * Returns the validation childs before and after the current validation child in the ordered set where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param id the primary key of the current validation child
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next validation child
+	 * @throws NoSuchValidationChildException if a validation child with the primary key could not be found
+	 */
+	public ValidationChild[] findByVOID_S_PrevAndNext(
+			long id, String validationOrignalId, long subscriptionId,
+			com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+				orderByComparator)
+		throws NoSuchValidationChildException;
+
+	/**
+	 * Removes all the validation childs where validationOrignalId = &#63; and subscriptionId = &#63; from the database.
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 */
+	public void removeByVOID_S(String validationOrignalId, long subscriptionId);
+
+	/**
+	 * Returns the number of validation childs where validationOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param validationOrignalId the validation orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @return the number of matching validation childs
+	 */
+	public int countByVOID_S(String validationOrignalId, long subscriptionId);
+
+	/**
+	 * Returns all the validation childs where childValidationOriginalId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @return the matching validation childs
+	 */
+	public java.util.List<ValidationChild> findByChildValidationOrignalId(
+		String childValidationOriginalId);
+
+	/**
+	 * Returns a range of all the validation childs where childValidationOriginalId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @return the range of matching validation childs
+	 */
+	public java.util.List<ValidationChild> findByChildValidationOrignalId(
+		String childValidationOriginalId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the validation childs where childValidationOriginalId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching validation childs
+	 */
+	public java.util.List<ValidationChild> findByChildValidationOrignalId(
+		String childValidationOriginalId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the validation childs where childValidationOriginalId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching validation childs
+	 */
+	public java.util.List<ValidationChild> findByChildValidationOrignalId(
+		String childValidationOriginalId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first validation child in the ordered set where childValidationOriginalId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching validation child
+	 * @throws NoSuchValidationChildException if a matching validation child could not be found
+	 */
+	public ValidationChild findByChildValidationOrignalId_First(
+			String childValidationOriginalId,
+			com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+				orderByComparator)
+		throws NoSuchValidationChildException;
+
+	/**
+	 * Returns the first validation child in the ordered set where childValidationOriginalId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching validation child, or <code>null</code> if a matching validation child could not be found
+	 */
+	public ValidationChild fetchByChildValidationOrignalId_First(
+		String childValidationOriginalId,
+		com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+			orderByComparator);
+
+	/**
+	 * Returns the last validation child in the ordered set where childValidationOriginalId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching validation child
+	 * @throws NoSuchValidationChildException if a matching validation child could not be found
+	 */
+	public ValidationChild findByChildValidationOrignalId_Last(
+			String childValidationOriginalId,
+			com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+				orderByComparator)
+		throws NoSuchValidationChildException;
+
+	/**
+	 * Returns the last validation child in the ordered set where childValidationOriginalId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching validation child, or <code>null</code> if a matching validation child could not be found
+	 */
+	public ValidationChild fetchByChildValidationOrignalId_Last(
+		String childValidationOriginalId,
+		com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+			orderByComparator);
+
+	/**
+	 * Returns the validation childs before and after the current validation child in the ordered set where childValidationOriginalId = &#63;.
+	 *
+	 * @param id the primary key of the current validation child
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next validation child
+	 * @throws NoSuchValidationChildException if a validation child with the primary key could not be found
+	 */
+	public ValidationChild[] findByChildValidationOrignalId_PrevAndNext(
+			long id, String childValidationOriginalId,
+			com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+				orderByComparator)
+		throws NoSuchValidationChildException;
+
+	/**
+	 * Removes all the validation childs where childValidationOriginalId = &#63; from the database.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 */
+	public void removeByChildValidationOrignalId(
+		String childValidationOriginalId);
+
+	/**
+	 * Returns the number of validation childs where childValidationOriginalId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @return the number of matching validation childs
+	 */
+	public int countByChildValidationOrignalId(
+		String childValidationOriginalId);
+
+	/**
+	 * Returns all the validation childs where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @return the matching validation childs
+	 */
+	public java.util.List<ValidationChild> findByCVOID_S(
+		String childValidationOriginalId, long subscriptionId);
+
+	/**
+	 * Returns a range of all the validation childs where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @return the range of matching validation childs
+	 */
+	public java.util.List<ValidationChild> findByCVOID_S(
+		String childValidationOriginalId, long subscriptionId, int start,
+		int end);
+
+	/**
+	 * Returns an ordered range of all the validation childs where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching validation childs
+	 */
+	public java.util.List<ValidationChild> findByCVOID_S(
+		String childValidationOriginalId, long subscriptionId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the validation childs where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ValidationChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of validation childs
+	 * @param end the upper bound of the range of validation childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching validation childs
+	 */
+	public java.util.List<ValidationChild> findByCVOID_S(
+		String childValidationOriginalId, long subscriptionId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first validation child in the ordered set where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching validation child
+	 * @throws NoSuchValidationChildException if a matching validation child could not be found
+	 */
+	public ValidationChild findByCVOID_S_First(
+			String childValidationOriginalId, long subscriptionId,
+			com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+				orderByComparator)
+		throws NoSuchValidationChildException;
+
+	/**
+	 * Returns the first validation child in the ordered set where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching validation child, or <code>null</code> if a matching validation child could not be found
+	 */
+	public ValidationChild fetchByCVOID_S_First(
+		String childValidationOriginalId, long subscriptionId,
+		com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+			orderByComparator);
+
+	/**
+	 * Returns the last validation child in the ordered set where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching validation child
+	 * @throws NoSuchValidationChildException if a matching validation child could not be found
+	 */
+	public ValidationChild findByCVOID_S_Last(
+			String childValidationOriginalId, long subscriptionId,
+			com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+				orderByComparator)
+		throws NoSuchValidationChildException;
+
+	/**
+	 * Returns the last validation child in the ordered set where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching validation child, or <code>null</code> if a matching validation child could not be found
+	 */
+	public ValidationChild fetchByCVOID_S_Last(
+		String childValidationOriginalId, long subscriptionId,
+		com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+			orderByComparator);
+
+	/**
+	 * Returns the validation childs before and after the current validation child in the ordered set where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param id the primary key of the current validation child
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next validation child
+	 * @throws NoSuchValidationChildException if a validation child with the primary key could not be found
+	 */
+	public ValidationChild[] findByCVOID_S_PrevAndNext(
+			long id, String childValidationOriginalId, long subscriptionId,
+			com.liferay.portal.kernel.util.OrderByComparator<ValidationChild>
+				orderByComparator)
+		throws NoSuchValidationChildException;
+
+	/**
+	 * Removes all the validation childs where childValidationOriginalId = &#63; and subscriptionId = &#63; from the database.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 */
+	public void removeByCVOID_S(
+		String childValidationOriginalId, long subscriptionId);
+
+	/**
+	 * Returns the number of validation childs where childValidationOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childValidationOriginalId the child validation original ID
+	 * @param subscriptionId the subscription ID
+	 * @return the number of matching validation childs
+	 */
+	public int countByCVOID_S(
+		String childValidationOriginalId, long subscriptionId);
+
+	/**
 	 * Returns all the validation childs where subscriptionId = &#63;.
 	 *
 	 * @param subscriptionId the subscription ID

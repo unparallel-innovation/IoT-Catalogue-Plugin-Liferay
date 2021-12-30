@@ -2516,6 +2516,1771 @@ public class ComponentChildPersistenceImpl
 		_FINDER_COLUMN_COMPONENTORIGNALID_COMPONENTORIGNALID_3 =
 			"(componentChild.componentOrignalId IS NULL OR componentChild.componentOrignalId = '')";
 
+	private FinderPath _finderPathWithPaginationFindByCOID_S;
+	private FinderPath _finderPathWithoutPaginationFindByCOID_S;
+	private FinderPath _finderPathCountByCOID_S;
+
+	/**
+	 * Returns all the component childs where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @return the matching component childs
+	 */
+	@Override
+	public List<ComponentChild> findByCOID_S(
+		String componentOrignalId, long subscriptionId) {
+
+		return findByCOID_S(
+			componentOrignalId, subscriptionId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the component childs where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @return the range of matching component childs
+	 */
+	@Override
+	public List<ComponentChild> findByCOID_S(
+		String componentOrignalId, long subscriptionId, int start, int end) {
+
+		return findByCOID_S(
+			componentOrignalId, subscriptionId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the component childs where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching component childs
+	 */
+	@Override
+	public List<ComponentChild> findByCOID_S(
+		String componentOrignalId, long subscriptionId, int start, int end,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		return findByCOID_S(
+			componentOrignalId, subscriptionId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the component childs where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching component childs
+	 */
+	@Override
+	public List<ComponentChild> findByCOID_S(
+		String componentOrignalId, long subscriptionId, int start, int end,
+		OrderByComparator<ComponentChild> orderByComparator,
+		boolean useFinderCache) {
+
+		componentOrignalId = Objects.toString(componentOrignalId, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCOID_S;
+				finderArgs = new Object[] {componentOrignalId, subscriptionId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByCOID_S;
+			finderArgs = new Object[] {
+				componentOrignalId, subscriptionId, start, end,
+				orderByComparator
+			};
+		}
+
+		List<ComponentChild> list = null;
+
+		if (useFinderCache) {
+			list = (List<ComponentChild>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ComponentChild componentChild : list) {
+					if (!componentOrignalId.equals(
+							componentChild.getComponentOrignalId()) ||
+						(subscriptionId !=
+							componentChild.getSubscriptionId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_COMPONENTCHILD_WHERE);
+
+			boolean bindComponentOrignalId = false;
+
+			if (componentOrignalId.isEmpty()) {
+				sb.append(_FINDER_COLUMN_COID_S_COMPONENTORIGNALID_3);
+			}
+			else {
+				bindComponentOrignalId = true;
+
+				sb.append(_FINDER_COLUMN_COID_S_COMPONENTORIGNALID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_COID_S_SUBSCRIPTIONID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(ComponentChildModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindComponentOrignalId) {
+					queryPos.add(componentOrignalId);
+				}
+
+				queryPos.add(subscriptionId);
+
+				list = (List<ComponentChild>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first component child in the ordered set where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching component child
+	 * @throws NoSuchComponentChildException if a matching component child could not be found
+	 */
+	@Override
+	public ComponentChild findByCOID_S_First(
+			String componentOrignalId, long subscriptionId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws NoSuchComponentChildException {
+
+		ComponentChild componentChild = fetchByCOID_S_First(
+			componentOrignalId, subscriptionId, orderByComparator);
+
+		if (componentChild != null) {
+			return componentChild;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("componentOrignalId=");
+		sb.append(componentOrignalId);
+
+		sb.append(", subscriptionId=");
+		sb.append(subscriptionId);
+
+		sb.append("}");
+
+		throw new NoSuchComponentChildException(sb.toString());
+	}
+
+	/**
+	 * Returns the first component child in the ordered set where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching component child, or <code>null</code> if a matching component child could not be found
+	 */
+	@Override
+	public ComponentChild fetchByCOID_S_First(
+		String componentOrignalId, long subscriptionId,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		List<ComponentChild> list = findByCOID_S(
+			componentOrignalId, subscriptionId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last component child in the ordered set where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching component child
+	 * @throws NoSuchComponentChildException if a matching component child could not be found
+	 */
+	@Override
+	public ComponentChild findByCOID_S_Last(
+			String componentOrignalId, long subscriptionId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws NoSuchComponentChildException {
+
+		ComponentChild componentChild = fetchByCOID_S_Last(
+			componentOrignalId, subscriptionId, orderByComparator);
+
+		if (componentChild != null) {
+			return componentChild;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("componentOrignalId=");
+		sb.append(componentOrignalId);
+
+		sb.append(", subscriptionId=");
+		sb.append(subscriptionId);
+
+		sb.append("}");
+
+		throw new NoSuchComponentChildException(sb.toString());
+	}
+
+	/**
+	 * Returns the last component child in the ordered set where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching component child, or <code>null</code> if a matching component child could not be found
+	 */
+	@Override
+	public ComponentChild fetchByCOID_S_Last(
+		String componentOrignalId, long subscriptionId,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		int count = countByCOID_S(componentOrignalId, subscriptionId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ComponentChild> list = findByCOID_S(
+			componentOrignalId, subscriptionId, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the component childs before and after the current component child in the ordered set where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param id the primary key of the current component child
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next component child
+	 * @throws NoSuchComponentChildException if a component child with the primary key could not be found
+	 */
+	@Override
+	public ComponentChild[] findByCOID_S_PrevAndNext(
+			long id, String componentOrignalId, long subscriptionId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws NoSuchComponentChildException {
+
+		componentOrignalId = Objects.toString(componentOrignalId, "");
+
+		ComponentChild componentChild = findByPrimaryKey(id);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ComponentChild[] array = new ComponentChildImpl[3];
+
+			array[0] = getByCOID_S_PrevAndNext(
+				session, componentChild, componentOrignalId, subscriptionId,
+				orderByComparator, true);
+
+			array[1] = componentChild;
+
+			array[2] = getByCOID_S_PrevAndNext(
+				session, componentChild, componentOrignalId, subscriptionId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ComponentChild getByCOID_S_PrevAndNext(
+		Session session, ComponentChild componentChild,
+		String componentOrignalId, long subscriptionId,
+		OrderByComparator<ComponentChild> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_COMPONENTCHILD_WHERE);
+
+		boolean bindComponentOrignalId = false;
+
+		if (componentOrignalId.isEmpty()) {
+			sb.append(_FINDER_COLUMN_COID_S_COMPONENTORIGNALID_3);
+		}
+		else {
+			bindComponentOrignalId = true;
+
+			sb.append(_FINDER_COLUMN_COID_S_COMPONENTORIGNALID_2);
+		}
+
+		sb.append(_FINDER_COLUMN_COID_S_SUBSCRIPTIONID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(ComponentChildModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindComponentOrignalId) {
+			queryPos.add(componentOrignalId);
+		}
+
+		queryPos.add(subscriptionId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						componentChild)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ComponentChild> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the component childs where componentOrignalId = &#63; and subscriptionId = &#63; from the database.
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 */
+	@Override
+	public void removeByCOID_S(String componentOrignalId, long subscriptionId) {
+		for (ComponentChild componentChild :
+				findByCOID_S(
+					componentOrignalId, subscriptionId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(componentChild);
+		}
+	}
+
+	/**
+	 * Returns the number of component childs where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @return the number of matching component childs
+	 */
+	@Override
+	public int countByCOID_S(String componentOrignalId, long subscriptionId) {
+		componentOrignalId = Objects.toString(componentOrignalId, "");
+
+		FinderPath finderPath = _finderPathCountByCOID_S;
+
+		Object[] finderArgs = new Object[] {componentOrignalId, subscriptionId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMPONENTCHILD_WHERE);
+
+			boolean bindComponentOrignalId = false;
+
+			if (componentOrignalId.isEmpty()) {
+				sb.append(_FINDER_COLUMN_COID_S_COMPONENTORIGNALID_3);
+			}
+			else {
+				bindComponentOrignalId = true;
+
+				sb.append(_FINDER_COLUMN_COID_S_COMPONENTORIGNALID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_COID_S_SUBSCRIPTIONID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindComponentOrignalId) {
+					queryPos.add(componentOrignalId);
+				}
+
+				queryPos.add(subscriptionId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_COID_S_COMPONENTORIGNALID_2 =
+		"componentChild.componentOrignalId = ? AND ";
+
+	private static final String _FINDER_COLUMN_COID_S_COMPONENTORIGNALID_3 =
+		"(componentChild.componentOrignalId IS NULL OR componentChild.componentOrignalId = '') AND ";
+
+	private static final String _FINDER_COLUMN_COID_S_SUBSCRIPTIONID_2 =
+		"componentChild.subscriptionId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByChildComponentOrignalId;
+	private FinderPath
+		_finderPathWithoutPaginationFindByChildComponentOrignalId;
+	private FinderPath _finderPathCountByChildComponentOrignalId;
+
+	/**
+	 * Returns all the component childs where childComponentOriginalId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @return the matching component childs
+	 */
+	@Override
+	public List<ComponentChild> findByChildComponentOrignalId(
+		String childComponentOriginalId) {
+
+		return findByChildComponentOrignalId(
+			childComponentOriginalId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the component childs where childComponentOriginalId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @return the range of matching component childs
+	 */
+	@Override
+	public List<ComponentChild> findByChildComponentOrignalId(
+		String childComponentOriginalId, int start, int end) {
+
+		return findByChildComponentOrignalId(
+			childComponentOriginalId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the component childs where childComponentOriginalId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching component childs
+	 */
+	@Override
+	public List<ComponentChild> findByChildComponentOrignalId(
+		String childComponentOriginalId, int start, int end,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		return findByChildComponentOrignalId(
+			childComponentOriginalId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the component childs where childComponentOriginalId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching component childs
+	 */
+	@Override
+	public List<ComponentChild> findByChildComponentOrignalId(
+		String childComponentOriginalId, int start, int end,
+		OrderByComparator<ComponentChild> orderByComparator,
+		boolean useFinderCache) {
+
+		childComponentOriginalId = Objects.toString(
+			childComponentOriginalId, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByChildComponentOrignalId;
+				finderArgs = new Object[] {childComponentOriginalId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByChildComponentOrignalId;
+			finderArgs = new Object[] {
+				childComponentOriginalId, start, end, orderByComparator
+			};
+		}
+
+		List<ComponentChild> list = null;
+
+		if (useFinderCache) {
+			list = (List<ComponentChild>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ComponentChild componentChild : list) {
+					if (!childComponentOriginalId.equals(
+							componentChild.getChildComponentOriginalId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_COMPONENTCHILD_WHERE);
+
+			boolean bindChildComponentOriginalId = false;
+
+			if (childComponentOriginalId.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_CHILDCOMPONENTORIGNALID_CHILDCOMPONENTORIGINALID_3);
+			}
+			else {
+				bindChildComponentOriginalId = true;
+
+				sb.append(
+					_FINDER_COLUMN_CHILDCOMPONENTORIGNALID_CHILDCOMPONENTORIGINALID_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(ComponentChildModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindChildComponentOriginalId) {
+					queryPos.add(childComponentOriginalId);
+				}
+
+				list = (List<ComponentChild>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first component child in the ordered set where childComponentOriginalId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching component child
+	 * @throws NoSuchComponentChildException if a matching component child could not be found
+	 */
+	@Override
+	public ComponentChild findByChildComponentOrignalId_First(
+			String childComponentOriginalId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws NoSuchComponentChildException {
+
+		ComponentChild componentChild = fetchByChildComponentOrignalId_First(
+			childComponentOriginalId, orderByComparator);
+
+		if (componentChild != null) {
+			return componentChild;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("childComponentOriginalId=");
+		sb.append(childComponentOriginalId);
+
+		sb.append("}");
+
+		throw new NoSuchComponentChildException(sb.toString());
+	}
+
+	/**
+	 * Returns the first component child in the ordered set where childComponentOriginalId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching component child, or <code>null</code> if a matching component child could not be found
+	 */
+	@Override
+	public ComponentChild fetchByChildComponentOrignalId_First(
+		String childComponentOriginalId,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		List<ComponentChild> list = findByChildComponentOrignalId(
+			childComponentOriginalId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last component child in the ordered set where childComponentOriginalId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching component child
+	 * @throws NoSuchComponentChildException if a matching component child could not be found
+	 */
+	@Override
+	public ComponentChild findByChildComponentOrignalId_Last(
+			String childComponentOriginalId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws NoSuchComponentChildException {
+
+		ComponentChild componentChild = fetchByChildComponentOrignalId_Last(
+			childComponentOriginalId, orderByComparator);
+
+		if (componentChild != null) {
+			return componentChild;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("childComponentOriginalId=");
+		sb.append(childComponentOriginalId);
+
+		sb.append("}");
+
+		throw new NoSuchComponentChildException(sb.toString());
+	}
+
+	/**
+	 * Returns the last component child in the ordered set where childComponentOriginalId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching component child, or <code>null</code> if a matching component child could not be found
+	 */
+	@Override
+	public ComponentChild fetchByChildComponentOrignalId_Last(
+		String childComponentOriginalId,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		int count = countByChildComponentOrignalId(childComponentOriginalId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ComponentChild> list = findByChildComponentOrignalId(
+			childComponentOriginalId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the component childs before and after the current component child in the ordered set where childComponentOriginalId = &#63;.
+	 *
+	 * @param id the primary key of the current component child
+	 * @param childComponentOriginalId the child component original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next component child
+	 * @throws NoSuchComponentChildException if a component child with the primary key could not be found
+	 */
+	@Override
+	public ComponentChild[] findByChildComponentOrignalId_PrevAndNext(
+			long id, String childComponentOriginalId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws NoSuchComponentChildException {
+
+		childComponentOriginalId = Objects.toString(
+			childComponentOriginalId, "");
+
+		ComponentChild componentChild = findByPrimaryKey(id);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ComponentChild[] array = new ComponentChildImpl[3];
+
+			array[0] = getByChildComponentOrignalId_PrevAndNext(
+				session, componentChild, childComponentOriginalId,
+				orderByComparator, true);
+
+			array[1] = componentChild;
+
+			array[2] = getByChildComponentOrignalId_PrevAndNext(
+				session, componentChild, childComponentOriginalId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ComponentChild getByChildComponentOrignalId_PrevAndNext(
+		Session session, ComponentChild componentChild,
+		String childComponentOriginalId,
+		OrderByComparator<ComponentChild> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_COMPONENTCHILD_WHERE);
+
+		boolean bindChildComponentOriginalId = false;
+
+		if (childComponentOriginalId.isEmpty()) {
+			sb.append(
+				_FINDER_COLUMN_CHILDCOMPONENTORIGNALID_CHILDCOMPONENTORIGINALID_3);
+		}
+		else {
+			bindChildComponentOriginalId = true;
+
+			sb.append(
+				_FINDER_COLUMN_CHILDCOMPONENTORIGNALID_CHILDCOMPONENTORIGINALID_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(ComponentChildModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindChildComponentOriginalId) {
+			queryPos.add(childComponentOriginalId);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						componentChild)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ComponentChild> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the component childs where childComponentOriginalId = &#63; from the database.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 */
+	@Override
+	public void removeByChildComponentOrignalId(
+		String childComponentOriginalId) {
+
+		for (ComponentChild componentChild :
+				findByChildComponentOrignalId(
+					childComponentOriginalId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(componentChild);
+		}
+	}
+
+	/**
+	 * Returns the number of component childs where childComponentOriginalId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @return the number of matching component childs
+	 */
+	@Override
+	public int countByChildComponentOrignalId(String childComponentOriginalId) {
+		childComponentOriginalId = Objects.toString(
+			childComponentOriginalId, "");
+
+		FinderPath finderPath = _finderPathCountByChildComponentOrignalId;
+
+		Object[] finderArgs = new Object[] {childComponentOriginalId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_COMPONENTCHILD_WHERE);
+
+			boolean bindChildComponentOriginalId = false;
+
+			if (childComponentOriginalId.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_CHILDCOMPONENTORIGNALID_CHILDCOMPONENTORIGINALID_3);
+			}
+			else {
+				bindChildComponentOriginalId = true;
+
+				sb.append(
+					_FINDER_COLUMN_CHILDCOMPONENTORIGNALID_CHILDCOMPONENTORIGINALID_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindChildComponentOriginalId) {
+					queryPos.add(childComponentOriginalId);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_CHILDCOMPONENTORIGNALID_CHILDCOMPONENTORIGINALID_2 =
+			"componentChild.childComponentOriginalId = ?";
+
+	private static final String
+		_FINDER_COLUMN_CHILDCOMPONENTORIGNALID_CHILDCOMPONENTORIGINALID_3 =
+			"(componentChild.childComponentOriginalId IS NULL OR componentChild.childComponentOriginalId = '')";
+
+	private FinderPath _finderPathWithPaginationFindByCCOID_S;
+	private FinderPath _finderPathWithoutPaginationFindByCCOID_S;
+	private FinderPath _finderPathCountByCCOID_S;
+
+	/**
+	 * Returns all the component childs where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @return the matching component childs
+	 */
+	@Override
+	public List<ComponentChild> findByCCOID_S(
+		String childComponentOriginalId, long subscriptionId) {
+
+		return findByCCOID_S(
+			childComponentOriginalId, subscriptionId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the component childs where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @return the range of matching component childs
+	 */
+	@Override
+	public List<ComponentChild> findByCCOID_S(
+		String childComponentOriginalId, long subscriptionId, int start,
+		int end) {
+
+		return findByCCOID_S(
+			childComponentOriginalId, subscriptionId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the component childs where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching component childs
+	 */
+	@Override
+	public List<ComponentChild> findByCCOID_S(
+		String childComponentOriginalId, long subscriptionId, int start,
+		int end, OrderByComparator<ComponentChild> orderByComparator) {
+
+		return findByCCOID_S(
+			childComponentOriginalId, subscriptionId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the component childs where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching component childs
+	 */
+	@Override
+	public List<ComponentChild> findByCCOID_S(
+		String childComponentOriginalId, long subscriptionId, int start,
+		int end, OrderByComparator<ComponentChild> orderByComparator,
+		boolean useFinderCache) {
+
+		childComponentOriginalId = Objects.toString(
+			childComponentOriginalId, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCCOID_S;
+				finderArgs = new Object[] {
+					childComponentOriginalId, subscriptionId
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByCCOID_S;
+			finderArgs = new Object[] {
+				childComponentOriginalId, subscriptionId, start, end,
+				orderByComparator
+			};
+		}
+
+		List<ComponentChild> list = null;
+
+		if (useFinderCache) {
+			list = (List<ComponentChild>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ComponentChild componentChild : list) {
+					if (!childComponentOriginalId.equals(
+							componentChild.getChildComponentOriginalId()) ||
+						(subscriptionId !=
+							componentChild.getSubscriptionId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_COMPONENTCHILD_WHERE);
+
+			boolean bindChildComponentOriginalId = false;
+
+			if (childComponentOriginalId.isEmpty()) {
+				sb.append(_FINDER_COLUMN_CCOID_S_CHILDCOMPONENTORIGINALID_3);
+			}
+			else {
+				bindChildComponentOriginalId = true;
+
+				sb.append(_FINDER_COLUMN_CCOID_S_CHILDCOMPONENTORIGINALID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_CCOID_S_SUBSCRIPTIONID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(ComponentChildModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindChildComponentOriginalId) {
+					queryPos.add(childComponentOriginalId);
+				}
+
+				queryPos.add(subscriptionId);
+
+				list = (List<ComponentChild>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first component child in the ordered set where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching component child
+	 * @throws NoSuchComponentChildException if a matching component child could not be found
+	 */
+	@Override
+	public ComponentChild findByCCOID_S_First(
+			String childComponentOriginalId, long subscriptionId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws NoSuchComponentChildException {
+
+		ComponentChild componentChild = fetchByCCOID_S_First(
+			childComponentOriginalId, subscriptionId, orderByComparator);
+
+		if (componentChild != null) {
+			return componentChild;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("childComponentOriginalId=");
+		sb.append(childComponentOriginalId);
+
+		sb.append(", subscriptionId=");
+		sb.append(subscriptionId);
+
+		sb.append("}");
+
+		throw new NoSuchComponentChildException(sb.toString());
+	}
+
+	/**
+	 * Returns the first component child in the ordered set where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching component child, or <code>null</code> if a matching component child could not be found
+	 */
+	@Override
+	public ComponentChild fetchByCCOID_S_First(
+		String childComponentOriginalId, long subscriptionId,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		List<ComponentChild> list = findByCCOID_S(
+			childComponentOriginalId, subscriptionId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last component child in the ordered set where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching component child
+	 * @throws NoSuchComponentChildException if a matching component child could not be found
+	 */
+	@Override
+	public ComponentChild findByCCOID_S_Last(
+			String childComponentOriginalId, long subscriptionId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws NoSuchComponentChildException {
+
+		ComponentChild componentChild = fetchByCCOID_S_Last(
+			childComponentOriginalId, subscriptionId, orderByComparator);
+
+		if (componentChild != null) {
+			return componentChild;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("childComponentOriginalId=");
+		sb.append(childComponentOriginalId);
+
+		sb.append(", subscriptionId=");
+		sb.append(subscriptionId);
+
+		sb.append("}");
+
+		throw new NoSuchComponentChildException(sb.toString());
+	}
+
+	/**
+	 * Returns the last component child in the ordered set where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching component child, or <code>null</code> if a matching component child could not be found
+	 */
+	@Override
+	public ComponentChild fetchByCCOID_S_Last(
+		String childComponentOriginalId, long subscriptionId,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		int count = countByCCOID_S(childComponentOriginalId, subscriptionId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ComponentChild> list = findByCCOID_S(
+			childComponentOriginalId, subscriptionId, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the component childs before and after the current component child in the ordered set where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param id the primary key of the current component child
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next component child
+	 * @throws NoSuchComponentChildException if a component child with the primary key could not be found
+	 */
+	@Override
+	public ComponentChild[] findByCCOID_S_PrevAndNext(
+			long id, String childComponentOriginalId, long subscriptionId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws NoSuchComponentChildException {
+
+		childComponentOriginalId = Objects.toString(
+			childComponentOriginalId, "");
+
+		ComponentChild componentChild = findByPrimaryKey(id);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ComponentChild[] array = new ComponentChildImpl[3];
+
+			array[0] = getByCCOID_S_PrevAndNext(
+				session, componentChild, childComponentOriginalId,
+				subscriptionId, orderByComparator, true);
+
+			array[1] = componentChild;
+
+			array[2] = getByCCOID_S_PrevAndNext(
+				session, componentChild, childComponentOriginalId,
+				subscriptionId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ComponentChild getByCCOID_S_PrevAndNext(
+		Session session, ComponentChild componentChild,
+		String childComponentOriginalId, long subscriptionId,
+		OrderByComparator<ComponentChild> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_COMPONENTCHILD_WHERE);
+
+		boolean bindChildComponentOriginalId = false;
+
+		if (childComponentOriginalId.isEmpty()) {
+			sb.append(_FINDER_COLUMN_CCOID_S_CHILDCOMPONENTORIGINALID_3);
+		}
+		else {
+			bindChildComponentOriginalId = true;
+
+			sb.append(_FINDER_COLUMN_CCOID_S_CHILDCOMPONENTORIGINALID_2);
+		}
+
+		sb.append(_FINDER_COLUMN_CCOID_S_SUBSCRIPTIONID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(ComponentChildModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindChildComponentOriginalId) {
+			queryPos.add(childComponentOriginalId);
+		}
+
+		queryPos.add(subscriptionId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						componentChild)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ComponentChild> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the component childs where childComponentOriginalId = &#63; and subscriptionId = &#63; from the database.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 */
+	@Override
+	public void removeByCCOID_S(
+		String childComponentOriginalId, long subscriptionId) {
+
+		for (ComponentChild componentChild :
+				findByCCOID_S(
+					childComponentOriginalId, subscriptionId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(componentChild);
+		}
+	}
+
+	/**
+	 * Returns the number of component childs where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @return the number of matching component childs
+	 */
+	@Override
+	public int countByCCOID_S(
+		String childComponentOriginalId, long subscriptionId) {
+
+		childComponentOriginalId = Objects.toString(
+			childComponentOriginalId, "");
+
+		FinderPath finderPath = _finderPathCountByCCOID_S;
+
+		Object[] finderArgs = new Object[] {
+			childComponentOriginalId, subscriptionId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMPONENTCHILD_WHERE);
+
+			boolean bindChildComponentOriginalId = false;
+
+			if (childComponentOriginalId.isEmpty()) {
+				sb.append(_FINDER_COLUMN_CCOID_S_CHILDCOMPONENTORIGINALID_3);
+			}
+			else {
+				bindChildComponentOriginalId = true;
+
+				sb.append(_FINDER_COLUMN_CCOID_S_CHILDCOMPONENTORIGINALID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_CCOID_S_SUBSCRIPTIONID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindChildComponentOriginalId) {
+					queryPos.add(childComponentOriginalId);
+				}
+
+				queryPos.add(subscriptionId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_CCOID_S_CHILDCOMPONENTORIGINALID_2 =
+			"componentChild.childComponentOriginalId = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_CCOID_S_CHILDCOMPONENTORIGINALID_3 =
+			"(componentChild.childComponentOriginalId IS NULL OR componentChild.childComponentOriginalId = '') AND ";
+
+	private static final String _FINDER_COLUMN_CCOID_S_SUBSCRIPTIONID_2 =
+		"componentChild.subscriptionId = ?";
+
 	private FinderPath _finderPathWithPaginationFindBySubscriptionId;
 	private FinderPath _finderPathWithoutPaginationFindBySubscriptionId;
 	private FinderPath _finderPathCountBySubscriptionId;
@@ -3687,6 +5452,67 @@ public class ComponentChildPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByComponentOrignalId", new String[] {String.class.getName()},
 			new String[] {"componentOrignalId"}, false);
+
+		_finderPathWithPaginationFindByCOID_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCOID_S",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"componentOrignalId", "subscriptionId"}, true);
+
+		_finderPathWithoutPaginationFindByCOID_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCOID_S",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"componentOrignalId", "subscriptionId"}, true);
+
+		_finderPathCountByCOID_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCOID_S",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"componentOrignalId", "subscriptionId"}, false);
+
+		_finderPathWithPaginationFindByChildComponentOrignalId =
+			_createFinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByChildComponentOrignalId",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"childComponentOriginalId"}, true);
+
+		_finderPathWithoutPaginationFindByChildComponentOrignalId =
+			_createFinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByChildComponentOrignalId",
+				new String[] {String.class.getName()},
+				new String[] {"childComponentOriginalId"}, true);
+
+		_finderPathCountByChildComponentOrignalId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByChildComponentOrignalId",
+			new String[] {String.class.getName()},
+			new String[] {"childComponentOriginalId"}, false);
+
+		_finderPathWithPaginationFindByCCOID_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCCOID_S",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"childComponentOriginalId", "subscriptionId"}, true);
+
+		_finderPathWithoutPaginationFindByCCOID_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCCOID_S",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"childComponentOriginalId", "subscriptionId"}, true);
+
+		_finderPathCountByCCOID_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCCOID_S",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"childComponentOriginalId", "subscriptionId"}, false);
 
 		_finderPathWithPaginationFindBySubscriptionId = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySubscriptionId",

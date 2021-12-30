@@ -880,6 +880,581 @@ public class ComponentChildUtil {
 	}
 
 	/**
+	 * Returns all the component childs where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @return the matching component childs
+	 */
+	public static List<ComponentChild> findByCOID_S(
+		String componentOrignalId, long subscriptionId) {
+
+		return getPersistence().findByCOID_S(
+			componentOrignalId, subscriptionId);
+	}
+
+	/**
+	 * Returns a range of all the component childs where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @return the range of matching component childs
+	 */
+	public static List<ComponentChild> findByCOID_S(
+		String componentOrignalId, long subscriptionId, int start, int end) {
+
+		return getPersistence().findByCOID_S(
+			componentOrignalId, subscriptionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the component childs where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching component childs
+	 */
+	public static List<ComponentChild> findByCOID_S(
+		String componentOrignalId, long subscriptionId, int start, int end,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		return getPersistence().findByCOID_S(
+			componentOrignalId, subscriptionId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the component childs where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching component childs
+	 */
+	public static List<ComponentChild> findByCOID_S(
+		String componentOrignalId, long subscriptionId, int start, int end,
+		OrderByComparator<ComponentChild> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByCOID_S(
+			componentOrignalId, subscriptionId, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first component child in the ordered set where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching component child
+	 * @throws NoSuchComponentChildException if a matching component child could not be found
+	 */
+	public static ComponentChild findByCOID_S_First(
+			String componentOrignalId, long subscriptionId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchComponentChildException {
+
+		return getPersistence().findByCOID_S_First(
+			componentOrignalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first component child in the ordered set where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching component child, or <code>null</code> if a matching component child could not be found
+	 */
+	public static ComponentChild fetchByCOID_S_First(
+		String componentOrignalId, long subscriptionId,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		return getPersistence().fetchByCOID_S_First(
+			componentOrignalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last component child in the ordered set where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching component child
+	 * @throws NoSuchComponentChildException if a matching component child could not be found
+	 */
+	public static ComponentChild findByCOID_S_Last(
+			String componentOrignalId, long subscriptionId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchComponentChildException {
+
+		return getPersistence().findByCOID_S_Last(
+			componentOrignalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last component child in the ordered set where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching component child, or <code>null</code> if a matching component child could not be found
+	 */
+	public static ComponentChild fetchByCOID_S_Last(
+		String componentOrignalId, long subscriptionId,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		return getPersistence().fetchByCOID_S_Last(
+			componentOrignalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the component childs before and after the current component child in the ordered set where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param id the primary key of the current component child
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next component child
+	 * @throws NoSuchComponentChildException if a component child with the primary key could not be found
+	 */
+	public static ComponentChild[] findByCOID_S_PrevAndNext(
+			long id, String componentOrignalId, long subscriptionId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchComponentChildException {
+
+		return getPersistence().findByCOID_S_PrevAndNext(
+			id, componentOrignalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the component childs where componentOrignalId = &#63; and subscriptionId = &#63; from the database.
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 */
+	public static void removeByCOID_S(
+		String componentOrignalId, long subscriptionId) {
+
+		getPersistence().removeByCOID_S(componentOrignalId, subscriptionId);
+	}
+
+	/**
+	 * Returns the number of component childs where componentOrignalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param componentOrignalId the component orignal ID
+	 * @param subscriptionId the subscription ID
+	 * @return the number of matching component childs
+	 */
+	public static int countByCOID_S(
+		String componentOrignalId, long subscriptionId) {
+
+		return getPersistence().countByCOID_S(
+			componentOrignalId, subscriptionId);
+	}
+
+	/**
+	 * Returns all the component childs where childComponentOriginalId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @return the matching component childs
+	 */
+	public static List<ComponentChild> findByChildComponentOrignalId(
+		String childComponentOriginalId) {
+
+		return getPersistence().findByChildComponentOrignalId(
+			childComponentOriginalId);
+	}
+
+	/**
+	 * Returns a range of all the component childs where childComponentOriginalId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @return the range of matching component childs
+	 */
+	public static List<ComponentChild> findByChildComponentOrignalId(
+		String childComponentOriginalId, int start, int end) {
+
+		return getPersistence().findByChildComponentOrignalId(
+			childComponentOriginalId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the component childs where childComponentOriginalId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching component childs
+	 */
+	public static List<ComponentChild> findByChildComponentOrignalId(
+		String childComponentOriginalId, int start, int end,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		return getPersistence().findByChildComponentOrignalId(
+			childComponentOriginalId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the component childs where childComponentOriginalId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching component childs
+	 */
+	public static List<ComponentChild> findByChildComponentOrignalId(
+		String childComponentOriginalId, int start, int end,
+		OrderByComparator<ComponentChild> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByChildComponentOrignalId(
+			childComponentOriginalId, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first component child in the ordered set where childComponentOriginalId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching component child
+	 * @throws NoSuchComponentChildException if a matching component child could not be found
+	 */
+	public static ComponentChild findByChildComponentOrignalId_First(
+			String childComponentOriginalId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchComponentChildException {
+
+		return getPersistence().findByChildComponentOrignalId_First(
+			childComponentOriginalId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first component child in the ordered set where childComponentOriginalId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching component child, or <code>null</code> if a matching component child could not be found
+	 */
+	public static ComponentChild fetchByChildComponentOrignalId_First(
+		String childComponentOriginalId,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		return getPersistence().fetchByChildComponentOrignalId_First(
+			childComponentOriginalId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last component child in the ordered set where childComponentOriginalId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching component child
+	 * @throws NoSuchComponentChildException if a matching component child could not be found
+	 */
+	public static ComponentChild findByChildComponentOrignalId_Last(
+			String childComponentOriginalId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchComponentChildException {
+
+		return getPersistence().findByChildComponentOrignalId_Last(
+			childComponentOriginalId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last component child in the ordered set where childComponentOriginalId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching component child, or <code>null</code> if a matching component child could not be found
+	 */
+	public static ComponentChild fetchByChildComponentOrignalId_Last(
+		String childComponentOriginalId,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		return getPersistence().fetchByChildComponentOrignalId_Last(
+			childComponentOriginalId, orderByComparator);
+	}
+
+	/**
+	 * Returns the component childs before and after the current component child in the ordered set where childComponentOriginalId = &#63;.
+	 *
+	 * @param id the primary key of the current component child
+	 * @param childComponentOriginalId the child component original ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next component child
+	 * @throws NoSuchComponentChildException if a component child with the primary key could not be found
+	 */
+	public static ComponentChild[] findByChildComponentOrignalId_PrevAndNext(
+			long id, String childComponentOriginalId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchComponentChildException {
+
+		return getPersistence().findByChildComponentOrignalId_PrevAndNext(
+			id, childComponentOriginalId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the component childs where childComponentOriginalId = &#63; from the database.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 */
+	public static void removeByChildComponentOrignalId(
+		String childComponentOriginalId) {
+
+		getPersistence().removeByChildComponentOrignalId(
+			childComponentOriginalId);
+	}
+
+	/**
+	 * Returns the number of component childs where childComponentOriginalId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @return the number of matching component childs
+	 */
+	public static int countByChildComponentOrignalId(
+		String childComponentOriginalId) {
+
+		return getPersistence().countByChildComponentOrignalId(
+			childComponentOriginalId);
+	}
+
+	/**
+	 * Returns all the component childs where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @return the matching component childs
+	 */
+	public static List<ComponentChild> findByCCOID_S(
+		String childComponentOriginalId, long subscriptionId) {
+
+		return getPersistence().findByCCOID_S(
+			childComponentOriginalId, subscriptionId);
+	}
+
+	/**
+	 * Returns a range of all the component childs where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @return the range of matching component childs
+	 */
+	public static List<ComponentChild> findByCCOID_S(
+		String childComponentOriginalId, long subscriptionId, int start,
+		int end) {
+
+		return getPersistence().findByCCOID_S(
+			childComponentOriginalId, subscriptionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the component childs where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching component childs
+	 */
+	public static List<ComponentChild> findByCCOID_S(
+		String childComponentOriginalId, long subscriptionId, int start,
+		int end, OrderByComparator<ComponentChild> orderByComparator) {
+
+		return getPersistence().findByCCOID_S(
+			childComponentOriginalId, subscriptionId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the component childs where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ComponentChildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param start the lower bound of the range of component childs
+	 * @param end the upper bound of the range of component childs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching component childs
+	 */
+	public static List<ComponentChild> findByCCOID_S(
+		String childComponentOriginalId, long subscriptionId, int start,
+		int end, OrderByComparator<ComponentChild> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByCCOID_S(
+			childComponentOriginalId, subscriptionId, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first component child in the ordered set where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching component child
+	 * @throws NoSuchComponentChildException if a matching component child could not be found
+	 */
+	public static ComponentChild findByCCOID_S_First(
+			String childComponentOriginalId, long subscriptionId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchComponentChildException {
+
+		return getPersistence().findByCCOID_S_First(
+			childComponentOriginalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first component child in the ordered set where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching component child, or <code>null</code> if a matching component child could not be found
+	 */
+	public static ComponentChild fetchByCCOID_S_First(
+		String childComponentOriginalId, long subscriptionId,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		return getPersistence().fetchByCCOID_S_First(
+			childComponentOriginalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last component child in the ordered set where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching component child
+	 * @throws NoSuchComponentChildException if a matching component child could not be found
+	 */
+	public static ComponentChild findByCCOID_S_Last(
+			String childComponentOriginalId, long subscriptionId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchComponentChildException {
+
+		return getPersistence().findByCCOID_S_Last(
+			childComponentOriginalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last component child in the ordered set where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching component child, or <code>null</code> if a matching component child could not be found
+	 */
+	public static ComponentChild fetchByCCOID_S_Last(
+		String childComponentOriginalId, long subscriptionId,
+		OrderByComparator<ComponentChild> orderByComparator) {
+
+		return getPersistence().fetchByCCOID_S_Last(
+			childComponentOriginalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Returns the component childs before and after the current component child in the ordered set where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param id the primary key of the current component child
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next component child
+	 * @throws NoSuchComponentChildException if a component child with the primary key could not be found
+	 */
+	public static ComponentChild[] findByCCOID_S_PrevAndNext(
+			long id, String childComponentOriginalId, long subscriptionId,
+			OrderByComparator<ComponentChild> orderByComparator)
+		throws com.iot_catalogue.exception.NoSuchComponentChildException {
+
+		return getPersistence().findByCCOID_S_PrevAndNext(
+			id, childComponentOriginalId, subscriptionId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the component childs where childComponentOriginalId = &#63; and subscriptionId = &#63; from the database.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 */
+	public static void removeByCCOID_S(
+		String childComponentOriginalId, long subscriptionId) {
+
+		getPersistence().removeByCCOID_S(
+			childComponentOriginalId, subscriptionId);
+	}
+
+	/**
+	 * Returns the number of component childs where childComponentOriginalId = &#63; and subscriptionId = &#63;.
+	 *
+	 * @param childComponentOriginalId the child component original ID
+	 * @param subscriptionId the subscription ID
+	 * @return the number of matching component childs
+	 */
+	public static int countByCCOID_S(
+		String childComponentOriginalId, long subscriptionId) {
+
+		return getPersistence().countByCCOID_S(
+			childComponentOriginalId, subscriptionId);
+	}
+
+	/**
 	 * Returns all the component childs where subscriptionId = &#63;.
 	 *
 	 * @param subscriptionId the subscription ID

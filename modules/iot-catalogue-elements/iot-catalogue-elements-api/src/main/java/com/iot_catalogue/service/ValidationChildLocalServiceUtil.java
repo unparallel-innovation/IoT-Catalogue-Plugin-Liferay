@@ -318,6 +318,25 @@ public class ValidationChildLocalServiceUtil {
 		return getService().getValidationChilds(validationOriginalId);
 	}
 
+	public static List<ValidationChild> getValidationChilds(
+		String componentOriginalId, long subcriptionId) {
+
+		return getService().getValidationChilds(
+			componentOriginalId, subcriptionId);
+	}
+
+	public static List<ValidationChild> getValidationChildsByChild(
+		String childId) {
+
+		return getService().getValidationChildsByChild(childId);
+	}
+
+	public static List<ValidationChild> getValidationChildsByChild(
+		String childId, long subscriptionId) {
+
+		return getService().getValidationChildsByChild(childId, subscriptionId);
+	}
+
 	public static List<ValidationChild> getValidationChildsBySubscriptionId(
 		long subscriptionId) {
 

@@ -353,6 +353,29 @@ public class ValidationChildLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.iot_catalogue.model.ValidationChild>
+		getValidationChilds(String componentOriginalId, long subcriptionId) {
+
+		return _validationChildLocalService.getValidationChilds(
+			componentOriginalId, subcriptionId);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ValidationChild>
+		getValidationChildsByChild(String childId) {
+
+		return _validationChildLocalService.getValidationChildsByChild(childId);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ValidationChild>
+		getValidationChildsByChild(String childId, long subscriptionId) {
+
+		return _validationChildLocalService.getValidationChildsByChild(
+			childId, subscriptionId);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ValidationChild>
 		getValidationChildsBySubscriptionId(long subscriptionId) {
 
 		return _validationChildLocalService.getValidationChildsBySubscriptionId(

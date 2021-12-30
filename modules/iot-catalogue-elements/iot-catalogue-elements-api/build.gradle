@@ -1,6 +1,6 @@
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "release.portal.api"
-
+	compile group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 }
 
 
