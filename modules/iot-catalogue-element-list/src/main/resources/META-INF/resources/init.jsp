@@ -65,6 +65,7 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
 <%@ page import="com.liferay.asset.kernel.model.AssetEntry" %>
 <%@ page import="com.liferay.asset.kernel.model.AssetTag" %>
 <%@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %>
+<%@ page import="com.liferay.asset.kernel.model.AssetEntry" %>
 
 <liferay-theme:defineObjects />
 

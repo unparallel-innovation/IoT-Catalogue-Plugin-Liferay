@@ -16,8 +16,8 @@ import com.iot_catalogue.model.IoTValidation;
 import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
 import com.iot_catalogue.service.IoTValidationLocalService;
 import com.iot_catalogue.service.permission.IoTValidationPermission;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -55,6 +55,13 @@ public class IoTValidationFullContentPortlet extends MVCPortlet {
 				try {
 					if(IoTValidationPermission.contains(permissionChecker, iotValidationId, ActionKeys.VIEW)) {
 						renderRequest.setAttribute("iot_validation", iotValidation);
+						try {
+							AssetEntry assetEntry = _assetEntryLocalService.getEntry(IoTValidation.class.getName(),iotValidation.getPrimaryKey());
+							
+							renderRequest.setAttribute("asset_entry", assetEntry);
+						}catch(Exception e) {
+							e.printStackTrace();
+						}
 					}else {
 						renderRequest.setAttribute("not_authorized", true);
 					}
@@ -83,4 +90,13 @@ public class IoTValidationFullContentPortlet extends MVCPortlet {
 	}
 
 	private IoTValidationLocalService _iotValidationLocalService;
+	
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+
+	private AssetEntryLocalService _assetEntryLocalService = null;
 }

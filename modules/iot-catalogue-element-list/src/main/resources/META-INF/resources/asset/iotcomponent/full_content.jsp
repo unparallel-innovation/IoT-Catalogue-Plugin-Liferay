@@ -1,6 +1,7 @@
 <%@include file="../../init.jsp"%>
 <%
 IoTComponent iotComponent = (IoTComponent) request.getAttribute("iot_component");
+AssetEntry assetEntry = (AssetEntry) request.getAttribute("asset_entry");
 Object notFound =  request.getAttribute("not_found");
 Object notAuthorized =  request.getAttribute("not_authorized");
 if (iotComponent != null) {
@@ -44,6 +45,8 @@ if (notFound!=null) {
 <%
 } else if (iotComponent != null) {
 %>
+
+
 <div class="d-flex justify-content-center mb-4">
 
 	<img style="max-width: 500px; max-height: 300px"
@@ -53,6 +56,14 @@ if (notFound!=null) {
 	<b><%=iotComponent.getName()%></b>
 </h2>
 <p class="text-justify d-flex justify-content-center"><%=iotComponent.getDescription()%></p>
+<div class="asset-tags mb-3 d-flex justify-content-center">
+	<liferay-asset:asset-tags-summary
+		className="<%= assetEntry.getClassName() %>"
+		classPK="<%= assetEntry.getClassPK() %>"
+		portletURL="<%= renderResponse.createRenderURL() %>"
+	/>
+</div>
+
 <iframe id="iotCatalogueIframe" frameborder="0"
 	style="height: 0px;width: 100%; max-width: 100% !important"
 	src="<%=iotComponent.getEmbeddedUrl()%>"> </iframe>

@@ -1,9 +1,9 @@
 <%@include file="../../init.jsp"%>
 <%
 IoTValidation iotValidation = (IoTValidation) request.getAttribute("iot_validation");
+AssetEntry assetEntry = (AssetEntry) request.getAttribute("asset_entry");
 Object notFound = request.getAttribute("not_found");
 Object notAuthorized =  request.getAttribute("not_authorized");
-AssetEntry assetEntry = null;
 if (iotValidation != null) {
 	iotValidation = iotValidation.toEscapedModel();
 	assetEntry = AssetEntryLocalServiceUtil.getEntry(IoTValidation.class.getName(), iotValidation.getIotValidationId());
@@ -59,7 +59,13 @@ if (notFound != null) {
 
 
 <p class="text-justify d-flex justify-content-center"><%=iotValidation.getDescription()%></p>
-
+<div class="asset-tags mb-3 d-flex justify-content-center">
+	<liferay-asset:asset-tags-summary
+		className="<%= assetEntry.getClassName() %>"
+		classPK="<%= assetEntry.getClassPK() %>"
+		portletURL="<%= renderResponse.createRenderURL() %>"
+	/>
+</div>
 
 <iframe id="iotCatalogueIframe" frameborder="0"
 	style="height: 0px; width: 100%; max-width: 100% !important"
