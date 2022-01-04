@@ -63,7 +63,7 @@ if (notFound != null) {
 	<liferay-asset:asset-tags-summary
 		className="<%= assetEntry.getClassName() %>"
 		classPK="<%= assetEntry.getClassPK() %>"
-		portletURL="<%= renderResponse.createRenderURL() %>"
+		portletURL="<%= null %>"
 	/>
 </div>
 

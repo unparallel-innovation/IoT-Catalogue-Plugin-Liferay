@@ -12,8 +12,6 @@ if (iotComponent != null) {
 
 
 
-
-
 <script>
 	function receiveMessage(event) {
 		const data = event.data
@@ -60,7 +58,8 @@ if (notFound!=null) {
 	<liferay-asset:asset-tags-summary
 		className="<%= assetEntry.getClassName() %>"
 		classPK="<%= assetEntry.getClassPK() %>"
-		portletURL="<%= renderResponse.createRenderURL() %>"
+		portletURL="<%= null %>"
+
 	/>
 </div>
 

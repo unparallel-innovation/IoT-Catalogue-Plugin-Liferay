@@ -15,6 +15,11 @@
 package com.iot_catalogue.service.impl;
 
 
+import java.util.Date;
+import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+
 import com.iot_catalogue.exception.NoSuchSubscriptionException;
 import com.iot_catalogue.exception.SubscriptionConnectionIdException;
 import com.iot_catalogue.exception.SubscriptionConnectionStateException;
@@ -24,17 +29,11 @@ import com.iot_catalogue.exception.SubscriptionTokenException;
 import com.iot_catalogue.exception.SubscriptionUseSSLException;
 import com.iot_catalogue.model.Subscription;
 import com.iot_catalogue.service.base.SubscriptionLocalServiceBaseImpl;
-
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.util.Date;
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * The implementation of the subscription local service.
@@ -59,7 +58,7 @@ public class SubscriptionLocalServiceImpl
 	
 	public Subscription addSubscription(long userId, long groupId, String token, String host, String componentPagePath, String validationPagePath, Integer port, boolean useSSL, ServiceContext serviceContext) throws PortalException {
 		
-
+		
 		
 		User user = userLocalService.getUserById(userId);
 

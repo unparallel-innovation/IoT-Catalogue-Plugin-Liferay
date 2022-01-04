@@ -5,7 +5,9 @@ dependencies {
 	compileOnly project(":modules:iot-catalogue-elements:iot-catalogue-elements-api")
 	compileOnly project(":modules:iot-catalogue-elements:iot-catalogue-elements-service")
 	compileOnly group: "com.liferay", name: "com.liferay.application.list.api", version: "2.0.0"
-	
+
+
+
 }
 
 jar {
