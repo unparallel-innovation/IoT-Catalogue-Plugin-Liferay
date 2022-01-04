@@ -1,5 +1,5 @@
 Bundle-Name: iot-catalogue-full-content-tags
 Bundle-SymbolicName: iot.catalogue.full.content.tags
-Bundle-Version: 1.2.0
+Bundle-Version: 1.2.1
 Fragment-Host: com.liferay.asset.publisher.web;bundle-version="4.0.61"
 Portal-Bundle-Version: 7.3.6
