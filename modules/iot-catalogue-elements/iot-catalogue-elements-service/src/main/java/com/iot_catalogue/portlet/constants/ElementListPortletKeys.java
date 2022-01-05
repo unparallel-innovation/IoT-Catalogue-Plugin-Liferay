@@ -13,6 +13,10 @@ public class ElementListPortletKeys {
 		
 	public static final String IOT_COMPONENT_LIST_HEADER = "com_iot_catalogue_portlet_IoTComponentListHeader";
 	public static final String IOT_VALIDATION_LIST_HEADER = "com_iot_catalogue_portlet_IoTValidationListHeader";
+	
+	public static final String IOT_USE_CASE_LIST_HEADER = "com_iot_catalogue_portlet_IoTUseCaseListHeader";
+
+	
 	public static final String IOT_COMPONENT =
 			"com_iot_catalogue_IoTComponent";
 	public static final String IOT_VALIDATION =
