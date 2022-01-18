@@ -32,7 +32,7 @@ public class TagUtils {
 				validTagName = validTagName + replacementChar;
 			}
 		}
-		return validTagName;
+		return validTagName.toLowerCase();
 	}
 	
 	public static List<String> getValidTagNames(List<String> tagNames){
