@@ -1,5 +1,6 @@
 package com.iot_catalogue.asset;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -11,13 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Reference;
 
+import com.iot_catalogue.model.ElementCoordinate;
 import com.iot_catalogue.model.IoTComponent;
 import com.iot_catalogue.model.Subscription;
 import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
+import com.iot_catalogue.service.ElementCoordinateLocalServiceUtil;
 import com.iot_catalogue.service.SubscriptionLocalService;
 import com.iot_catalogue.service.SubscriptionLocalServiceUtil;
 import com.iot_catalogue.service.permission.IoTComponentPermission;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
+import com.liferay.asset.kernel.model.DDMFormValuesReader;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -39,7 +43,19 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 
 		return false;
 	}
+	
+	@Override
+	public DDMFormValuesReader getDDMFormValuesReader() {
 
+		List<ElementCoordinate> elementCoordinates =
+				ElementCoordinateLocalServiceUtil.getElementCoordinates(
+						_iotComponent.getSubscriptionId(),
+						_iotComponent.getOriginalId(),
+						IoTComponent.class.getName()
+						);
+		return new GeoLocationDDMFormValueReader(elementCoordinates);
+
+	}
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker) {
 

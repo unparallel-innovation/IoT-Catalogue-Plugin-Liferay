@@ -17,6 +17,7 @@ package com.iot_catalogue.service.base;
 import com.iot_catalogue.model.IoTValidation;
 import com.iot_catalogue.service.IoTValidationLocalService;
 import com.iot_catalogue.service.IoTValidationLocalServiceUtil;
+import com.iot_catalogue.service.persistence.ElementCoordinatePersistence;
 import com.iot_catalogue.service.persistence.IoTComponentPersistence;
 import com.iot_catalogue.service.persistence.IoTValidationPersistence;
 import com.iot_catalogue.service.persistence.SubscriptionPersistence;
@@ -622,6 +623,9 @@ public abstract class IoTValidationLocalServiceBaseImpl
 			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
+
+	@Reference
+	protected ElementCoordinatePersistence elementCoordinatePersistence;
 
 	@Reference
 	protected IoTComponentPersistence ioTComponentPersistence;

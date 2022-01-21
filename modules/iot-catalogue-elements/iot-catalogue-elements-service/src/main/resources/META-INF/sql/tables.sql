@@ -72,6 +72,26 @@ create table IoTCatalogue_Element (
 	categoryId LONG
 );
 
+create table IoTCatalogue_ElementCoordinate (
+	uuid_ VARCHAR(75) null,
+	elementCoordinateId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null,
+	elementOriginalId VARCHAR(75) null,
+	elementClassName VARCHAR(75) null,
+	latitude DOUBLE,
+	longitude DOUBLE,
+	subscriptionId LONG
+);
+
 create table IoTCatalogue_IoTComponent (
 	uuid_ VARCHAR(75) null,
 	iotComponentId LONG not null primary key,

@@ -23,6 +23,13 @@ create index IX_3A633085 on IoTCatalogue_Element (iotCatalogueId[$COLUMN_LENGTH:
 create index IX_F0C92B12 on IoTCatalogue_Element (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_2E654E14 on IoTCatalogue_Element (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_9E69CFDD on IoTCatalogue_ElementCoordinate (elementOriginalId[$COLUMN_LENGTH:75$], elementClassName[$COLUMN_LENGTH:75$]);
+create index IX_427E1F34 on IoTCatalogue_ElementCoordinate (groupId);
+create index IX_74A11B1C on IoTCatalogue_ElementCoordinate (status);
+create index IX_3D6CF8D1 on IoTCatalogue_ElementCoordinate (subscriptionId, elementOriginalId[$COLUMN_LENGTH:75$], elementClassName[$COLUMN_LENGTH:75$]);
+create index IX_4C3812AA on IoTCatalogue_ElementCoordinate (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_E7193BAC on IoTCatalogue_ElementCoordinate (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 create index IX_54BB3957 on IoTCatalogue_IoTComponent (groupId, status);
 create index IX_CCC1E73D on IoTCatalogue_IoTComponent (originalId[$COLUMN_LENGTH:75$], groupId, subscriptionId);
 create index IX_3E43DAA5 on IoTCatalogue_IoTComponent (originalId[$COLUMN_LENGTH:75$], subscriptionId);

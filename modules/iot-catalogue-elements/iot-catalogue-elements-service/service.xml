@@ -155,7 +155,52 @@
 			<finder-column name="subscriptionId" />
 		</finder>
 	</entity>
+	<entity name="ElementCoordinate" local-service="true" uuid="true">
+		<column name="elementCoordinateId" primary="true" type="long" />
+		
+		<column name="groupId" type="long" />
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
 
+		<!-- Status fields -->
+
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+		
+		<column name="elementOriginalId" type="String"/>
+		<column name="elementClassName" type="String"/>
+		
+		<column name="latitude" type="double"/>
+		<column name="longitude" type="double"/>
+		<column name="subscriptionId" type="long" />
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status" />
+		</finder>
+		
+		<finder name="S_E" return-type="Collection">
+			<finder-column name="subscriptionId" />
+			<finder-column name="elementOriginalId" />
+			<finder-column name="elementClassName" />
+		</finder>
+		
+		<finder name="Element" return-type="Collection">
+			<finder-column name="elementOriginalId" />
+			<finder-column name="elementClassName" />
+		</finder>
+		
+		<finder name="SubscriptionId" return-type="Collection">
+			<finder-column name="subscriptionId" />
+		</finder>
+				
+	</entity>
 	<exceptions>
 		<exception>IoTComponentName</exception>
 		<exception>IoTComponentDescription</exception>

@@ -20,14 +20,17 @@ import org.osgi.service.component.annotations.Reference;
 
 import com.iot_catalogue.exception.NoSuchIoTComponentException;
 import com.iot_catalogue.exception.NoSuchIoTValidationException;
+import com.iot_catalogue.model.ElementCoordinate;
 import com.iot_catalogue.model.IoTComponent;
 import com.iot_catalogue.model.IoTValidation;
 import com.iot_catalogue.model.Subscription;
 import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
+import com.iot_catalogue.service.ElementCoordinateLocalService;
 import com.iot_catalogue.service.IoTComponentLocalService;
 import com.iot_catalogue.service.IoTValidationLocalService;
 import com.iot_catalogue.service.SubscriptionLocalService;
 import com.iot_catalogue.tpi_plugin.TPIData;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -52,6 +55,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 		"javax.portlet.supports.mime-type=text/html",
 		"com.liferay.portlet.add-default-resource=true" }, service = Portlet.class)
 public class ElementListAdminPortlet extends MVCPortlet {
+
 
 	@Override
 	public void destroy() {
@@ -108,8 +112,15 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 		super.init();
 		_log.info("Starting IoT Catalogue plugin");
+		
+		List<ElementCoordinate> elementCoordinates = _elementCoordinateLocalService.getElementCoordinates();
+		
+		for(ElementCoordinate elementCoordinate: elementCoordinates) {
+			_elementCoordinateLocalService.deleteElementCoordinate(elementCoordinate);
+		}
+		
 		List<Subscription> subscriptions = _subscriptionLocalService.getSubscriptions();
-
+		
 		for (Subscription subscription : subscriptions) {
 			syncDataWithIoTCatalogue(subscription);
 		}
@@ -334,7 +345,6 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	private void deleteIoTValidation(String id, Subscription subscription, ServiceContext serviceContext)
 			throws PortalException {
 		IoTValidation iotValidation = null;
-
 		try {
 			long groupId = subscription.getGroupId();
 			iotValidation = _iotValidationLocalService.getIoTValidationByOriginalId(id, groupId);
@@ -343,6 +353,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 		}
 		if (iotValidation != null) {
+			_elementCoordinateLocalService.deleteElementCoordinates( subscription.getSubscriptionId(), iotValidation.getOriginalId(),IoTValidation.class.getName());
 			_iotValidationLocalService.deleteIoTValidation(iotValidation, serviceContext);
 		}
 	}
@@ -360,6 +371,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		}
 
 		if (ioTComponent != null) {
+			_elementCoordinateLocalService.deleteElementCoordinates( subscription.getSubscriptionId(), ioTComponent.getOriginalId(),IoTComponent.class.getName());
 			_ioTComponentLocalService.deleteIoTComponent(ioTComponent, serviceContext);
 		}
 	}
@@ -388,7 +400,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		long userId = subscription.getUserId();
 
 		if (iotComponent == null) {
-			_ioTComponentLocalService.addIoTComponent(userId, name, description, embeddedUrl, imageUrl,tagNames, id,
+			
+			IoTComponent newIoTComponent = _ioTComponentLocalService.addIoTComponent(userId, name, description, embeddedUrl, imageUrl,tagNames, id,
 					subscription.getSubscriptionId(), serviceContext);
 
 		} else {
@@ -413,6 +426,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		}
 
 		Map<String, Object> hashMap = (Map<String, Object>) fields;
+		List<Map<String, Double>> coordinates = (List<Map<String, Double>>)hashMap.get("_coordinates");
+
 
 		String name = (String)hashMap.get("name");
 		String embeddedUrl = (String)hashMap.get("_embeddedUrl");
@@ -424,14 +439,34 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	
 		if (iotValidation == null) {
 
-			_iotValidationLocalService.addIoTValidation(userId, name, description, embeddedUrl, imageUrl, tagNames, id,
+			IoTValidation newIoTValidation = _iotValidationLocalService.addIoTValidation(userId, name, description, embeddedUrl, imageUrl, tagNames, id,
 					subscription.getSubscriptionId(), serviceContext);
+			_elementCoordinateLocalService.deleteElementCoordinates(subscription.getSubscriptionId(), newIoTValidation.getOriginalId(), IoTValidation.class.getName());
+
+			if(coordinates != null) {
+				for(Map<String, Double> coordinate: coordinates) {
+					double latitude = coordinate.get("lat").doubleValue();
+					double longitude = coordinate.get("long").doubleValue();
+					_elementCoordinateLocalService.addElementCoordinate(userId, newIoTValidation.getOriginalId(), IoTValidation.class.getName(),latitude,longitude, subscription.getSubscriptionId(), serviceContext);
+				}
+			}
+			
+			
 
 		} else {
 			long iotValidationId = iotValidation.getIotValidationId();
+			_elementCoordinateLocalService.deleteElementCoordinates(subscription.getSubscriptionId(), iotValidation.getOriginalId(), IoTValidation.class.getName());
+			if(coordinates != null) {
+				for(Map<String, Double> coordinate: coordinates) {
+					double latitude = coordinate.get("lat").doubleValue();
+					double longitude = coordinate.get("long").doubleValue();
+					_elementCoordinateLocalService.addElementCoordinate(userId, iotValidation.getOriginalId(), IoTValidation.class.getName(),latitude,longitude, subscription.getSubscriptionId(), serviceContext);
+				}
+			}
 			_iotValidationLocalService.updateIoTValidation(userId, iotValidationId, name, description,
 					embeddedUrl, imageUrl,tagNames, serviceContext);
 		}
+
 
 	}
 	
@@ -464,6 +499,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 					Boolean exists = idsHashMap.get(originalId);
 					if (exists == null || exists == false) {
+						_elementCoordinateLocalService.deleteElementCoordinates( subscription.getSubscriptionId(), iotComponent.getOriginalId(),IoTComponent.class.getName());
 						_ioTComponentLocalService.deleteIoTComponent(iotComponent, serviceContext);
 					}
 
@@ -497,6 +533,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 					Boolean exists = idsHashMap.get(originalId);
 					if (exists == null || exists == false) {
+						_elementCoordinateLocalService.deleteElementCoordinates( subscription.getSubscriptionId(), iotValidation.getOriginalId(),IoTValidation.class.getName());
 						_iotValidationLocalService.deleteIoTValidation(iotValidation, serviceContext);
 					}
 
@@ -526,12 +563,20 @@ public class ElementListAdminPortlet extends MVCPortlet {
 						.getIoTComponentsBySubscriptionId(subscription.getSubscriptionId());
 				List<IoTValidation> iotValidations = _iotValidationLocalService
 						.getIoTValidationsBySubscriptionId(subscription.getSubscriptionId());
+				
+				List<ElementCoordinate> elementCoordinates = _elementCoordinateLocalService
+						.getElementCoordinatesBySubscriptionId(subscription.getSubscriptionId());
+						
+				
 				for (IoTComponent iotComponent : iotComponents) {
 					_ioTComponentLocalService.deleteIoTComponent(iotComponent, serviceContext);
 				}
 
 				for (IoTValidation iotValidation : iotValidations) {
 					_iotValidationLocalService.deleteIoTValidation(iotValidation, serviceContext);
+				}
+				for(ElementCoordinate elementCoordinate: elementCoordinates) {
+					_elementCoordinateLocalService.deleteElementCoordinate(elementCoordinate);
 				}
 
 			} catch (Exception e) {
@@ -589,7 +634,39 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			}
 		}
 	}
+ 
+	public void test(ActionRequest request, ActionResponse response) throws PortalException {
+		System.out.println( _elementCoordinateLocalService.getElementCoordinatesCount());
+		System.out.println( _elementCoordinateLocalService.getElementCoordinates(0, 100));
+		/*
+		Object o = new DLFileEntryDDMFormValuesReader(null, null);
+		AssetRenderer ar = null;
+		
+	
+		
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+		
+		Value value = new LocalizedValue();
+		value.addString(null, "{\"latitude\":38.0119156,\"longitude\":-6.8663008}");
+		ddmFormFieldValue.setValue(value);*/
+		
+		/*System.out.println(_assetEntryLocalService.getAssetEntriesCount());
 
+		List<AssetEntry> assetEntries = _assetEntryLocalService.getAssetEntries(0, 200);
+		for(AssetEntry assetEntry: assetEntries) {
+			if(assetEntry.getClassName().equals(JournalArticle.class.getName())) {
+				System.out.println(assetEntry.getTitle());
+				AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
+				DDMFormValuesReader  ddmFormValuesReader = assetRenderer.getDDMFormValuesReader();
+				printCoordinatesFromDDMForm(ddmFormValuesReader);
+
+			}
+			
+		}*/
+	}
+	
+
+	
 	public void deleteAllSubscriptions(ActionRequest request, ActionResponse response) throws PortalException {
 		_log.info("Deleting all subscriptions");
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(request);
@@ -621,6 +698,24 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 	private SubscriptionLocalService _subscriptionLocalService;
 
+	
+	@Reference(unbind = "-")
+	protected void setElementCoordinateLocalService(ElementCoordinateLocalService elementCoordinateLocalService) {
+
+		_elementCoordinateLocalService = elementCoordinateLocalService;
+	}
+
+	private ElementCoordinateLocalService _elementCoordinateLocalService;
+	
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+	
+	
+	private AssetEntryLocalService _assetEntryLocalService= null;
+	
 	// private TPIData tpiData = null;
 
 	private HashMap<String, TPIData> connections = new HashMap<String, TPIData>();
