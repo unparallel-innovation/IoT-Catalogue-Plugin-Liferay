@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -20,17 +23,24 @@ import org.osgi.service.component.annotations.Reference;
 
 import com.iot_catalogue.exception.NoSuchIoTComponentException;
 import com.iot_catalogue.exception.NoSuchIoTValidationException;
+import com.iot_catalogue.model.ComponentChild;
 import com.iot_catalogue.model.ElementCoordinate;
 import com.iot_catalogue.model.IoTComponent;
 import com.iot_catalogue.model.IoTValidation;
 import com.iot_catalogue.model.Subscription;
+import com.iot_catalogue.model.ValidationChild;
 import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
+import com.iot_catalogue.portlet.utils.AssetRelationsPopulator;
+import com.iot_catalogue.service.ComponentChildLocalService;
 import com.iot_catalogue.service.ElementCoordinateLocalService;
 import com.iot_catalogue.service.IoTComponentLocalService;
 import com.iot_catalogue.service.IoTValidationLocalService;
 import com.iot_catalogue.service.SubscriptionLocalService;
+import com.iot_catalogue.service.ValidationChildLocalService;
 import com.iot_catalogue.tpi_plugin.TPIData;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -216,9 +226,96 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	private void syncDataWithIoTCatalogue(Subscription subscription) {
 		syncDataWithIoTCatalogue(subscription, 0);
 	}
+	private ResettableTimer getTimer(Subscription subscription) {
+		ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(1);
+        final ResettableTimer timer = new ResettableTimer(scheduler, 
+                timeout, TimeUnit.MILLISECONDS,
+                new Runnable() { 
+                    public void run() { 
+                    	_log.info( "Processing asset relations"); 
+                    	addComponentAssetRelations(subscription);
+                    	addValidationAssetRelations(subscription);
+                    
+                    }
+                }
+        );
+        return timer;
+	}
+	private void addComponentAssetRelations(Subscription subscription) {
+		
+		AssetRelationsPopulator assetRelationsPopulator = new AssetRelationsPopulator(_assetLinkLocalService) {
+			@Override
+			public AssetEntry getAssetEntry(Object element) {
+				ComponentChild componentChild = (ComponentChild)element;
+				try {
+					IoTComponent iotComponent =  _ioTComponentLocalService.getIoTComponentByOriginalId(componentChild.getComponentOrignalId(),subscription.getSubscriptionId());
+	
+					return _assetEntryLocalService.getEntry(IoTComponent.class.getName(), iotComponent.getPrimaryKey());
+				} catch (PortalException e) {
+				}
+				return null;
+			}
+			
+			@Override
+			public AssetEntry getChildAssetEntry(Object element) {
+				ComponentChild componentChild = (ComponentChild)element;
+				try {
+					IoTComponent childComponent = _ioTComponentLocalService.getIoTComponentByOriginalId(componentChild.getChildComponentOriginalId(),subscription.getSubscriptionId());
+					return _assetEntryLocalService.getEntry(IoTComponent.class.getName(), childComponent.getPrimaryKey());
+				} catch (PortalException e) {
+				}
+				return null;
+	
+			}
+		};
+		List<ComponentChild> componentChilds = _componentChildLocalService.getComponentChildsBySubscriptionId(subscription.getSubscriptionId());
+		_log.info("Processing component relations");
+		assetRelationsPopulator.addAssetRelations(componentChilds, subscription.getUserId());
 
+    	
+	}
+	
+	private void addValidationAssetRelations(Subscription subscription){
+		
+		AssetRelationsPopulator assetRelationsPopulator = new AssetRelationsPopulator(_assetLinkLocalService) {
+			@Override
+			public AssetEntry getAssetEntry(Object element) {
+				ValidationChild validationChild = (ValidationChild)element;
+				try {
+					IoTValidation ioTValidation =  _iotValidationLocalService.getIoTValidationByOriginalId(validationChild.getValidationOrignalId(),subscription.getSubscriptionId());
+	
+					return _assetEntryLocalService.getEntry(IoTValidation.class.getName(), ioTValidation.getPrimaryKey());
+				} catch (PortalException e) {
+				}
+				return null;
+			}
+			
+			@Override
+			public AssetEntry getChildAssetEntry(Object element) {
+				ValidationChild validationChild = (ValidationChild)element;
+				try {
+					IoTValidation ioTValidation =  _iotValidationLocalService.getIoTValidationByOriginalId(validationChild.getChildValidationOriginalId(),subscription.getSubscriptionId());
+					return _assetEntryLocalService.getEntry(IoTValidation.class.getName(), ioTValidation.getPrimaryKey());
+				} catch (PortalException e) {
+				}
+				return null;
+	
+			}
+			
+			@Override
+			public void assetProcessed(Long assetId, List<Long> childAssetIds) {
+			
+			}
+		};
+		List<ValidationChild> validationChilds = _validationChildLocalService.getValidationChildsBySubscriptionId(subscription.getSubscriptionId());
+		_log.info("Processing validations relations");
+		assetRelationsPopulator.addAssetRelations(validationChilds, subscription.getUserId());
+
+		
+	}
+	
 	private void syncDataWithIoTCatalogue(Subscription subscription, long delay) {
-
+		ResettableTimer timer = getTimer(subscription);
 		String key = String.valueOf(subscription.getSubscriptionId());
 		if (connections.get(key) == null) {
 
@@ -293,6 +390,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 						try {
 							ServiceContext serviceContext = getServiceContextFromSubscription(subscription);
 							if (collectionName.equals(componentsCollectionName)) {
+								timer.reset(false);
 								if (action.equals(TPIData.ADDED) || action.equals(TPIData.CHANGED)) {
 									updateIoTComponent(id, fields, serviceContext, subscription);
 								} else if (action.equals(TPIData.REMOVED)) {
@@ -300,6 +398,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 								}
 							}
 							if (collectionName.equals(validationsCollectionName)) {
+								timer.reset(false);
 								if (action.equals(TPIData.ADDED) || action.equals(TPIData.CHANGED)) {
 									updateIoTValidation(id, fields, serviceContext, subscription);
 								} else if (action.equals(TPIData.REMOVED)) {
@@ -724,7 +823,32 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 	private final String componentsCollectionName = "components";
 	private final String validationsCollectionName = "validations";
+	@Reference(unbind = "-")
+	protected void setAssetLinkLocalService(AssetLinkLocalService assetLinkLocalService) {
 
+		_assetLinkLocalService = assetLinkLocalService;
+	}
+	@Reference(unbind = "-")
+	protected void setValidationChildLocalService(ValidationChildLocalService validationChildLocalService) {
+
+		_validationChildLocalService = validationChildLocalService;
+	}
+	
+	
+	private ValidationChildLocalService _validationChildLocalService= null;
+
+	@Reference(unbind = "-")
+	protected void setComponentChildLocalService(ComponentChildLocalService componentChildLocalService) {
+
+		_componentChildLocalService = componentChildLocalService;
+	}
+	
+	
+	
+	private ComponentChildLocalService _componentChildLocalService= null;
+	
+	private AssetLinkLocalService _assetLinkLocalService= null;
 	private static final Log _log = LogFactoryUtil.getLog(ElementListAdminPortlet.class);
-
+	private HashMap<String, ResettableTimer> timers = new HashMap<String, ResettableTimer>();
+	private static final int timeout = 5000;
 }
