@@ -363,7 +363,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 						/*
 						 * try {
-						 * 
+						 *
 						 * //_subscriptionLocalService.setSubscriptionConnectionState(subscription.
 						 * getSubscriptionId(), String.valueOf(this.getConnectionState())); } catch
 						 * (PortalException e) { // TODO Auto-generated catch block e.printStackTrace();
@@ -503,10 +503,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		String description = (String) hashMap.get("description");
 		List<String> tagNames = (List<String>) hashMap.get("_tagNames");
 		List<Object> components = (List<Object>) hashMap.get("components");
-		System.out.println("*******");
-		if(components != null) {
-			System.out.println(components.size());
-		}
+
 		processComponentIds(id, components, subscription, serviceContext);
 		long userId = subscription.getUserId();
 
@@ -817,11 +814,11 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		/*
 		 * Object o = new DLFileEntryDDMFormValuesReader(null, null); AssetRenderer ar =
 		 * null;
-		 * 
-		 * 
-		 * 
+		 *
+		 *
+		 *
 		 * DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
-		 * 
+		 *
 		 * Value value = new LocalizedValue(); value.addString(null,
 		 * "{\"latitude\":38.0119156,\"longitude\":-6.8663008}");
 		 * ddmFormFieldValue.setValue(value);
@@ -829,7 +826,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 		/*
 		 * System.out.println(_assetEntryLocalService.getAssetEntriesCount());
-		 * 
+		 *
 		 * List<AssetEntry> assetEntries = _assetEntryLocalService.getAssetEntries(0,
 		 * 200); for(AssetEntry assetEntry: assetEntries) {
 		 * if(assetEntry.getClassName().equals(JournalArticle.class.getName())) {
@@ -837,9 +834,9 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		 * assetEntry.getAssetRenderer(); DDMFormValuesReader ddmFormValuesReader =
 		 * assetRenderer.getDDMFormValuesReader();
 		 * printCoordinatesFromDDMForm(ddmFormValuesReader);
-		 * 
+		 *
 		 * }
-		 * 
+		 *
 		 * }
 		 */
 	}

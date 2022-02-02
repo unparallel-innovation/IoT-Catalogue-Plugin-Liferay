@@ -17,8 +17,10 @@ import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
 import com.iot_catalogue.service.ElementCoordinateLocalServiceUtil;
 import com.iot_catalogue.service.SubscriptionLocalServiceUtil;
 import com.iot_catalogue.service.permission.IoTValidationPermission;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -127,6 +129,13 @@ public class IoTValidationAssetRenderer extends BaseJSPAssetRenderer<IoTValidati
 	public String getJspPath(HttpServletRequest request, String template) {
 
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
+			try {
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(IoTValidation.class.getName(),_iotValidation.getPrimaryKey());
+				request.setAttribute("asset_entry", assetEntry);
+			} catch (PortalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			request.setAttribute("iot_validation", _iotValidation);
 
 			return "/asset/iotvalidation/" + template + ".jsp";

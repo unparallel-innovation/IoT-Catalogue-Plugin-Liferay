@@ -10,18 +10,17 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Reference;
-
 import com.iot_catalogue.model.ElementCoordinate;
 import com.iot_catalogue.model.IoTComponent;
 import com.iot_catalogue.model.Subscription;
 import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
 import com.iot_catalogue.service.ElementCoordinateLocalServiceUtil;
-import com.iot_catalogue.service.SubscriptionLocalService;
 import com.iot_catalogue.service.SubscriptionLocalServiceUtil;
 import com.iot_catalogue.service.permission.IoTComponentPermission;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -43,7 +42,7 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 
 		return false;
 	}
-	
+
 	@Override
 	public DDMFormValuesReader getDDMFormValuesReader() {
 
@@ -128,6 +127,17 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
+
+
+			try {
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(IoTComponent.class.getName(),_iotComponent.getPrimaryKey());
+				request.setAttribute("asset_entry", assetEntry);
+			} catch (PortalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
 			request.setAttribute("iot_component", _iotComponent);
 			//return "/asset/iotvalidation/" + template + ".jsp";
 			return "/asset/iotcomponent/full_content.jsp";// + template + ".jsp";
@@ -140,31 +150,31 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 	 * @Override public String getURLViewInContext(LiferayPortletRequest
 	 * liferayPortletRequest, LiferayPortletResponse liferayPortletResponse, String
 	 * noSuchEntryRedirect) throws Exception { try {
-	 * 
+	 *
 	 * long plid = PortalUtil.getPlidFromPortletId(_iotComponent.getGroupId(),
 	 * ElementListPortletKeys.ELEMENT_LIST);
-	 * 
+	 *
 	 * PortletURL portletURL; if (plid == LayoutConstants.DEFAULT_PLID) { portletURL
 	 * = liferayPortletResponse.createLiferayPortletURL(getControlPanelPlid(
 	 * liferayPortletRequest), ElementListPortletKeys.ELEMENT_LIST,
 	 * PortletRequest.RENDER_PHASE); } else { portletURL =
 	 * PortletURLFactoryUtil.create(liferayPortletRequest,
 	 * ElementListPortletKeys.ELEMENT_LIST, plid, PortletRequest.RENDER_PHASE); }
-	 * 
+	 *
 	 * portletURL.setParameter("mvcRenderCommandName",
 	 * "/elementswebportlet/view.jsp"); portletURL.setParameter("iotComponentId",
 	 * String.valueOf(_iotComponent.getIotComponentId()));
 	 * portletURL.setParameter("test", "test-str");
-	 * 
+	 *
 	 * String currentUrl = PortalUtil.getCurrentURL(liferayPortletRequest);
-	 * 
+	 *
 	 * portletURL.setParameter("redirect", currentUrl); String url =
 	 * portletURL.toString(); return url;
-	 * 
+	 *
 	 * } catch (PortalException e) {
-	 * 
+	 *
 	 * } catch (SystemException e) { }
-	 * 
+	 *
 	 * return noSuchEntryRedirect; }
 	 */
 
@@ -172,7 +182,7 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 	public String getURLViewInContext(LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, String noSuchEntryRedirect) { // IOT_COMPONENT_FULL_CONTENT
 																							// try {
-		
+
 		try {
 			String originalId = _iotComponent.getOriginalId();
 			Subscription subscription = SubscriptionLocalServiceUtil.getSubscriptionById(_iotComponent.getSubscriptionId());
@@ -183,7 +193,7 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return null;
 
 
@@ -218,13 +228,7 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 	public String getURLView(LiferayPortletResponse liferayPortletResponse, WindowState windowState) throws Exception {
 		return super.getURLView(liferayPortletResponse, windowState);
 	}
-	
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(SubscriptionLocalService subscriptionLocalService) {
 
-		_subscriptionLocalService = subscriptionLocalService;
-	}
 
-	private SubscriptionLocalService _subscriptionLocalService;
 
 }

@@ -53,30 +53,29 @@ public class IoTComponentFullContentPortlet extends MVCPortlet {
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 	        throws IOException, PortletException {
-			
+
 			HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
 			String originalComponentId = httpReq.getParameter("pageId");
 			if(originalComponentId != null) {
 				try {
 					IoTComponent iotComponent = _ioTComponentLocalService.getIoTComponentByOriginalId(originalComponentId);
 					ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-		
+
 					PermissionChecker permissionChecker = themeDisplay.getPermissionChecker();
 					long iotComponentId = iotComponent.getIotComponentId();
 					if(IoTComponentPermission.contains(permissionChecker, iotComponentId, ActionKeys.VIEW)) {
 						renderRequest.setAttribute("iot_component", iotComponent);
 						try {
 							AssetEntry assetEntry = _assetEntryLocalService.getEntry(IoTComponent.class.getName(),iotComponent.getPrimaryKey());
-							
 							renderRequest.setAttribute("asset_entry", assetEntry);
 						}catch(Exception e) {
 							e.printStackTrace();
 						}
-						
+
 					}else {
 						renderRequest.setAttribute("not_authorized", true);
 					}
-					
+
 				} catch (NoSuchIoTComponentException e) {
 					renderRequest.setAttribute("not_found", true);
 					// TODO Auto-generated catch block
@@ -94,7 +93,7 @@ public class IoTComponentFullContentPortlet extends MVCPortlet {
 	}
 
 	private IoTComponentLocalService _ioTComponentLocalService;
-	
+
 	@Reference(unbind = "-")
 	protected void setAssetEntryLocalService(AssetEntryLocalService assetEntryLocalService) {
 

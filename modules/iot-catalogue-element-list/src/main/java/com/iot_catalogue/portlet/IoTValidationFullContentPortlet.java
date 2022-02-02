@@ -50,14 +50,13 @@ public class IoTValidationFullContentPortlet extends MVCPortlet {
 				ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 				PermissionChecker permissionChecker = themeDisplay.getPermissionChecker();
 				iotValidation = _iotValidationLocalService.getIoTValidationByOriginalId(originalIoTValidationId);
-				
+
 				long iotValidationId = iotValidation.getIotValidationId();
 				try {
 					if(IoTValidationPermission.contains(permissionChecker, iotValidationId, ActionKeys.VIEW)) {
 						renderRequest.setAttribute("iot_validation", iotValidation);
 						try {
 							AssetEntry assetEntry = _assetEntryLocalService.getEntry(IoTValidation.class.getName(),iotValidation.getPrimaryKey());
-							
 							renderRequest.setAttribute("asset_entry", assetEntry);
 						}catch(Exception e) {
 							e.printStackTrace();
@@ -70,7 +69,7 @@ public class IoTValidationFullContentPortlet extends MVCPortlet {
 					renderRequest.setAttribute("not_authorized", true);
 					e.printStackTrace();
 				}
-				
+
 			} catch (NoSuchIoTValidationException e) {
 				// TODO Auto-generated catch block
 				renderRequest.setAttribute("not_found", true);
@@ -90,7 +89,7 @@ public class IoTValidationFullContentPortlet extends MVCPortlet {
 	}
 
 	private IoTValidationLocalService _iotValidationLocalService;
-	
+
 	@Reference(unbind = "-")
 	protected void setAssetEntryLocalService(AssetEntryLocalService assetEntryLocalService) {
 
