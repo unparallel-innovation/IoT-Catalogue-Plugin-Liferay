@@ -129,8 +129,8 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 	public String getJspPath(HttpServletRequest request, String template) {
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
 			request.setAttribute("iot_component", _iotComponent);
-
-			return "/asset/iotcomponent/" + template + ".jsp";
+			//return "/asset/iotvalidation/" + template + ".jsp";
+			return "/asset/iotcomponent/full_content.jsp";// + template + ".jsp";
 		} else {
 			return null;
 		}

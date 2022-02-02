@@ -1,3 +1,4 @@
+
 <%@include file="../../init.jsp"%>
 <%
 IoTComponent iotComponent = (IoTComponent) request.getAttribute("iot_component");
@@ -78,4 +79,3 @@ if (notFound!=null) {
 <%
 }
 %>
-
