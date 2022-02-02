@@ -17,10 +17,12 @@ package com.iot_catalogue.service.base;
 import com.iot_catalogue.model.IoTValidation;
 import com.iot_catalogue.service.IoTValidationService;
 import com.iot_catalogue.service.IoTValidationServiceUtil;
+import com.iot_catalogue.service.persistence.ComponentChildPersistence;
 import com.iot_catalogue.service.persistence.ElementCoordinatePersistence;
 import com.iot_catalogue.service.persistence.IoTComponentPersistence;
 import com.iot_catalogue.service.persistence.IoTValidationPersistence;
 import com.iot_catalogue.service.persistence.SubscriptionPersistence;
+import com.iot_catalogue.service.persistence.ValidationChildPersistence;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -137,6 +139,9 @@ public abstract class IoTValidationServiceBaseImpl
 	}
 
 	@Reference
+	protected ComponentChildPersistence componentChildPersistence;
+
+	@Reference
 	protected ElementCoordinatePersistence elementCoordinatePersistence;
 
 	@Reference
@@ -153,6 +158,9 @@ public abstract class IoTValidationServiceBaseImpl
 
 	@Reference
 	protected SubscriptionPersistence subscriptionPersistence;
+
+	@Reference
+	protected ValidationChildPersistence validationChildPersistence;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

@@ -17,10 +17,12 @@ package com.iot_catalogue.service.base;
 import com.iot_catalogue.model.Subscription;
 import com.iot_catalogue.service.SubscriptionLocalService;
 import com.iot_catalogue.service.SubscriptionLocalServiceUtil;
+import com.iot_catalogue.service.persistence.ComponentChildPersistence;
 import com.iot_catalogue.service.persistence.ElementCoordinatePersistence;
 import com.iot_catalogue.service.persistence.IoTComponentPersistence;
 import com.iot_catalogue.service.persistence.IoTValidationPersistence;
 import com.iot_catalogue.service.persistence.SubscriptionPersistence;
+import com.iot_catalogue.service.persistence.ValidationChildPersistence;
 
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -625,6 +627,9 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	}
 
 	@Reference
+	protected ComponentChildPersistence componentChildPersistence;
+
+	@Reference
 	protected ElementCoordinatePersistence elementCoordinatePersistence;
 
 	@Reference
@@ -637,6 +642,9 @@ public abstract class SubscriptionLocalServiceBaseImpl
 
 	@Reference
 	protected SubscriptionPersistence subscriptionPersistence;
+
+	@Reference
+	protected ValidationChildPersistence validationChildPersistence;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
