@@ -44,6 +44,8 @@ long previewClassPK = ParamUtil.getLong(request, "previewClassPK");
 
 boolean print = GetterUtil.getBoolean(request.getAttribute("view.jsp-print"));
 
+boolean hideTagsAndRelations = assetEntry.getClassName().equals("com.iot_catalogue.model.IoTValidation") || assetEntry.getClassName().equals("com.iot_catalogue.model.IoTComponent");
+
 assetPublisherDisplayContext.setLayoutAssetEntry(assetEntry);
 
 assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
@@ -64,6 +66,8 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 	"fragments-editor-item-type", "fragments-editor-mapped-item"
 ).build();
 %>
+
+
 
 <div class="asset-full-content clearfix mb-5 <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %> <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
 	<div class="align-items-center d-flex mb-2">
@@ -197,7 +201,7 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 		</div>
 	</c:if>
 
-	<c:if test="<%= assetPublisherDisplayContext.isShowTags() && false %>">
+	<c:if test="<%= assetPublisherDisplayContext.isShowTags() && !hideTagsAndRelations %>">
 		<div class="asset-tags mb-3">
 			<liferay-asset:asset-tags-summary
 				className="<%= assetEntry.getClassName() %>"
@@ -213,7 +217,7 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 		</div>
 	</c:if>
 
-	<c:if test="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>">
+	<c:if test="<%= assetPublisherDisplayContext.isEnableRelatedAssets()  && !hideTagsAndRelations  %>">
 
 		<%
 		PortletURL assetLingsURL = renderResponse.createRenderURL();
