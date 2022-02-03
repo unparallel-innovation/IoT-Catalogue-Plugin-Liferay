@@ -35,6 +35,8 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 		_iotComponent = iotComponent;
 	}
 
+
+	
 	private IoTComponent _iotComponent;
 
 	@Override
@@ -139,8 +141,8 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 
 
 			request.setAttribute("iot_component", _iotComponent);
-			//return "/asset/iotvalidation/" + template + ".jsp";
-			return "/asset/iotcomponent/full_content.jsp";// + template + ".jsp";
+			return "/asset/iotcomponent/" + template + ".jsp";
+			
 		} else {
 			return null;
 		}
