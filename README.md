@@ -4,7 +4,7 @@ Please check WiKi for instructions on how to use the plugin
 
 More information please contact info@unparallel.pt
 
-# Version 1.5.0
+# [Version 1.5.0](releases/tag/1.5.0)
 
 * Added relations between assets
 
