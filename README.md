@@ -1,4 +1,4 @@
-# iot-catalogue-plugin-liferay
+# IoT-Catalogue-Plugin-Liferay
 
 Please check WiKi for instructions on how to use the plugin
 
