@@ -82,7 +82,7 @@ public interface IoTValidationLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public IoTValidation addIoTValidation(
 			long userId, String name, String description, String embeddedUrl,
-			String imageUrl, List<String> tagNames, String originalId,
+			String imageUrl, List<List<String>> tagsPaths, String originalId,
 			long subscriptionId, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -368,7 +368,7 @@ public interface IoTValidationLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public IoTValidation updateIoTValidation(
 			long userId, long iotValidationId, String name, String description,
-			String embeddedUrl, String imageUrl, List<String> tagNames,
+			String embeddedUrl, String imageUrl, List<List<String>> tagsPaths,
 			ServiceContext serviceContext)
 		throws PortalException;
 

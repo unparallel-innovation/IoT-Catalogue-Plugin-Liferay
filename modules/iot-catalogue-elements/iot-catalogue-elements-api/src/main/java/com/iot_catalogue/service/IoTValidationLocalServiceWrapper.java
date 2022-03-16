@@ -53,13 +53,13 @@ public class IoTValidationLocalServiceWrapper
 	@Override
 	public com.iot_catalogue.model.IoTValidation addIoTValidation(
 			long userId, String name, String description, String embeddedUrl,
-			String imageUrl, java.util.List<String> tagNames, String originalId,
-			long subscriptionId,
+			String imageUrl, java.util.List<java.util.List<String>> tagsPaths,
+			String originalId, long subscriptionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ioTValidationLocalService.addIoTValidation(
-			userId, name, description, embeddedUrl, imageUrl, tagNames,
+			userId, name, description, embeddedUrl, imageUrl, tagsPaths,
 			originalId, subscriptionId, serviceContext);
 	}
 
@@ -492,13 +492,13 @@ public class IoTValidationLocalServiceWrapper
 	public com.iot_catalogue.model.IoTValidation updateIoTValidation(
 			long userId, long iotValidationId, String name, String description,
 			String embeddedUrl, String imageUrl,
-			java.util.List<String> tagNames,
+			java.util.List<java.util.List<String>> tagsPaths,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ioTValidationLocalService.updateIoTValidation(
 			userId, iotValidationId, name, description, embeddedUrl, imageUrl,
-			tagNames, serviceContext);
+			tagsPaths, serviceContext);
 	}
 
 	@Override

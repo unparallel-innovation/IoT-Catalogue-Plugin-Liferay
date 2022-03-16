@@ -4,3 +4,4 @@ Bundle-Version: 1.5.1
 Export-Package: \
 	com.iot_catalogue.constants,\
 	com.iot_catalogue.portlet
+-fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=warning

@@ -7,6 +7,19 @@ import com.liferay.petra.string.CharPool;
 
 public class TagUtils {
 	
+	public static List<String> getTagNamesFromTagsPaths(List<List<String>> tagsPaths){
+		if(tagsPaths!=null) {
+			List<String> tagNames = new ArrayList<String>();
+			for(List<String> tagPaths: tagsPaths) {
+				tagNames.add(tagPaths.get(0));
+			}
+			return tagNames;
+		}
+		return null;
+
+	}
+	
+	
 	public static String getValidTagName(String tagName) {
 		char[] wordCharArray = tagName.toCharArray();
 		String validTagName = "";

@@ -61,13 +61,13 @@ public class IoTComponentLocalServiceUtil {
 
 	public static IoTComponent addIoTComponent(
 			long userId, String name, String description, String embeddedUrl,
-			String imageUrl, List<String> tagNames, String originalId,
+			String imageUrl, List<List<String>> tagsPaths, String originalId,
 			long subscriptionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addIoTComponent(
-			userId, name, description, embeddedUrl, imageUrl, tagNames,
+			userId, name, description, embeddedUrl, imageUrl, tagsPaths,
 			originalId, subscriptionId, serviceContext);
 	}
 
@@ -427,13 +427,13 @@ public class IoTComponentLocalServiceUtil {
 
 	public static IoTComponent updateIoTComponent(
 			long userId, long iotComponentId, String name, String description,
-			String embeddedUrl, String imageUrl, List<String> tagNames,
+			String embeddedUrl, String imageUrl, List<List<String>> tagsPaths,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateIoTComponent(
 			userId, iotComponentId, name, description, embeddedUrl, imageUrl,
-			tagNames, serviceContext);
+			tagsPaths, serviceContext);
 	}
 
 	public static IoTComponentLocalService getService() {

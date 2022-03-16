@@ -65,10 +65,11 @@ try {
 				%>
 				<aui:button-row cssClass="subscription-buttons">
 
-					<aui:button onClick="<%=addSubscriptionUrl.toString()%>"
+					<aui:button  onClick="<%=addSubscriptionUrl.toString()%>"
 						value="Add subscription"></aui:button>
 
-
+			<aui:button onClick="<%=testVar.toString()%>"
+									value="Test"></aui:button>
 				</aui:button-row>
 			</div>
 		</clay:container-fluid>

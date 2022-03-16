@@ -3,6 +3,7 @@ package com.iot_catalogue.portlet;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -502,6 +503,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		String imageUrl = (String) hashMap.get("_imageUrl");
 		String description = (String) hashMap.get("description");
 		List<String> tagNames = (List<String>) hashMap.get("_tagNames");
+		List<List<String> > tagsPaths = (List<List<String>>) hashMap.get("_tagsPaths");
+
 		List<Object> components = (List<Object>) hashMap.get("components");
 
 		processComponentIds(id, components, subscription, serviceContext);
@@ -510,12 +513,12 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		if (iotComponent == null) {
 
 			IoTComponent newIoTComponent = _ioTComponentLocalService.addIoTComponent(userId, name, description,
-					embeddedUrl, imageUrl, tagNames, id, subscription.getSubscriptionId(), serviceContext);
+					embeddedUrl, imageUrl, tagsPaths, id, subscription.getSubscriptionId(), serviceContext);
 
 		} else {
 			long iotComponentId = iotComponent.getIotComponentId();
 			_ioTComponentLocalService.updateIoTComponent(userId, iotComponentId, name, description, embeddedUrl,
-					imageUrl, tagNames, serviceContext);
+					imageUrl, tagsPaths, serviceContext);
 		}
 
 	}
@@ -574,6 +577,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		String imageUrl = (String) hashMap.get("_imageUrl");
 		String description = (String) hashMap.get("description");
 		List<String> tagNames = (List<String>) hashMap.get("_tagNames");
+		List<List<String> > tagsPaths = (List<List<String>>) hashMap.get("_tagsPaths");
 		String parent = (String) hashMap.get("parent");
 		processValidationParent(id, parent, subscription, serviceContext);
 		long userId = subscription.getUserId();
@@ -581,7 +585,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		if (iotValidation == null) {
 
 			IoTValidation newIoTValidation = _iotValidationLocalService.addIoTValidation(userId, name, description,
-					embeddedUrl, imageUrl, tagNames, id, subscription.getSubscriptionId(), serviceContext);
+					embeddedUrl, imageUrl, tagsPaths, id, subscription.getSubscriptionId(), serviceContext);
 			_elementCoordinateLocalService.deleteElementCoordinates(subscription.getSubscriptionId(),
 					newIoTValidation.getOriginalId(), IoTValidation.class.getName());
 
@@ -609,7 +613,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 				}
 			}
 			_iotValidationLocalService.updateIoTValidation(userId, iotValidationId, name, description, embeddedUrl,
-					imageUrl, tagNames, serviceContext);
+					imageUrl, tagsPaths, serviceContext);
 		}
 
 	}
@@ -809,8 +813,29 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	}
 
 	public void test(ActionRequest request, ActionResponse response) throws PortalException {
-		System.out.println(_elementCoordinateLocalService.getElementCoordinatesCount());
-		System.out.println(_elementCoordinateLocalService.getElementCoordinates(0, 100));
+		
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(request);
+		try {
+
+			System.out.println("***");
+
+			List<String> categoryNames = new ArrayList<String>();
+			categoryNames.add("a");
+			categoryNames.add("b");
+			categoryNames.add("c");
+			List<String> reverseList = new ArrayList<>(categoryNames);
+			Collections.reverse(reverseList);
+			System.out.println(categoryNames);
+			System.out.println(reverseList);
+			 //AssetCategory category = CategoryUtil.addCategoryPath(categoryNames,serviceContext);
+			 //System.out.println(category.getTitle());
+		
+
+			
+		}catch(Exception ex) {
+			System.out.println(ex);
+		}
+
 		/*
 		 * Object o = new DLFileEntryDDMFormValuesReader(null, null); AssetRenderer ar =
 		 * null;
