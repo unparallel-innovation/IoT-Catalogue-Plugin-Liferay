@@ -1,4 +1,5 @@
 package com.iot_catalogue.utils;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -17,7 +18,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 public class CategoryUtil {
 	
 	
-	private static AssetVocabulary getVocabulary(ServiceContext serviceContext) {
+	private static AssetVocabulary getVocabulary(String vocabularyTitle , ServiceContext serviceContext) {
 		AssetVocabulary assetVocabulary = null;
 		try {
 			
@@ -38,11 +39,28 @@ public class CategoryUtil {
 		}
 		return assetVocabulary;
 	}
-	
-	public static AssetCategory addCategoryPath(List<String> categoryNames,  ServiceContext serviceContext) throws PortalException {
-		return addCategoryPath(categoryNames, serviceContext, null, 0);
+
+	public static long[] getCategoryIds(List<HashMap<String, Object>> categoriesPath, ServiceContext serviceContext) throws PortalException{
+		long[] categoryIds = null;
+		if(categoriesPath != null) {
+			List<Long> values = new ArrayList<Long>();
+			for(HashMap<String, Object> hashMap: categoriesPath) {
+				List<String> categoryNames =(List<String>)hashMap.get("path");
+				String vocabularyTitle = (String)hashMap.get("vocabularyTitle");
+				AssetCategory assetCategory = addCategoryPath(categoryNames,vocabularyTitle, serviceContext);
+				values.add(assetCategory.getCategoryId());
+			}
+			categoryIds = values.stream().mapToLong(l -> l).toArray();
+		}
+		return categoryIds;
+
+
 	}
-	public static AssetCategory addCategoryPath(List<String> categoryNames,  ServiceContext serviceContext, AssetCategory parentCategory, int index) throws PortalException {
+	
+	public static AssetCategory addCategoryPath(List<String> categoryNames,String vocabularyTitle,  ServiceContext serviceContext) throws PortalException {
+		return addCategoryPath(categoryNames,vocabularyTitle, serviceContext, null, 0);
+	}
+	public static AssetCategory addCategoryPath(List<String> categoryNames, String vocabularyTitle, ServiceContext serviceContext, AssetCategory parentCategory, int index) throws PortalException {
 		if(categoryNames.size() == 0) {
 			return parentCategory;
 		}
@@ -50,14 +68,14 @@ public class CategoryUtil {
 
 		
 		
-		AssetCategory newCategory = addCategory(categoryNames.get(0), parentCategory, serviceContext);
+		AssetCategory newCategory = addCategory(categoryNames.get(0), vocabularyTitle, parentCategory, serviceContext);
 
-		return addCategoryPath(categoryNames.subList(1, categoryNames.size()), serviceContext, newCategory, index + 1);
+		return addCategoryPath(categoryNames.subList(1, categoryNames.size()),vocabularyTitle, serviceContext, newCategory, index + 1);
 
 	}
 	
-	private static AssetCategory  addCategory(String name,  AssetCategory parentCategory, ServiceContext serviceContext) throws PortalException {
-		AssetVocabulary assetVocabulary  = getVocabulary(serviceContext);
+	private static AssetCategory  addCategory(String name, String vocabularyTitle,  AssetCategory parentCategory, ServiceContext serviceContext) throws PortalException {
+		AssetVocabulary assetVocabulary  = getVocabulary(vocabularyTitle, serviceContext);
 
 		AssetCategory newCategory = null;
 		try {
@@ -100,6 +118,6 @@ public class CategoryUtil {
 	}
 	
 
-	private static String vocabularyTitle = "IoT Catalogue";
+	//private static String vocabularyTitle = "IoT Catalogue";
 	private static final Log _log = LogFactoryUtil.getLog(CategoryUtil.class);
 }

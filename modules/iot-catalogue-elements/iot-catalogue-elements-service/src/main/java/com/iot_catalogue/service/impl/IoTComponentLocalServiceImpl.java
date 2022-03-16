@@ -17,6 +17,7 @@ package com.iot_catalogue.service.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -65,7 +66,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 			String description, 
 			String embeddedUrl,
 			String imageUrl,
-			List<List<String>> tagsPaths ,
+			List<HashMap<String, Object>> categoriesPath ,
 			String originalId, 
 			long subscriptionId, 
 			ServiceContext serviceContext)
@@ -102,7 +103,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 				iotComponentId, false, true, true);
 
 		
-		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent, tagsPaths, serviceContext);
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent, categoriesPath, serviceContext);
 		//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		return iotComponent;
 
@@ -130,15 +131,17 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 		return super.deleteIoTComponent(iotComponent.getIotComponentId());
 	}
 
-	private AssetEntry updateAsset(long userId, long groupId, IoTComponent iotComponent, List<List<String>> tagsPaths, ServiceContext serviceContext) throws PortalException {
-		List<String> tagNames = TagUtils.getTagNamesFromTagsPaths(tagsPaths);
-		List<String> validTagNames = TagUtils.getValidTagNames(tagNames);
-		String[] tagArray = null;
-		if(validTagNames!=null) {
-			tagArray = validTagNames.toArray(new String[0]);
-		}
-		long[] categoryIds = null;
-		if(tagsPaths != null) {
+	private AssetEntry updateAsset(
+			long userId, 
+			long groupId, 
+			IoTComponent iotComponent, 
+			List<HashMap<String, Object>> categoriesPath , 
+			ServiceContext serviceContext
+			) throws PortalException {
+		String[] tagArray = TagUtils.getTagNamesFromCategoriesPaths(categoriesPath);
+
+		long[] categoryIds = CategoryUtil.getCategoryIds(categoriesPath,serviceContext);
+		/*if(tagsPaths != null) {
 			List<Long> values = new ArrayList<Long>();
 			for(List<String> tagPaths:tagsPaths) {
 				List<String> categoryNames = new ArrayList<>(tagPaths);
@@ -147,7 +150,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 				values.add(assetCategory.getCategoryId());
 			}
 			categoryIds = values.stream().mapToLong(l -> l).toArray();
-		}
+		}*/
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId, // userId
 				groupId, // groupId
 				iotComponent.getCreateDate(), // createDate
@@ -189,7 +192,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 			String description,
 			String embeddedUrl,
 			String imageUrl,
-			List<List<String>> tagsPaths  , 
+			List<HashMap<String, Object>> categoriesPath , 
 			ServiceContext serviceContext) throws PortalException {
 		Date now = new Date();
 
@@ -215,7 +218,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 
 		ioTComponentPersistence.update(iotComponent);
 		
-		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent, tagsPaths, serviceContext);
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent, categoriesPath, serviceContext);
 		//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		/*
 		 * resourceLocalService.updateResources(serviceContext.getCompanyId(),

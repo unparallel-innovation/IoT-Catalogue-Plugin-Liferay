@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -82,8 +83,9 @@ public interface IoTValidationLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public IoTValidation addIoTValidation(
 			long userId, String name, String description, String embeddedUrl,
-			String imageUrl, List<List<String>> tagsPaths, String originalId,
-			long subscriptionId, ServiceContext serviceContext)
+			String imageUrl, List<HashMap<String, Object>> categoriesPath,
+			String originalId, long subscriptionId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -368,7 +370,8 @@ public interface IoTValidationLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public IoTValidation updateIoTValidation(
 			long userId, long iotValidationId, String name, String description,
-			String embeddedUrl, String imageUrl, List<List<String>> tagsPaths,
+			String embeddedUrl, String imageUrl,
+			List<HashMap<String, Object>> categoriesPath,
 			ServiceContext serviceContext)
 		throws PortalException;
 

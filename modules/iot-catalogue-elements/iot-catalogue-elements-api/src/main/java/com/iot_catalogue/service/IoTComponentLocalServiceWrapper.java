@@ -53,13 +53,14 @@ public class IoTComponentLocalServiceWrapper
 	@Override
 	public com.iot_catalogue.model.IoTComponent addIoTComponent(
 			long userId, String name, String description, String embeddedUrl,
-			String imageUrl, java.util.List<java.util.List<String>> tagsPaths,
+			String imageUrl,
+			java.util.List<java.util.HashMap<String, Object>> categoriesPath,
 			String originalId, long subscriptionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ioTComponentLocalService.addIoTComponent(
-			userId, name, description, embeddedUrl, imageUrl, tagsPaths,
+			userId, name, description, embeddedUrl, imageUrl, categoriesPath,
 			originalId, subscriptionId, serviceContext);
 	}
 
@@ -495,13 +496,13 @@ public class IoTComponentLocalServiceWrapper
 	public com.iot_catalogue.model.IoTComponent updateIoTComponent(
 			long userId, long iotComponentId, String name, String description,
 			String embeddedUrl, String imageUrl,
-			java.util.List<java.util.List<String>> tagsPaths,
+			java.util.List<java.util.HashMap<String, Object>> categoriesPath,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ioTComponentLocalService.updateIoTComponent(
 			userId, iotComponentId, name, description, embeddedUrl, imageUrl,
-			tagsPaths, serviceContext);
+			categoriesPath, serviceContext);
 	}
 
 	@Override

@@ -1,19 +1,26 @@
 package com.iot_catalogue.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.liferay.petra.string.CharPool;
 
 public class TagUtils {
 	
-	public static List<String> getTagNamesFromTagsPaths(List<List<String>> tagsPaths){
-		if(tagsPaths!=null) {
+	public static String[] getTagNamesFromCategoriesPaths(List<HashMap<String, Object>> categoriesPath ){
+		if(categoriesPath!=null) {
 			List<String> tagNames = new ArrayList<String>();
-			for(List<String> tagPaths: tagsPaths) {
-				tagNames.add(tagPaths.get(0));
+			for(HashMap<String, Object> categoryPath: categoriesPath) {
+				List<String> path = (List<String>)categoryPath.get("path");
+				tagNames.add(path.get(path.size() - 1));
 			}
-			return tagNames;
+			List<String> validTagNames = TagUtils.getValidTagNames(tagNames);
+			String[] tagArray = null;
+			if(validTagNames!=null) {
+				tagArray = validTagNames.toArray(new String[0]);
+			}
+			return tagArray;
 		}
 		return null;
 

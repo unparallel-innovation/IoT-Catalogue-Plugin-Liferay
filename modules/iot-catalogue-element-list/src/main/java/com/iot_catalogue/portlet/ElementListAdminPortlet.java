@@ -32,6 +32,7 @@ import com.iot_catalogue.model.Subscription;
 import com.iot_catalogue.model.ValidationChild;
 import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
 import com.iot_catalogue.portlet.utils.AssetRelationsPopulator;
+import com.iot_catalogue.portlet.utils.DataUtils;
 import com.iot_catalogue.service.ComponentChildLocalService;
 import com.iot_catalogue.service.ElementCoordinateLocalService;
 import com.iot_catalogue.service.IoTComponentLocalService;
@@ -503,8 +504,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		String imageUrl = (String) hashMap.get("_imageUrl");
 		String description = (String) hashMap.get("description");
 		List<String> tagNames = (List<String>) hashMap.get("_tagNames");
-		List<List<String> > tagsPaths = (List<List<String>>) hashMap.get("_tagsPaths");
 
+		List<HashMap<String, Object>> categoriesPaths = DataUtils.getCategoriesPathFromTagsPath(hashMap.get("_tagsPath"));
 		List<Object> components = (List<Object>) hashMap.get("components");
 
 		processComponentIds(id, components, subscription, serviceContext);
@@ -513,12 +514,12 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		if (iotComponent == null) {
 
 			IoTComponent newIoTComponent = _ioTComponentLocalService.addIoTComponent(userId, name, description,
-					embeddedUrl, imageUrl, tagsPaths, id, subscription.getSubscriptionId(), serviceContext);
+					embeddedUrl, imageUrl, categoriesPaths, id, subscription.getSubscriptionId(), serviceContext);
 
 		} else {
 			long iotComponentId = iotComponent.getIotComponentId();
 			_ioTComponentLocalService.updateIoTComponent(userId, iotComponentId, name, description, embeddedUrl,
-					imageUrl, tagsPaths, serviceContext);
+					imageUrl, categoriesPaths, serviceContext);
 		}
 
 	}
@@ -577,7 +578,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		String imageUrl = (String) hashMap.get("_imageUrl");
 		String description = (String) hashMap.get("description");
 		List<String> tagNames = (List<String>) hashMap.get("_tagNames");
-		List<List<String> > tagsPaths = (List<List<String>>) hashMap.get("_tagsPaths");
+
+		List<HashMap<String, Object>> categoriesPaths = DataUtils.getCategoriesPathFromTagsPath(hashMap.get("_tagsPath"));
 		String parent = (String) hashMap.get("parent");
 		processValidationParent(id, parent, subscription, serviceContext);
 		long userId = subscription.getUserId();
@@ -585,7 +587,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		if (iotValidation == null) {
 
 			IoTValidation newIoTValidation = _iotValidationLocalService.addIoTValidation(userId, name, description,
-					embeddedUrl, imageUrl, tagsPaths, id, subscription.getSubscriptionId(), serviceContext);
+					embeddedUrl, imageUrl, categoriesPaths, id, subscription.getSubscriptionId(), serviceContext);
 			_elementCoordinateLocalService.deleteElementCoordinates(subscription.getSubscriptionId(),
 					newIoTValidation.getOriginalId(), IoTValidation.class.getName());
 
@@ -613,7 +615,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 				}
 			}
 			_iotValidationLocalService.updateIoTValidation(userId, iotValidationId, name, description, embeddedUrl,
-					imageUrl, tagsPaths, serviceContext);
+					imageUrl, categoriesPaths, serviceContext);
 		}
 
 	}
