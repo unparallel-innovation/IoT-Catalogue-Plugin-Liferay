@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
@@ -39,7 +40,32 @@ public class CategoryUtil {
 		}
 		return assetVocabulary;
 	}
+	public static HashMap<String, List<HashMap<String,String>>> getVocabulariesCategories(AssetEntry assetEntry) throws PortalException{
+		List<AssetCategory> assetCategories = assetEntry.getCategories();
 
+		HashMap<String, List<HashMap<String,String>>> vocabulariesCategories = new HashMap<String,List<HashMap<String,String>>>();
+		for(AssetCategory assetCategory: assetCategories) {
+		
+			AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
+			String vocabularyTitle = assetVocabulary.getTitle();
+			List<HashMap<String,String>> list = vocabulariesCategories.get(vocabularyTitle);
+			if(list == null) {
+				list = new ArrayList<HashMap<String,String>>();
+				vocabulariesCategories.put(vocabularyTitle, list);
+			}
+			HashMap<String, String> category = new HashMap<String, String>();
+			category.put("categoryName", assetCategory.getName().replaceAll(",", ""));
+			AssetCategory parentCategory = assetCategory.getParentCategory();
+			if(parentCategory!=null) {
+				category.put("parentCategoryName", parentCategory.getName().replaceAll(",", ""));
+			}
+			list.add(category);
+		}
+			
+		return vocabulariesCategories;
+		
+	}
+	
 	public static long[] getCategoryIds(List<HashMap<String, Object>> categoriesPath, ServiceContext serviceContext) throws PortalException{
 		long[] categoryIds = null;
 		if(categoriesPath != null) {

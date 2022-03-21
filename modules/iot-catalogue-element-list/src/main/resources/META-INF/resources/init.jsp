@@ -6,15 +6,14 @@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-
+<%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset"%>
 <%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
-
 <%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %>
-
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
@@ -41,6 +40,8 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
 
 <%@ page import="com.iot_catalogue.service.permission.IoTValidationModelPermission" %>
 <%@ page import="com.iot_catalogue.service.permission.IoTValidationPermission" %>
+
+<%@ page import="com.iot_catalogue.portlet.utils.DataUtils" %>
 
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %>
@@ -69,5 +70,6 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
 
 
 <liferay-theme:defineObjects />
+
 
 <portlet:defineObjects />

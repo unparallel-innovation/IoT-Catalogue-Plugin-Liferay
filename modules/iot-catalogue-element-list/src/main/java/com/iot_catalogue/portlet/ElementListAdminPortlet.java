@@ -3,7 +3,7 @@ package com.iot_catalogue.portlet;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -71,6 +72,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	@Override
 	public void destroy() {
 		closeAllConnection();
+		
 	}
 
 	@Override
@@ -819,53 +821,14 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(request);
 		try {
 
-			System.out.println("***");
 
-			List<String> categoryNames = new ArrayList<String>();
-			categoryNames.add("a");
-			categoryNames.add("b");
-			categoryNames.add("c");
-			List<String> reverseList = new ArrayList<>(categoryNames);
-			Collections.reverse(reverseList);
-			System.out.println(categoryNames);
-			System.out.println(reverseList);
-			 //AssetCategory category = CategoryUtil.addCategoryPath(categoryNames,serviceContext);
-			 //System.out.println(category.getTitle());
-		
 
 			
 		}catch(Exception ex) {
 			System.out.println(ex);
 		}
 
-		/*
-		 * Object o = new DLFileEntryDDMFormValuesReader(null, null); AssetRenderer ar =
-		 * null;
-		 *
-		 *
-		 *
-		 * DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
-		 *
-		 * Value value = new LocalizedValue(); value.addString(null,
-		 * "{\"latitude\":38.0119156,\"longitude\":-6.8663008}");
-		 * ddmFormFieldValue.setValue(value);
-		 */
 
-		/*
-		 * System.out.println(_assetEntryLocalService.getAssetEntriesCount());
-		 *
-		 * List<AssetEntry> assetEntries = _assetEntryLocalService.getAssetEntries(0,
-		 * 200); for(AssetEntry assetEntry: assetEntries) {
-		 * if(assetEntry.getClassName().equals(JournalArticle.class.getName())) {
-		 * System.out.println(assetEntry.getTitle()); AssetRenderer assetRenderer =
-		 * assetEntry.getAssetRenderer(); DDMFormValuesReader ddmFormValuesReader =
-		 * assetRenderer.getDDMFormValuesReader();
-		 * printCoordinatesFromDDMForm(ddmFormValuesReader);
-		 *
-		 * }
-		 *
-		 * }
-		 */
 	}
 
 	public void deleteAllSubscriptions(ActionRequest request, ActionResponse response) throws PortalException {

@@ -42,6 +42,7 @@ public class Connection extends DDPClient{
 	
 	public Connection(String meteorServerIp, Integer meteorServerPort, boolean useSSL, String serviceId, String token, Object props) throws URISyntaxException, InterruptedException {
 		this(meteorServerIp, meteorServerPort, useSSL, serviceId, token, props, false );
+
 	}
 	
 	

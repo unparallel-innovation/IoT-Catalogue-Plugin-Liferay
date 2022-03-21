@@ -1,5 +1,6 @@
 package com.iot_catalogue.asset;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -17,6 +18,7 @@ import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
 import com.iot_catalogue.service.ElementCoordinateLocalServiceUtil;
 import com.iot_catalogue.service.SubscriptionLocalServiceUtil;
 import com.iot_catalogue.service.permission.IoTComponentPermission;
+import com.iot_catalogue.utils.CategoryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
@@ -133,6 +135,9 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 
 			try {
 				AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(IoTComponent.class.getName(),_iotComponent.getPrimaryKey());
+				HashMap<String, List<HashMap<String,String>>> vocabulariesCategories = CategoryUtil.getVocabulariesCategories(assetEntry);
+				
+				request.setAttribute("vocabularies_categories", vocabulariesCategories);
 				request.setAttribute("asset_entry", assetEntry);
 			} catch (PortalException e) {
 				// TODO Auto-generated catch block
