@@ -504,7 +504,6 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		String imageUrl = (String) hashMap.get("_imageUrl");
 		String description = (String) hashMap.get("description");
 		List<String> tagNames = (List<String>) hashMap.get("_tagNames");
-
 		List<HashMap<String, Object>> categoriesPaths = DataUtils.getCategoriesPathFromTagsPath(hashMap.get("_tagsPath"));
 		List<Object> components = (List<Object>) hashMap.get("components");
 
