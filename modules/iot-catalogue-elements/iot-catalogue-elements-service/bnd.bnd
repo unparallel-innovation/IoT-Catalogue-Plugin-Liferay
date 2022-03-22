@@ -1,6 +1,6 @@
 Bundle-Name: iot-catalogue-elements-service
 Bundle-SymbolicName: com.iot_catalogue.service
-Bundle-Version: 1.6.0-beta
+Bundle-Version: 1.6.0-beta.2
 Liferay-Require-SchemaVersion: 1.2.0
 Liferay-Service: true
 -dsannotations-options: inherit

@@ -3,7 +3,6 @@ package com.iot_catalogue.portlet;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +10,6 @@ import java.util.Map.Entry;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -582,6 +580,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		List<String> tagNames = (List<String>) hashMap.get("_tagNames");
 
 		List<HashMap<String, Object>> categoriesPaths = DataUtils.getCategoriesPathFromTagsPath(hashMap.get("_tagsPath"));
+		
 		String parent = (String) hashMap.get("parent");
 		processValidationParent(id, parent, subscription, serviceContext);
 		long userId = subscription.getUserId();

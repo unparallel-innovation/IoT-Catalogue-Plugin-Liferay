@@ -2,6 +2,10 @@
 <%
 IoTValidation iotValidation = (IoTValidation) request.getAttribute("iot_validation");
 AssetEntry assetEntry = (AssetEntry) request.getAttribute("asset_entry");
+
+HashMap<String, List<HashMap<String,String>>> vocabulariesCategories = (HashMap<String, List<HashMap<String,String>>>)request.getAttribute("vocabularies_categories");
+
+
 Object notFound = request.getAttribute("not_found");
 Object notAuthorized =  request.getAttribute("not_authorized");
 if (iotValidation != null) {
@@ -59,6 +63,30 @@ if (notFound != null) {
 
 
 <p class="text-justify d-flex justify-content-center"><%=iotValidation.getDescription()%></p>
+
+<%
+if(vocabulariesCategories!= null){
+	for(Map.Entry<String, List<HashMap<String,String>>> entry:vocabulariesCategories.entrySet()) {
+	
+%>
+		<div class="mb-2">
+		<liferay-util:include page="/asset/visualelements/vocabulary_tags.jsp" servletContext="<%= application %>">
+	 			<liferay-util:param name="vocabularyTitle" value="<%= entry.getKey() %>"/>
+	 			<%
+					for(HashMap<String,String> category: entry.getValue()){
+				%>
+						<liferay-util:param name="category" value="<%=category.toString() %>"/>
+				<%
+					}
+				%>
+		 </liferay-util:include>
+		</div>
+<%
+
+	}
+}
+%>
+<!-- 
 <div class="asset-tags mb-3 d-flex justify-content-center">
 	<liferay-asset:asset-tags-summary
 		className="<%= assetEntry.getClassName() %>"
@@ -66,7 +94,7 @@ if (notFound != null) {
 		portletURL="<%= null %>"
 	/>
 </div>
-
+-->
 <iframe id="iotCatalogueIframe" frameborder="0"
 	style="height: 0px; width: 100%; max-width: 100% !important"
 	src="<%=iotValidation.getEmbeddedUrl()%>">

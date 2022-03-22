@@ -8,7 +8,7 @@ ArrayList<Group> sites = (ArrayList<Group>) renderRequest.getAttribute("sites");
 
 List<Map<String, Object>> options = new ArrayList<>();
 
-boolean hideInputs = false;
+boolean hideInputs = true;
 
 String host = "www.iot-catalogue.com";
 String port = "443";

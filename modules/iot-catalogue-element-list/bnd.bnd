@@ -1,6 +1,6 @@
 Bundle-Name: iot-catalogue-element-list
 Bundle-SymbolicName: com.iot_catalogue.portlet
-Bundle-Version: 1.6.0-beta
+Bundle-Version: 1.6.0-beta.2
 Export-Package: \
 	com.iot_catalogue.constants,\
 	com.iot_catalogue.portlet
