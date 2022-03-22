@@ -4,6 +4,10 @@ Please check WiKi for instructions on how to use the plugin
 
 More information please contact info@unparallel.pt
 
+# [Version 1.6.0](https://github.com/unparallel-innovation/iot-catalogue-plugin-liferay/releases/tag/1.6.0)
+
+* Added support for categories
+
 # [Version 1.5.1](https://github.com/unparallel-innovation/iot-catalogue-plugin-liferay/releases/tag/1.5.1)
 
 * Added auto run for db upgrade process
