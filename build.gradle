@@ -14,3 +14,7 @@ buildscript {
 }
 
 apply plugin: "com.liferay.deployment.helper"
+
+buildDeploymentHelper {
+	outputFile "${buildDir}/iot-catalogue-plugin-liferay.war"
+}
