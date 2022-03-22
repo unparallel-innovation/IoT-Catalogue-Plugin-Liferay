@@ -86,18 +86,10 @@ if(vocabulariesCategories!= null){
 	}
 }
 %>
-<!-- 
-<div class="asset-tags mb-3 d-flex justify-content-center">
-	<liferay-asset:asset-tags-summary
-		className="<%= assetEntry.getClassName() %>"
-		classPK="<%= assetEntry.getClassPK() %>"
-		portletURL="<%= null %>"
-	/>
-</div>
--->
+
 <iframe id="iotCatalogueIframe" frameborder="0"
 	style="height: 0px; width: 100%; max-width: 100% !important"
-	src="<%=iotValidation.getEmbeddedUrl()%>">
+	src="<%=iotValidation.getEmbeddedUrl()%>"></iframe>
 
 
 	<%
