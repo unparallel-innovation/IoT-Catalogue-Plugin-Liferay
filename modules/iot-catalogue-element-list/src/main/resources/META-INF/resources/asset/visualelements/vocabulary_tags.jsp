@@ -18,7 +18,7 @@
 
 <% if(vocabularyTitle != null && categoryHashMaps != null){ %>
 
-<div class="bg-light bg-light rounded p-2 h-100 d-flex align-items-center">
+<div class="bg-light rounded p-2 h-100 d-flex align-items-center">
 	<h5 class="mb-0 mr-2"><%=vocabularyTitle %></h5>
 	<div>
 	
