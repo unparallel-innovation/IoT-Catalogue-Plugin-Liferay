@@ -48,6 +48,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -55,6 +59,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 @Component(immediate = true, property = { "com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.scopeable=true", "javax.portlet.display-name=IoT Catalogue Element List",
@@ -122,8 +127,10 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	public void init() throws PortletException {
 
 		super.init();
+		
 		_log.info("Starting IoT Catalogue plugin");
-
+		deleteClassEntityDocuments(IoTComponent.class.getName());
+		deleteClassEntityDocuments(IoTValidation.class.getName());
 		List<ElementCoordinate> elementCoordinates = _elementCoordinateLocalService.getElementCoordinates();
 
 		for (ElementCoordinate elementCoordinate : elementCoordinates) {
@@ -137,6 +144,18 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	private void deleteClassEntityDocuments(String className) {
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(className);
+		try {
+			IndexWriterHelperUtil.deleteEntityDocuments(indexer.getSearchEngineId(), PortalUtil.getDefaultCompanyId(), className, true);
+		} catch (SearchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+		
+	
 	private void closeAllConnection() {
 		_log.info("Closing all connections");
 		for (Entry<String, TPIData> entry : connections.entrySet()) {

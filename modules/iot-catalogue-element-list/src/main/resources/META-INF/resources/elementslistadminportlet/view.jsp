@@ -67,10 +67,10 @@ try {
 
 					<aui:button  onClick="<%=addSubscriptionUrl.toString()%>"
 						value="Add subscription"></aui:button>
-
+			<!-- 
 			<aui:button onClick="<%=testVar.toString()%>"
 									value="Test"></aui:button>
-				</aui:button-row>
+				</aui:button-row> -->
 			</div>
 		</clay:container-fluid>
 	</div>

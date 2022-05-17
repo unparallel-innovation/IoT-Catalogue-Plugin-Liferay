@@ -1,6 +1,6 @@
 Bundle-Name: iot-catalogue-elements-api
 Bundle-SymbolicName: com.iot_catalogue.api
-Bundle-Version: 1.6.1
+Bundle-Version: 1.6.2
 Export-Package:\
 	com.iot_catalogue.exception,\
 	com.iot_catalogue.model,\
