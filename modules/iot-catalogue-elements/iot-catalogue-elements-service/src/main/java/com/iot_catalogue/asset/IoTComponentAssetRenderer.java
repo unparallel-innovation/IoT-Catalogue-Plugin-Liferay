@@ -59,6 +59,14 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 		return new GeoLocationDDMFormValueReader(elementCoordinates);
 
 	}
+	
+
+	@Override
+	public String getURLImagePreview(PortletRequest portletRequest) throws Exception {
+		// TODO Auto-generated method stub
+		return _iotComponent.getImageUrl();
+	}
+	
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker) {
 

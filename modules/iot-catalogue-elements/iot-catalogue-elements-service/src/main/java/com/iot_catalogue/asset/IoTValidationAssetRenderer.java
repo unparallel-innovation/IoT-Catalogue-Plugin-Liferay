@@ -63,6 +63,14 @@ public class IoTValidationAssetRenderer extends BaseJSPAssetRenderer<IoTValidati
 		return IoTValidationPermission.contains(permissionChecker, iotValidationId, ActionKeys.VIEW);
 	}
 
+	
+	@Override
+	public String getURLImagePreview(PortletRequest portletRequest) throws Exception {
+		// TODO Auto-generated method stub
+		return _iotValidation.getImageUrl();
+	}
+	
+	
 	@Override
 	public IoTValidation getAssetObject() {
 		return _iotValidation;
@@ -199,7 +207,7 @@ public class IoTValidationAssetRenderer extends BaseJSPAssetRenderer<IoTValidati
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+	
 		return null;
 
 
