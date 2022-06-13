@@ -64,6 +64,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 			long userId, 
 			String name, 
 			String description, 
+			String website,
 			String embeddedUrl,
 			String imageUrl,
 			List<HashMap<String, Object>> categoriesPath ,
@@ -103,7 +104,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 				iotComponentId, false, true, true);
 
 		
-		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent, categoriesPath, serviceContext);
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent,website, categoriesPath, serviceContext);
 		//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		return iotComponent;
 
@@ -135,6 +136,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 			long userId, 
 			long groupId, 
 			IoTComponent iotComponent, 
+			String website,
 			List<HashMap<String, Object>> categoriesPath , 
 			ServiceContext serviceContext
 			) throws PortalException {
@@ -171,7 +173,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 				iotComponent.getName(), // title
 				iotComponent.getDescription(), // description
 				null, // summary
-				null, // url
+				website, // url
 				null, // layoutUuid
 				0, // height
 				0, // width
@@ -190,6 +192,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 			long iotComponentId, 
 			String name, 
 			String description,
+			String website,
 			String embeddedUrl,
 			String imageUrl,
 			List<HashMap<String, Object>> categoriesPath , 
@@ -218,7 +221,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 
 		ioTComponentPersistence.update(iotComponent);
 		
-		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent, categoriesPath, serviceContext);
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotComponent,website, categoriesPath, serviceContext);
 		//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		/*
 		 * resourceLocalService.updateResources(serviceContext.getCompanyId(),

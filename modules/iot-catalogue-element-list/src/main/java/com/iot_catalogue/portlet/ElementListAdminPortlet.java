@@ -1,7 +1,9 @@
 package com.iot_catalogue.portlet;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -411,6 +413,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 					@Override
 					public void onElementChanged(String collectionName, String id, Object fields, String action) {
+			
 						_log.info("Element " + action + " on IoT Catalogue collection: " + collectionName + ", id: "
 								+ id);
 						try {
@@ -522,6 +525,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		String embeddedUrl = (String) hashMap.get("_embeddedUrl");
 		String imageUrl = (String) hashMap.get("_imageUrl");
 		String description = (String) hashMap.get("description");
+		String website = (String) hashMap.get("_website");
+
 		List<String> tagNames = (List<String>) hashMap.get("_tagNames");
 		List<HashMap<String, Object>> categoriesPaths = DataUtils.getCategoriesPathFromTagsPath(hashMap.get("_tagsPath"));
 		List<Object> components = (List<Object>) hashMap.get("components");
@@ -531,12 +536,12 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 		if (iotComponent == null) {
 
-			IoTComponent newIoTComponent = _ioTComponentLocalService.addIoTComponent(userId, name, description,
+			IoTComponent newIoTComponent = _ioTComponentLocalService.addIoTComponent(userId, name, description,website,
 					embeddedUrl, imageUrl, categoriesPaths, id, subscription.getSubscriptionId(), serviceContext);
 
 		} else {
 			long iotComponentId = iotComponent.getIotComponentId();
-			_ioTComponentLocalService.updateIoTComponent(userId, iotComponentId, name, description, embeddedUrl,
+			_ioTComponentLocalService.updateIoTComponent(userId, iotComponentId, name, description,website, embeddedUrl,
 					imageUrl, categoriesPaths, serviceContext);
 		}
 
@@ -595,6 +600,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		String embeddedUrl = (String) hashMap.get("_embeddedUrl");
 		String imageUrl = (String) hashMap.get("_imageUrl");
 		String description = (String) hashMap.get("description");
+		String website = (String) hashMap.get("_website");
+
 		List<String> tagNames = (List<String>) hashMap.get("_tagNames");
 
 		List<HashMap<String, Object>> categoriesPaths = DataUtils.getCategoriesPathFromTagsPath(hashMap.get("_tagsPath"));
@@ -605,7 +612,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 		if (iotValidation == null) {
 
-			IoTValidation newIoTValidation = _iotValidationLocalService.addIoTValidation(userId, name, description,
+			IoTValidation newIoTValidation = _iotValidationLocalService.addIoTValidation(userId, name, description,website,
 					embeddedUrl, imageUrl, categoriesPaths, id, subscription.getSubscriptionId(), serviceContext);
 			_elementCoordinateLocalService.deleteElementCoordinates(subscription.getSubscriptionId(),
 					newIoTValidation.getOriginalId(), IoTValidation.class.getName());
@@ -633,7 +640,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 							serviceContext);
 				}
 			}
-			_iotValidationLocalService.updateIoTValidation(userId, iotValidationId, name, description, embeddedUrl,
+			_iotValidationLocalService.updateIoTValidation(userId, iotValidationId, name, description,website, embeddedUrl,
 					imageUrl, categoriesPaths, serviceContext);
 		}
 
@@ -835,16 +842,9 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 	public void test(ActionRequest request, ActionResponse response) throws PortalException {
 		
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(request);
-		try {
+		
 
-
-
-			
-		}catch(Exception ex) {
-			System.out.println(ex);
-		}
-
+		
 
 	}
 

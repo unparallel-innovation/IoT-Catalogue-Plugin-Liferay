@@ -65,6 +65,7 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 			long userId, 
 			String name, 
 			String description, 
+			String website,
 			String embeddedUrl,
 			String imageUrl,
 			List<HashMap<String, Object>> categoriesPath  , 
@@ -102,13 +103,13 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId, IoTValidation.class.getName(),
 				iotValidationId, false, true, true);
 		
-		AssetEntry assetEntry = updateAsset(userId, groupId, iotValidation, categoriesPath, serviceContext);
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotValidation,website, categoriesPath, serviceContext);
 		//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		return iotValidation;
 
 	}
 
-	private AssetEntry updateAsset(long userId, long groupId, IoTValidation iotValidation, List<HashMap<String, Object>> categoriesPath, ServiceContext serviceContext) throws PortalException {
+	private AssetEntry updateAsset(long userId, long groupId, IoTValidation iotValidation, String website,List<HashMap<String, Object>> categoriesPath, ServiceContext serviceContext) throws PortalException {
 
 		String[] tagArray = TagUtils.getTagNamesFromCategoriesPaths(categoriesPath);
 		long[] categoryIds = CategoryUtil.getCategoryIds(categoriesPath,serviceContext);
@@ -143,7 +144,7 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 				iotValidation.getName(), // title
 				iotValidation.getDescription(), // description
 				null, // summary
-				null, // url
+				website, // url
 				null, // layoutUuid
 				0, // height
 				0, // width
@@ -181,6 +182,7 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 			long iotValidationId, 
 			String name, 
 			String description,
+			String website,
 			String embeddedUrl, 
 			String imageUrl, 
 			List<HashMap<String, Object>> categoriesPath , 
@@ -218,7 +220,7 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 		 * serviceContext.getModelPermissions().getActionIds(RoleConstants.GUEST));
 		 */
 
-		AssetEntry assetEntry = updateAsset(userId, groupId, iotValidation, categoriesPath, serviceContext);
+		AssetEntry assetEntry = updateAsset(userId, groupId, iotValidation,website, categoriesPath, serviceContext);
 		//tagManager.addTagNamesToAsset(serviceContext, tagNames, assetEntry.getEntryId());
 		return iotValidation;
 

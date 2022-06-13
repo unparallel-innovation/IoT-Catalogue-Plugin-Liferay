@@ -10,6 +10,21 @@ HashMap<String, List<HashMap<String,String>>> vocabulariesCategories = (HashMap<
 Object notFound =  request.getAttribute("not_found");
 Object notAuthorized =  request.getAttribute("not_authorized");
 
+String url = null;
+String urlHost = null;
+if(assetEntry != null){
+	url = assetEntry.getUrl();
+
+	if(url!=null && !url.equals("")){
+		try{
+		URL urlObj = new URL(url);
+		urlHost = urlObj.getHost();
+		}catch(Exception ex){
+			
+		}
+	}
+}
+
 if (iotComponent != null) {
 	iotComponent = iotComponent.toEscapedModel();
 }
@@ -91,7 +106,15 @@ if(vocabulariesCategories!= null){
 }
 %>
 
-	 
+<% if(url!=null && urlHost!=null){ %>
+
+	<div class="mb-2">
+		<div class="bg-light rounded p-2 h-100 d-flex align-items-center">
+			<h5 class="mb-0 mr-2">Website</h5>
+			<a href="<%= url%>" target="_blank"><%= urlHost %></a>
+		</div>
+	</div>
+<%} %>
 	 
 	 
 
