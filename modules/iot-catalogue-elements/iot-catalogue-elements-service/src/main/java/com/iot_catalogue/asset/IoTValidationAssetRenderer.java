@@ -40,6 +40,13 @@ public class IoTValidationAssetRenderer extends BaseJSPAssetRenderer<IoTValidati
 	private IoTValidation _iotValidation;
 
 	@Override
+	public int getStatus() {
+
+		return super.getStatus();
+	}
+	
+	
+	@Override
 	public boolean hasEditPermission(PermissionChecker permissionChecker) throws PortalException {
 
 		return false;
@@ -123,7 +130,6 @@ public class IoTValidationAssetRenderer extends BaseJSPAssetRenderer<IoTValidati
 	
 	@Override
 	public String getTitle(Locale locale) {
-
 		return _iotValidation.getName();
 	}
 

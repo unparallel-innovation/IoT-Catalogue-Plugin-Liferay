@@ -50,6 +50,7 @@ public class IoTComponentSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setEmbeddedUrl(model.getEmbeddedUrl());
 		soapModel.setImageUrl(model.getImageUrl());
+		soapModel.setElementStatus(model.getElementStatus());
 		soapModel.setSubscriptionId(model.getSubscriptionId());
 
 		return soapModel;
@@ -240,6 +241,14 @@ public class IoTComponentSoap implements Serializable {
 		_imageUrl = imageUrl;
 	}
 
+	public String getElementStatus() {
+		return _elementStatus;
+	}
+
+	public void setElementStatus(String elementStatus) {
+		_elementStatus = elementStatus;
+	}
+
 	public long getSubscriptionId() {
 		return _subscriptionId;
 	}
@@ -265,6 +274,7 @@ public class IoTComponentSoap implements Serializable {
 	private String _description;
 	private String _embeddedUrl;
 	private String _imageUrl;
+	private String _elementStatus;
 	private long _subscriptionId;
 
 }

@@ -35,6 +35,7 @@
 		<column name="description" type="String" />
 		<column name="embeddedUrl" type="String" />
 		<column name="imageUrl" type="String" />
+		<column name="elementStatus" type="String" />
 		<column name="subscriptionId" type="long" />
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
@@ -94,6 +95,7 @@
 		<column name="description" type="String" />
 		<column name="embeddedUrl" type="String" />
 		<column name="imageUrl" type="String" />
+		<column name="elementStatus" type="String" />
 		<column name="subscriptionId" type="long" />
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />

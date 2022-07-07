@@ -1,17 +1,23 @@
 package com.iot_catalogue.portlet;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -19,6 +25,8 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,12 +42,16 @@ import com.iot_catalogue.model.ValidationChild;
 import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
 import com.iot_catalogue.portlet.utils.AssetRelationsPopulator;
 import com.iot_catalogue.portlet.utils.DataUtils;
+import com.iot_catalogue.portlet.utils.FileRequest;
+import com.iot_catalogue.portlet.utils.PDFGeneration;
+import com.iot_catalogue.portlet.utils.ZIPDownloader;
 import com.iot_catalogue.service.ComponentChildLocalService;
 import com.iot_catalogue.service.ElementCoordinateLocalService;
 import com.iot_catalogue.service.IoTComponentLocalService;
 import com.iot_catalogue.service.IoTValidationLocalService;
 import com.iot_catalogue.service.SubscriptionLocalService;
 import com.iot_catalogue.service.ValidationChildLocalService;
+import com.iot_catalogue.tpi_plugin.Connection;
 import com.iot_catalogue.tpi_plugin.TPIData;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -59,9 +71,12 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 @Component(immediate = true, property = { "com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.scopeable=true", "javax.portlet.display-name=IoT Catalogue Element List",
@@ -77,7 +92,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	@Override
 	public void destroy() {
 		closeAllConnection();
-		
+
 	}
 
 	@Override
@@ -91,6 +106,18 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			ArrayList<Group> sites = getSites(serviceContext);
 			renderRequest.setAttribute("users", users);
 			renderRequest.setAttribute("sites", sites);
+
+			String subscriptionId = ParamUtil.getString(renderRequest, "subscriptionId");
+			boolean getEntries = ParamUtil.getBoolean(renderRequest, "getEntries");
+			if (getEntries && !subscriptionId.equals("")) {
+				Subscription subscription = _subscriptionLocalService.getSubscription(Long.parseLong(subscriptionId));
+				String token = subscription.getToken();
+				Connection connection = connections.get(subscriptionId).getConnection();
+				List<Map<String, Object>> entries = PDFGeneration.getQueueEntries(connection, token, true);
+
+				renderRequest.setAttribute("entries", entries);
+			}
+
 		} catch (Exception e) {
 			throw new PortletException(e);
 		}
@@ -129,7 +156,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	public void init() throws PortletException {
 
 		super.init();
-		
+
 		_log.info("Starting IoT Catalogue plugin");
 		deleteClassEntityDocuments(IoTComponent.class.getName());
 		deleteClassEntityDocuments(IoTValidation.class.getName());
@@ -149,15 +176,15 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	private void deleteClassEntityDocuments(String className) {
 		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(className);
 		try {
-			IndexWriterHelperUtil.deleteEntityDocuments(indexer.getSearchEngineId(), PortalUtil.getDefaultCompanyId(), className, true);
+			IndexWriterHelperUtil.deleteEntityDocuments(indexer.getSearchEngineId(), PortalUtil.getDefaultCompanyId(),
+					className, true);
 		} catch (SearchException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-		
-	
+
 	private void closeAllConnection() {
 		_log.info("Closing all connections");
 		for (Entry<String, TPIData> entry : connections.entrySet()) {
@@ -168,7 +195,43 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 	}
 
-	public void addSubscription(ActionRequest request, ActionResponse response) throws PortalException {
+	public void addFilesToQueue(ActionRequest request, ActionResponse response)
+			throws InterruptedException, NumberFormatException, PortalException, ExecutionException {
+		boolean includeComponents = ParamUtil.getString(request, "includeComponents").equals("on")
+				|| ParamUtil.getString(request, "includeComponents").equals("true");
+		boolean includeValidations = ParamUtil.getString(request, "includeValidations").equals("on")
+				|| ParamUtil.getString(request, "includeValidations").equals("true");
+		String subcriptionId = ParamUtil.getString(request, "subscriptionId");
+		Subscription subscription = _subscriptionLocalService.getSubscription(Long.parseLong(subcriptionId));
+		TPIData connection = connections.get(subcriptionId);
+		try {
+			ThemeDisplay  themeDisplay=(ThemeDisplay)request.getAttribute(		WebKeys.THEME_DISPLAY);
+
+			String logo = themeDisplay.getLayoutSetLogo()!=null?themeDisplay.getLayoutSetLogo():themeDisplay.getCompanyLogo();
+			String logoPath = PortalUtil.getPortalURL(themeDisplay) + logo;
+			PDFGeneration.addRequestToQueue(includeComponents, includeValidations, subscription.getToken(),
+					connection.getConnection(),logoPath);
+
+			// response.setRenderParameter("addedToQueue", "true");
+		} catch (TimeoutException e) {
+			SessionErrors.add(request, e.getClass());
+		}
+
+	}
+	
+	public void deleteExportedDocuments(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, InterruptedException, ExecutionException, TimeoutException {
+		String subcriptionId = ParamUtil.getString(request, "subscriptionId");
+		String requestId = ParamUtil.getString(request, "requestId");
+		
+		Subscription subscription = _subscriptionLocalService.getSubscription(Long.parseLong(subcriptionId));
+		Connection connection = connections.get(subcriptionId).getConnection();
+		String token = subscription.getToken();
+		PDFGeneration.deleteExportedDocuments(connection, requestId, token);
+		
+	}
+
+	public void addSubscription(ActionRequest request, ActionResponse response)
+			throws PortalException, InterruptedException, ExecutionException {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(Subscription.class.getName(), request);
 
 		String token = ParamUtil.getString(request, "token");
@@ -187,8 +250,16 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		Subscription subscription = _subscriptionLocalService.addSubscription(userId, groupId, token, host,
 				componentPagePath, validationPagePath, port, useSSL, serviceContext);
 
-		syncDataWithIoTCatalogue(subscription, 100);
-		SessionMessages.add(request, "subscriptionAdded");
+		CompletableFuture<String> completableFuture = syncDataWithIoTCatalogue(subscription);
+		try {
+			if (!completableFuture.isDone()) {
+				completableFuture.get(10, TimeUnit.SECONDS);
+			}
+
+			SessionMessages.add(request, "subscriptionAdded");
+		} catch (TimeoutException e) {
+			SessionErrors.add(request, e.getClass());
+		}
 
 	}
 
@@ -245,8 +316,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	private void syncDataWithIoTCatalogue(Subscription subscription) {
-		syncDataWithIoTCatalogue(subscription, 0);
+	private CompletableFuture<String> syncDataWithIoTCatalogue(Subscription subscription) {
+		return syncDataWithIoTCatalogue(subscription, 0);
 	}
 
 	private ResettableTimer getTimer(Subscription subscription) {
@@ -342,7 +413,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 	}
 
-	private void syncDataWithIoTCatalogue(Subscription subscription, long delay) {
+	private CompletableFuture<String> syncDataWithIoTCatalogue(Subscription subscription, long delay) {
+		CompletableFuture<String> completableFuture = new CompletableFuture<String>();
 		ResettableTimer timer = getTimer(subscription);
 		String key = String.valueOf(subscription.getSubscriptionId());
 		if (connections.get(key) == null) {
@@ -367,8 +439,10 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 							_subscriptionLocalService.setSubscriptionConnectionInfo(subscription.getSubscriptionId(),
 									sessionId, String.valueOf(this.getConnectionState()));
+							completableFuture.complete("");
 						} catch (PortalException e) {
 							// TODO Auto-generated catch block
+
 							e.printStackTrace();
 						}
 					}
@@ -413,7 +487,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 					@Override
 					public void onElementChanged(String collectionName, String id, Object fields, String action) {
-			
+
 						_log.info("Element " + action + " on IoT Catalogue collection: " + collectionName + ", id: "
 								+ id);
 						try {
@@ -449,6 +523,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else {
+			completableFuture.complete("");
 		}
 
 		try {
@@ -457,6 +533,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return completableFuture;
 	}
 
 	private ServiceContext getServiceContextFromSubscription(Subscription subscription) throws Exception {
@@ -526,9 +603,11 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		String imageUrl = (String) hashMap.get("_imageUrl");
 		String description = (String) hashMap.get("description");
 		String website = (String) hashMap.get("_website");
+		String status = (String) hashMap.get("_status");
 
 		List<String> tagNames = (List<String>) hashMap.get("_tagNames");
-		List<HashMap<String, Object>> categoriesPaths = DataUtils.getCategoriesPathFromTagsPath(hashMap.get("_tagsPath"));
+		List<HashMap<String, Object>> categoriesPaths = DataUtils
+				.getCategoriesPathFromTagsPath(hashMap.get("_tagsPath"));
 		List<Object> components = (List<Object>) hashMap.get("components");
 
 		processComponentIds(id, components, subscription, serviceContext);
@@ -536,13 +615,14 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 		if (iotComponent == null) {
 
-			IoTComponent newIoTComponent = _ioTComponentLocalService.addIoTComponent(userId, name, description,website,
-					embeddedUrl, imageUrl, categoriesPaths, id, subscription.getSubscriptionId(), serviceContext);
+			IoTComponent newIoTComponent = _ioTComponentLocalService.addIoTComponent(userId, name, description, website,
+					embeddedUrl, imageUrl, status, categoriesPaths, id, subscription.getSubscriptionId(),
+					serviceContext);
 
 		} else {
 			long iotComponentId = iotComponent.getIotComponentId();
-			_ioTComponentLocalService.updateIoTComponent(userId, iotComponentId, name, description,website, embeddedUrl,
-					imageUrl, categoriesPaths, serviceContext);
+			_ioTComponentLocalService.updateIoTComponent(userId, iotComponentId, name, description, website,
+					embeddedUrl, imageUrl, status, categoriesPaths, serviceContext);
 		}
 
 	}
@@ -601,19 +681,22 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		String imageUrl = (String) hashMap.get("_imageUrl");
 		String description = (String) hashMap.get("description");
 		String website = (String) hashMap.get("_website");
+		String status = (String) hashMap.get("_status");
 
 		List<String> tagNames = (List<String>) hashMap.get("_tagNames");
 
-		List<HashMap<String, Object>> categoriesPaths = DataUtils.getCategoriesPathFromTagsPath(hashMap.get("_tagsPath"));
-		
+		List<HashMap<String, Object>> categoriesPaths = DataUtils
+				.getCategoriesPathFromTagsPath(hashMap.get("_tagsPath"));
+
 		String parent = (String) hashMap.get("parent");
 		processValidationParent(id, parent, subscription, serviceContext);
 		long userId = subscription.getUserId();
 
 		if (iotValidation == null) {
 
-			IoTValidation newIoTValidation = _iotValidationLocalService.addIoTValidation(userId, name, description,website,
-					embeddedUrl, imageUrl, categoriesPaths, id, subscription.getSubscriptionId(), serviceContext);
+			IoTValidation newIoTValidation = _iotValidationLocalService.addIoTValidation(userId, name, description,
+					website, embeddedUrl, imageUrl, status, categoriesPaths, id, subscription.getSubscriptionId(),
+					serviceContext);
 			_elementCoordinateLocalService.deleteElementCoordinates(subscription.getSubscriptionId(),
 					newIoTValidation.getOriginalId(), IoTValidation.class.getName());
 
@@ -640,8 +723,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 							serviceContext);
 				}
 			}
-			_iotValidationLocalService.updateIoTValidation(userId, iotValidationId, name, description,website, embeddedUrl,
-					imageUrl, categoriesPaths, serviceContext);
+			_iotValidationLocalService.updateIoTValidation(userId, iotValidationId, name, description, website,
+					embeddedUrl, imageUrl, status, categoriesPaths, serviceContext);
 		}
 
 	}
@@ -840,10 +923,60 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	public void test(ActionRequest request, ActionResponse response) throws PortalException {
-		
-		
 
+	@Override
+	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws IOException, PortletException {
+
+		String subscriptionId = ParamUtil.getString(resourceRequest, "subscriptionId");
+		String requestId = ParamUtil.getString(resourceRequest, "requestId");
+		if (!subscriptionId.equals("") && !requestId.equals("")) {
+
+			Connection connection = connections.get(subscriptionId).getConnection();
+
+			try {
+				Subscription subscription = _subscriptionLocalService.getSubscription(Long.parseLong(subscriptionId));
+				_log.info("Starting download");
+				Map<String, Object> entry = PDFGeneration
+						.getQueueEntries(connection, subscription.getToken(), false, requestId).get(0);
+				String status = (String) entry.get("status");
+				if (status.equals("Finished")) {
+					String requestDateStr = (String)entry.get("requestDateStr");
+					List<Map<String, String>> files = (List<Map<String, String>>) entry.get("files");
+					ArrayList<FileRequest> fileRequests = new ArrayList<FileRequest>();
+					for (Map<String, String> file : files) {
+						String url = file.get("url");
+						String filename = file.get("filename");
+						String path = file.get("path");
+						FileRequest fileRequest = new FileRequest(url, filename, path);
+						fileRequests.add(fileRequest);
+					}
+
+					resourceResponse.setContentType("application/application-download");
+					resourceResponse.setProperty("Content-disposition", "attachement; filename=GeneratedDocuments_" + requestDateStr +".zip");
+
+					OutputStream outputStream = resourceResponse.getPortletOutputStream();
+					ZIPDownloader zipDownloader = new ZIPDownloader(outputStream, fileRequests);
+					zipDownloader.start();
+					outputStream.flush();
+					outputStream.close();
+					resourceResponse.setContentType("application/zip");
+				}
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+	public void test(ActionRequest request, ActionResponse resourceResponse)
+			throws PortalException, InterruptedException, ExecutionException {
+	
+		
+	
 		
 
 	}

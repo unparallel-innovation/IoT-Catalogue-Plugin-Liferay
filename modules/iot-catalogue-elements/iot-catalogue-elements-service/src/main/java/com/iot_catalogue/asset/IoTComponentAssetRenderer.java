@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent> {
 
@@ -37,7 +38,11 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 		_iotComponent = iotComponent;
 	}
 
+	@Override
+	public int getStatus() {
 
+		return super.getStatus();
+	}
 	
 	private IoTComponent _iotComponent;
 
@@ -123,7 +128,6 @@ public class IoTComponentAssetRenderer extends BaseJSPAssetRenderer<IoTComponent
 
 	@Override
 	public String getTitle(Locale locale) {
-
 		return _iotComponent.getName();
 	}
 

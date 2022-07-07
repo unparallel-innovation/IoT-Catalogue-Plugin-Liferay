@@ -83,7 +83,7 @@ public interface IoTComponentLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public IoTComponent addIoTComponent(
 			long userId, String name, String description, String website,
-			String embeddedUrl, String imageUrl,
+			String embeddedUrl, String imageUrl, String elementStatus,
 			List<HashMap<String, Object>> categoriesPath, String originalId,
 			long subscriptionId, ServiceContext serviceContext)
 		throws PortalException;
@@ -373,7 +373,7 @@ public interface IoTComponentLocalService
 	public IoTComponent updateIoTComponent(
 			long userId, long iotComponentId, String name, String description,
 			String website, String embeddedUrl, String imageUrl,
-			List<HashMap<String, Object>> categoriesPath,
+			String elementStatus, List<HashMap<String, Object>> categoriesPath,
 			ServiceContext serviceContext)
 		throws PortalException;
 

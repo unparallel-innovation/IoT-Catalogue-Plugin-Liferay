@@ -362,6 +362,21 @@ public interface IoTValidationModel
 	public void setImageUrl(String imageUrl);
 
 	/**
+	 * Returns the element status of this io t validation.
+	 *
+	 * @return the element status of this io t validation
+	 */
+	@AutoEscape
+	public String getElementStatus();
+
+	/**
+	 * Sets the element status of this io t validation.
+	 *
+	 * @param elementStatus the element status of this io t validation
+	 */
+	public void setElementStatus(String elementStatus);
+
+	/**
 	 * Returns the subscription ID of this io t validation.
 	 *
 	 * @return the subscription ID of this io t validation

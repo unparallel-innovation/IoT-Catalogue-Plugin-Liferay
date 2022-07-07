@@ -49,6 +49,8 @@ public class TPIData {
 		
 	}
 	
+	
+	
 	private void onQueueChanged(String collectionName, String id, Object fields, String action) {
 	
 		if(collectionName.equals(tpiCollectionName)) {
@@ -86,6 +88,9 @@ public class TPIData {
 		
 	}
 	
+	public Connection getConnection() {
+		return connection;
+	}
 	
 	private void subscribeToTPIInfo() {
 		DDPListener ddpListener = new DDPListener() {

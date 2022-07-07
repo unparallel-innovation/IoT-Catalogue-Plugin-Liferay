@@ -67,6 +67,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 			String website,
 			String embeddedUrl,
 			String imageUrl,
+			String elementStatus,
 			List<HashMap<String, Object>> categoriesPath ,
 			String originalId, 
 			long subscriptionId, 
@@ -94,6 +95,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 		iotComponent.setDescription(description);
 		iotComponent.setEmbeddedUrl(embeddedUrl);
 		iotComponent.setImageUrl(imageUrl);
+		iotComponent.setElementStatus(elementStatus);
 		iotComponent.setOriginalId(originalId);
 		iotComponent.setSubscriptionId(subscriptionId);
 	
@@ -195,6 +197,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 			String website,
 			String embeddedUrl,
 			String imageUrl,
+			String elementStatus,
 			List<HashMap<String, Object>> categoriesPath , 
 			ServiceContext serviceContext) throws PortalException {
 		Date now = new Date();
@@ -217,6 +220,19 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 		if (imageUrl != null) {
 			iotComponent.setImageUrl(imageUrl);
 		}
+		String prevElementStatus = iotComponent.getElementStatus();
+		if(
+			elementStatus!=null && prevElementStatus!=null && (
+				elementStatus == null && 	prevElementStatus!=null ||
+				elementStatus != null && 	prevElementStatus==null ||
+				!elementStatus.equals(prevElementStatus)
+			)
+	
+			
+		) {
+			iotComponent.setElementStatus(elementStatus);
+		}
+		
 		iotComponent.setExpandoBridgeAttributes(serviceContext);
 
 		ioTComponentPersistence.update(iotComponent);

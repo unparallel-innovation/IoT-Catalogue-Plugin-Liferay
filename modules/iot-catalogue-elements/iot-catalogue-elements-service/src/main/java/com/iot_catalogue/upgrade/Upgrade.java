@@ -18,6 +18,7 @@ import org.osgi.service.component.annotations.Reference;
 import com.iot_catalogue.upgrade.v_1_1_0.ElementCoordinateUpgrade;
 import com.iot_catalogue.upgrade.v_1_2_0.ComponentChildUpgrade;
 import com.iot_catalogue.upgrade.v_1_2_0.ValidationChildUpgrade;
+import com.iot_catalogue.upgrade.v_1_3_0.AddElementStatusField;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,6 +39,7 @@ public class Upgrade implements UpgradeStepRegistrator{
 		_log.info("Service upgrade step registrator started");
 		registry.register("1.0.0", "1.1.0", new ElementCoordinateUpgrade());
 		registry.register("1.1.0", "1.2.0", new ComponentChildUpgrade(), new ValidationChildUpgrade());
+		registry.register("1.2.0", "1.3.0", new AddElementStatusField());
 
 	}
 	

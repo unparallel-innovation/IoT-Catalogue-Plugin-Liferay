@@ -12,7 +12,6 @@ try {
 <portlet:actionURL name="deleteAll" var="deleteAllVar"></portlet:actionURL>
 <portlet:actionURL name="deleteAllSubscriptions"
 	var="deleteAllSubscriptionsVar"></portlet:actionURL>
-<portlet:actionURL name="test" var="testVar"></portlet:actionURL>
 
 
 <portlet:renderURL var="addSubscriptionUrl">
@@ -21,6 +20,9 @@ try {
 
 </portlet:renderURL>
 
+<portlet:actionURL name="test" var="testVar">
+	
+		</portlet:actionURL>
 
 <div class="closed sidenav-container sidenav-right"
 	id="<%=liferayPortletResponse.getNamespace() + "infoPanelId"%>">

@@ -84,7 +84,8 @@ public class IoTComponentModelImpl
 		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP},
 		{"originalId", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"embeddedUrl", Types.VARCHAR},
-		{"imageUrl", Types.VARCHAR}, {"subscriptionId", Types.BIGINT}
+		{"imageUrl", Types.VARCHAR}, {"elementStatus", Types.VARCHAR},
+		{"subscriptionId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -108,11 +109,12 @@ public class IoTComponentModelImpl
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("embeddedUrl", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("imageUrl", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("elementStatus", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("subscriptionId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table IoTCatalogue_IoTComponent (uuid_ VARCHAR(75) null,iotComponentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,originalId VARCHAR(75) null,name VARCHAR(1000) null,description TEXT null,embeddedUrl VARCHAR(2000) null,imageUrl VARCHAR(500) null,subscriptionId LONG)";
+		"create table IoTCatalogue_IoTComponent (uuid_ VARCHAR(75) null,iotComponentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,originalId VARCHAR(75) null,name VARCHAR(1000) null,description TEXT null,embeddedUrl VARCHAR(2000) null,imageUrl VARCHAR(500) null,elementStatus VARCHAR(75) null,subscriptionId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table IoTCatalogue_IoTComponent";
@@ -218,6 +220,7 @@ public class IoTComponentModelImpl
 		model.setDescription(soapModel.getDescription());
 		model.setEmbeddedUrl(soapModel.getEmbeddedUrl());
 		model.setImageUrl(soapModel.getImageUrl());
+		model.setElementStatus(soapModel.getElementStatus());
 		model.setSubscriptionId(soapModel.getSubscriptionId());
 
 		return model;
@@ -442,6 +445,11 @@ public class IoTComponentModelImpl
 		attributeSetterBiConsumers.put(
 			"imageUrl",
 			(BiConsumer<IoTComponent, String>)IoTComponent::setImageUrl);
+		attributeGetterFunctions.put(
+			"elementStatus", IoTComponent::getElementStatus);
+		attributeSetterBiConsumers.put(
+			"elementStatus",
+			(BiConsumer<IoTComponent, String>)IoTComponent::setElementStatus);
 		attributeGetterFunctions.put(
 			"subscriptionId", IoTComponent::getSubscriptionId);
 		attributeSetterBiConsumers.put(
@@ -836,6 +844,26 @@ public class IoTComponentModelImpl
 
 	@JSON
 	@Override
+	public String getElementStatus() {
+		if (_elementStatus == null) {
+			return "";
+		}
+		else {
+			return _elementStatus;
+		}
+	}
+
+	@Override
+	public void setElementStatus(String elementStatus) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_elementStatus = elementStatus;
+	}
+
+	@JSON
+	@Override
 	public long getSubscriptionId() {
 		return _subscriptionId;
 	}
@@ -1016,6 +1044,7 @@ public class IoTComponentModelImpl
 		ioTComponentImpl.setDescription(getDescription());
 		ioTComponentImpl.setEmbeddedUrl(getEmbeddedUrl());
 		ioTComponentImpl.setImageUrl(getImageUrl());
+		ioTComponentImpl.setElementStatus(getElementStatus());
 		ioTComponentImpl.setSubscriptionId(getSubscriptionId());
 
 		ioTComponentImpl.resetOriginalValues();
@@ -1200,6 +1229,14 @@ public class IoTComponentModelImpl
 			ioTComponentCacheModel.imageUrl = null;
 		}
 
+		ioTComponentCacheModel.elementStatus = getElementStatus();
+
+		String elementStatus = ioTComponentCacheModel.elementStatus;
+
+		if ((elementStatus != null) && (elementStatus.length() == 0)) {
+			ioTComponentCacheModel.elementStatus = null;
+		}
+
 		ioTComponentCacheModel.subscriptionId = getSubscriptionId();
 
 		return ioTComponentCacheModel;
@@ -1293,6 +1330,7 @@ public class IoTComponentModelImpl
 	private String _description;
 	private String _embeddedUrl;
 	private String _imageUrl;
+	private String _elementStatus;
 	private long _subscriptionId;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1341,6 +1379,7 @@ public class IoTComponentModelImpl
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("embeddedUrl", _embeddedUrl);
 		_columnOriginalValues.put("imageUrl", _imageUrl);
+		_columnOriginalValues.put("elementStatus", _elementStatus);
 		_columnOriginalValues.put("subscriptionId", _subscriptionId);
 	}
 
@@ -1399,7 +1438,9 @@ public class IoTComponentModelImpl
 
 		columnBitmasks.put("imageUrl", 65536L);
 
-		columnBitmasks.put("subscriptionId", 131072L);
+		columnBitmasks.put("elementStatus", 131072L);
+
+		columnBitmasks.put("subscriptionId", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

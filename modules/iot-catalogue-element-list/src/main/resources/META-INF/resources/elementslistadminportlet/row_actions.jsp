@@ -28,6 +28,25 @@ String deleteConfirm = "javascript:confirmDel()";
 	<portlet:param name="subscriptionId"
 		value="<%=String.valueOf(subscription.getSubscriptionId())%>" />
 </portlet:actionURL>
+<portlet:renderURL var="pdfGenerationFormUrl">
+	<portlet:param name="mvcPath"
+		value="/elementslistadminportlet/pdf_generation/pdf_generation_form.jsp" />
+	<portlet:param name="subscriptionId"
+	value="<%=String.valueOf(subscription.getSubscriptionId())%>" />
+
+
+</portlet:renderURL>
+<portlet:renderURL var="openQueueURL">
+	<portlet:param name="mvcPath"
+		value="/elementslistadminportlet/pdf_generation/pdf_generation_queue.jsp" />
+	<portlet:param name="subscriptionId"
+	value="<%=String.valueOf(subscription.getSubscriptionId())%>" />
+	<portlet:param name="getEntries"
+	value="true" />
+
+
+</portlet:renderURL>
+
 
 
 <portlet:renderURL var="modalURL"
@@ -135,7 +154,17 @@ Liferay.provide(
 		 <%
  if (subscription.getConnectionState().equals("Connected")) {
  %> 
- 
+ <liferay-ui:icon
+	
+		 ariaRole="button" 
+			image="add_instance" cssClass="icon-monospaced cursor-pointer"    markupView="lexicon" url="<%=pdfGenerationFormUrl%>"
+			message="Extract elements to PDF"  />
+	 <liferay-ui:icon
+	
+		 ariaRole="button" 
+			image="all_pages" cssClass="icon-monospaced cursor-pointer"    markupView="lexicon" url="<%=openQueueURL%>"
+			message="See PDF queue for this subscription"  />		
+			
  <liferay-ui:icon image="unsubscribe" linkCssClass="icon-monospaced"
 		markupView="lexicon" message="Disconnect"
 		url="<%=disconnectActionUrl%>" /> 

@@ -63,7 +63,7 @@ public class IoTComponentCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -99,6 +99,8 @@ public class IoTComponentCacheModel
 		sb.append(embeddedUrl);
 		sb.append(", imageUrl=");
 		sb.append(imageUrl);
+		sb.append(", elementStatus=");
+		sb.append(elementStatus);
 		sb.append(", subscriptionId=");
 		sb.append(subscriptionId);
 		sb.append("}");
@@ -195,6 +197,13 @@ public class IoTComponentCacheModel
 			ioTComponentImpl.setImageUrl(imageUrl);
 		}
 
+		if (elementStatus == null) {
+			ioTComponentImpl.setElementStatus("");
+		}
+		else {
+			ioTComponentImpl.setElementStatus(elementStatus);
+		}
+
 		ioTComponentImpl.setSubscriptionId(subscriptionId);
 
 		ioTComponentImpl.resetOriginalValues();
@@ -227,6 +236,7 @@ public class IoTComponentCacheModel
 		description = objectInput.readUTF();
 		embeddedUrl = objectInput.readUTF();
 		imageUrl = objectInput.readUTF();
+		elementStatus = objectInput.readUTF();
 
 		subscriptionId = objectInput.readLong();
 	}
@@ -306,6 +316,13 @@ public class IoTComponentCacheModel
 			objectOutput.writeUTF(imageUrl);
 		}
 
+		if (elementStatus == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(elementStatus);
+		}
+
 		objectOutput.writeLong(subscriptionId);
 	}
 
@@ -326,6 +343,7 @@ public class IoTComponentCacheModel
 	public String description;
 	public String embeddedUrl;
 	public String imageUrl;
+	public String elementStatus;
 	public long subscriptionId;
 
 }

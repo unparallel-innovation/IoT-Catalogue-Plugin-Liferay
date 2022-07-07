@@ -362,6 +362,21 @@ public interface IoTComponentModel
 	public void setImageUrl(String imageUrl);
 
 	/**
+	 * Returns the element status of this io t component.
+	 *
+	 * @return the element status of this io t component
+	 */
+	@AutoEscape
+	public String getElementStatus();
+
+	/**
+	 * Sets the element status of this io t component.
+	 *
+	 * @param elementStatus the element status of this io t component
+	 */
+	public void setElementStatus(String elementStatus);
+
+	/**
 	 * Returns the subscription ID of this io t component.
 	 *
 	 * @return the subscription ID of this io t component

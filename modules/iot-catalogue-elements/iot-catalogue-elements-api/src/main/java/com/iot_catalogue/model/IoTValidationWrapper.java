@@ -60,6 +60,7 @@ public class IoTValidationWrapper
 		attributes.put("description", getDescription());
 		attributes.put("embeddedUrl", getEmbeddedUrl());
 		attributes.put("imageUrl", getImageUrl());
+		attributes.put("elementStatus", getElementStatus());
 		attributes.put("subscriptionId", getSubscriptionId());
 
 		return attributes;
@@ -169,6 +170,12 @@ public class IoTValidationWrapper
 			setImageUrl(imageUrl);
 		}
 
+		String elementStatus = (String)attributes.get("elementStatus");
+
+		if (elementStatus != null) {
+			setElementStatus(elementStatus);
+		}
+
 		Long subscriptionId = (Long)attributes.get("subscriptionId");
 
 		if (subscriptionId != null) {
@@ -204,6 +211,16 @@ public class IoTValidationWrapper
 	@Override
 	public String getDescription() {
 		return model.getDescription();
+	}
+
+	/**
+	 * Returns the element status of this io t validation.
+	 *
+	 * @return the element status of this io t validation
+	 */
+	@Override
+	public String getElementStatus() {
+		return model.getElementStatus();
 	}
 
 	/**
@@ -499,6 +516,16 @@ public class IoTValidationWrapper
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
+	}
+
+	/**
+	 * Sets the element status of this io t validation.
+	 *
+	 * @param elementStatus the element status of this io t validation
+	 */
+	@Override
+	public void setElementStatus(String elementStatus) {
+		model.setElementStatus(elementStatus);
 	}
 
 	/**

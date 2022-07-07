@@ -63,6 +63,7 @@
 		<field name="imageUrl" type="String">
 			<hint name="max-length">500</hint>
 		</field>
+		<field name="elementStatus" type="String" />
 		<field name="subscriptionId" type="long" />
 	</model>
 	<model name="com.iot_catalogue.model.IoTValidation">
@@ -91,6 +92,7 @@
 		<field name="imageUrl" type="String">
 			<hint name="max-length">500</hint>
 		</field>
+		<field name="elementStatus" type="String" />
 		<field name="subscriptionId" type="long" />
 	</model>
 	<model name="com.iot_catalogue.model.Subscription">

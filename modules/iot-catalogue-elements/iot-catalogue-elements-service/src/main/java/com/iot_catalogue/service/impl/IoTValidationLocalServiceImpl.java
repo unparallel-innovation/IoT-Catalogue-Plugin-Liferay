@@ -68,6 +68,7 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 			String website,
 			String embeddedUrl,
 			String imageUrl,
+			String elementStatus,
 			List<HashMap<String, Object>> categoriesPath  , 
 			String originalId, 
 			long subscriptionId, 
@@ -96,6 +97,7 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 		iotValidation.setDescription(description);
 		iotValidation.setEmbeddedUrl(embeddedUrl);
 		iotValidation.setImageUrl(imageUrl);
+		iotValidation.setElementStatus(elementStatus);
 		iotValidation.setOriginalId(originalId);
 		iotValidation.setExpandoBridgeAttributes(serviceContext);
 		iotValidation.setSubscriptionId(subscriptionId);
@@ -184,7 +186,8 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 			String description,
 			String website,
 			String embeddedUrl, 
-			String imageUrl, 
+			String imageUrl,
+			String elementStatus,
 			List<HashMap<String, Object>> categoriesPath , 
 			ServiceContext serviceContext) throws PortalException {
 		Date now = new Date();
@@ -207,6 +210,19 @@ public class IoTValidationLocalServiceImpl extends IoTValidationLocalServiceBase
 		}
 		if (imageUrl != null) {
 			iotValidation.setImageUrl(imageUrl);
+		}
+		String prevElementStatus = iotValidation.getElementStatus();
+		
+		if(
+				elementStatus!=null && prevElementStatus!=null && (
+					elementStatus == null && 	prevElementStatus!=null ||
+					elementStatus != null && 	prevElementStatus==null ||
+					!elementStatus.equals(prevElementStatus)
+				)
+		
+				
+			) {
+			iotValidation.setElementStatus(elementStatus);
 		}
 		iotValidation.setExpandoBridgeAttributes(serviceContext);
 

@@ -128,6 +128,7 @@ create table IoTCatalogue_IoTComponent (
 	description TEXT null,
 	embeddedUrl VARCHAR(2000) null,
 	imageUrl VARCHAR(500) null,
+	elementStatus VARCHAR(75) null,
 	subscriptionId LONG
 );
 
@@ -149,6 +150,7 @@ create table IoTCatalogue_IoTValidation (
 	description TEXT null,
 	embeddedUrl VARCHAR(2000) null,
 	imageUrl VARCHAR(500) null,
+	elementStatus VARCHAR(75) null,
 	subscriptionId LONG
 );
 

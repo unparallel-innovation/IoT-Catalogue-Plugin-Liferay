@@ -61,7 +61,7 @@ public class IoTValidationLocalServiceUtil {
 
 	public static IoTValidation addIoTValidation(
 			long userId, String name, String description, String website,
-			String embeddedUrl, String imageUrl,
+			String embeddedUrl, String imageUrl, String elementStatus,
 			List<java.util.HashMap<String, Object>> categoriesPath,
 			String originalId, long subscriptionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -69,7 +69,8 @@ public class IoTValidationLocalServiceUtil {
 
 		return getService().addIoTValidation(
 			userId, name, description, website, embeddedUrl, imageUrl,
-			categoriesPath, originalId, subscriptionId, serviceContext);
+			elementStatus, categoriesPath, originalId, subscriptionId,
+			serviceContext);
 	}
 
 	/**
@@ -431,13 +432,14 @@ public class IoTValidationLocalServiceUtil {
 	public static IoTValidation updateIoTValidation(
 			long userId, long iotValidationId, String name, String description,
 			String website, String embeddedUrl, String imageUrl,
+			String elementStatus,
 			List<java.util.HashMap<String, Object>> categoriesPath,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateIoTValidation(
 			userId, iotValidationId, name, description, website, embeddedUrl,
-			imageUrl, categoriesPath, serviceContext);
+			imageUrl, elementStatus, categoriesPath, serviceContext);
 	}
 
 	public static IoTValidationLocalService getService() {
