@@ -28,8 +28,8 @@ String subscriptionId = (String) request.getParameter("subscriptionId");
 					name="<portlet:namespace />fm">
 					<liferay-frontend:fieldset>
 						<aui:input type="hidden" name="subscriptionId"   value="<%= subscriptionId %>" />
-						<aui:input    name="includeComponents"  label="includeComponents" type="checkbox"/>
-						<aui:input name="includeValidations" label="includeValidations" type="checkbox" />
+						<aui:input    name="includeComponents"  label="Components" type="checkbox"/>
+						<aui:input name="includeValidations" label="Validations" type="checkbox" />
 					</liferay-frontend:fieldset>
 					<aui:button-row>
 
