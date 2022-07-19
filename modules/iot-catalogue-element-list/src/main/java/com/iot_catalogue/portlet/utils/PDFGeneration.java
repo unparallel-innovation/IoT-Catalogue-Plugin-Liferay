@@ -33,7 +33,7 @@ public class PDFGeneration {
 		
 		params[0] = hashMap;
 		connection.call("generatePDFFromTPI",params,ddpListener);
-		completableFuture.get(10,TimeUnit.SECONDS);
+		completableFuture.get(30,TimeUnit.SECONDS);
 
 	}
 	
@@ -59,7 +59,7 @@ public class PDFGeneration {
 		params[2] = requestId;
 		
 		connection.call("getTPIPDFQueue",params,ddpListener);
-		return completableFuture.get(10, TimeUnit.SECONDS);
+		return completableFuture.get(30, TimeUnit.SECONDS);
 		
 	}
 	
@@ -76,6 +76,6 @@ public class PDFGeneration {
 		params[0] = requestId;
 		params[1] = token;
 		connection.call("deleteTPIExportedDocuments",params,ddpListener);
-		completableFuture.get(10,TimeUnit.SECONDS);
+		completableFuture.get(2,TimeUnit.MINUTES);
 	}
 }

@@ -219,14 +219,18 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 	}
 	
-	public void deleteExportedDocuments(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, InterruptedException, ExecutionException, TimeoutException {
+	public void deleteExportedDocuments(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, InterruptedException, ExecutionException {
 		String subcriptionId = ParamUtil.getString(request, "subscriptionId");
 		String requestId = ParamUtil.getString(request, "requestId");
 		
 		Subscription subscription = _subscriptionLocalService.getSubscription(Long.parseLong(subcriptionId));
 		Connection connection = connections.get(subcriptionId).getConnection();
 		String token = subscription.getToken();
-		PDFGeneration.deleteExportedDocuments(connection, requestId, token);
+		try {
+			PDFGeneration.deleteExportedDocuments(connection, requestId, token);
+		}catch (TimeoutException e) {
+			SessionErrors.add(request, e.getClass());
+		}
 		
 	}
 
