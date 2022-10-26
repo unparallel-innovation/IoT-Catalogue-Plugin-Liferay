@@ -4,6 +4,31 @@ Please check WiKi for instructions on how to use the plugin
 
 More information please contact info@unparallel.pt
 
+
+# [Version 1.9.1](https://github.com/unparallel-innovation/iot-catalogue-plugin-liferay/releases/tag/1.9.1)
+
+* Fixed bug on upgrade process
+
+# [Version 1.9.0](https://github.com/unparallel-innovation/iot-catalogue-plugin-liferay/releases/tag/1.9.0)
+
+* Added PDF export feature
+
+# [Version 1.8.1](https://github.com/unparallel-innovation/iot-catalogue-plugin-liferay/releases/tag/1.8.1)
+
+* Showing web site of component and validation under the asset page
+
+# [Version 1.7.1](https://github.com/unparallel-innovation/iot-catalogue-plugin-liferay/releases/tag/1.7.1)
+
+* Fixed minor bug to allow overriding Language Keys
+
+# [Version 1.7.0](https://github.com/unparallel-innovation/iot-catalogue-plugin-liferay/releases/tag/1.7.0)
+
+* Added support to image preview (assets)
+
+# [Version 1.6.2](https://github.com/unparallel-innovation/iot-catalogue-plugin-liferay/releases/tag/1.6.2)
+
+* Fixed bug with lost search indexes
+
 # [Version 1.6.1](https://github.com/unparallel-innovation/iot-catalogue-plugin-liferay/releases/tag/1.6.1)
 
 * Fixed bug on plugin installation for Liferay version 7.3 CE GA6
