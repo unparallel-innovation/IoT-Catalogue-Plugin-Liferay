@@ -37,6 +37,20 @@ create index IX_3D6CF8D1 on IoTCatalogue_ElementCoordinate (subscriptionId, elem
 create index IX_4C3812AA on IoTCatalogue_ElementCoordinate (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_E7193BAC on IoTCatalogue_ElementCoordinate (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_B2445D52 on IoTCatalogue_ElementEntity (elementOriginalId[$COLUMN_LENGTH:75$], elementClassName[$COLUMN_LENGTH:75$], label[$COLUMN_LENGTH:75$]);
+create index IX_CC0C53E9 on IoTCatalogue_ElementEntity (groupId);
+create index IX_70CEFBC7 on IoTCatalogue_ElementEntity (status);
+create index IX_A8DD43DE on IoTCatalogue_ElementEntity (subscriptionId, elementOriginalId[$COLUMN_LENGTH:75$], elementClassName[$COLUMN_LENGTH:75$], label[$COLUMN_LENGTH:75$]);
+create index IX_45515995 on IoTCatalogue_ElementEntity (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_511D4157 on IoTCatalogue_ElementEntity (uuid_[$COLUMN_LENGTH:75$], groupId);
+
+create index IX_34BF54F8 on IoTCatalogue_ElementStandard (elementOriginalId[$COLUMN_LENGTH:75$], elementClassName[$COLUMN_LENGTH:75$]);
+create index IX_FDD2CACF on IoTCatalogue_ElementStandard (groupId);
+create index IX_F68B1021 on IoTCatalogue_ElementStandard (status);
+create index IX_4C02E7EC on IoTCatalogue_ElementStandard (subscriptionId, elementOriginalId[$COLUMN_LENGTH:75$], elementClassName[$COLUMN_LENGTH:75$]);
+create index IX_66B456F on IoTCatalogue_ElementStandard (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_D3945BB1 on IoTCatalogue_ElementStandard (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 create index IX_54BB3957 on IoTCatalogue_IoTComponent (groupId, status);
 create index IX_CCC1E73D on IoTCatalogue_IoTComponent (originalId[$COLUMN_LENGTH:75$], groupId, subscriptionId);
 create index IX_3E43DAA5 on IoTCatalogue_IoTComponent (originalId[$COLUMN_LENGTH:75$], subscriptionId);

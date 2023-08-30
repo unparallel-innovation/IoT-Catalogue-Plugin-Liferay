@@ -362,6 +362,36 @@ public interface IoTComponentModel
 	public void setImageUrl(String imageUrl);
 
 	/**
+	 * Returns the license of this io t component.
+	 *
+	 * @return the license of this io t component
+	 */
+	@AutoEscape
+	public String getLicense();
+
+	/**
+	 * Sets the license of this io t component.
+	 *
+	 * @param license the license of this io t component
+	 */
+	public void setLicense(String license);
+
+	/**
+	 * Returns the trl of this io t component.
+	 *
+	 * @return the trl of this io t component
+	 */
+	@AutoEscape
+	public String getTrl();
+
+	/**
+	 * Sets the trl of this io t component.
+	 *
+	 * @param trl the trl of this io t component
+	 */
+	public void setTrl(String trl);
+
+	/**
 	 * Returns the element status of this io t component.
 	 *
 	 * @return the element status of this io t component

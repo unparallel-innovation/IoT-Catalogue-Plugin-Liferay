@@ -50,6 +50,8 @@ public class IoTComponentSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setEmbeddedUrl(model.getEmbeddedUrl());
 		soapModel.setImageUrl(model.getImageUrl());
+		soapModel.setLicense(model.getLicense());
+		soapModel.setTrl(model.getTrl());
 		soapModel.setElementStatus(model.getElementStatus());
 		soapModel.setSubscriptionId(model.getSubscriptionId());
 
@@ -241,6 +243,22 @@ public class IoTComponentSoap implements Serializable {
 		_imageUrl = imageUrl;
 	}
 
+	public String getLicense() {
+		return _license;
+	}
+
+	public void setLicense(String license) {
+		_license = license;
+	}
+
+	public String getTrl() {
+		return _trl;
+	}
+
+	public void setTrl(String trl) {
+		_trl = trl;
+	}
+
 	public String getElementStatus() {
 		return _elementStatus;
 	}
@@ -274,6 +292,8 @@ public class IoTComponentSoap implements Serializable {
 	private String _description;
 	private String _embeddedUrl;
 	private String _imageUrl;
+	private String _license;
+	private String _trl;
 	private String _elementStatus;
 	private long _subscriptionId;
 

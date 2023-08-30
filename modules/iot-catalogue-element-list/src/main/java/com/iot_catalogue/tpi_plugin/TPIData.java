@@ -56,7 +56,7 @@ public class TPIData {
 		if(collectionName.equals(tpiCollectionName)) {
 			Map<String, Object> hashMap = (Map<String, Object>) fields;
 			Map<String, Object> data = (Map<String, Object>) hashMap.get("data");
-			
+
 			onTPIChanged(data, action, collectionNames);
 			
 		}else if(!collectionName.equals(queueCollectionName)) {

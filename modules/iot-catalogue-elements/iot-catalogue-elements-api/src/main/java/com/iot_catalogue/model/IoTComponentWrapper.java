@@ -60,6 +60,8 @@ public class IoTComponentWrapper
 		attributes.put("description", getDescription());
 		attributes.put("embeddedUrl", getEmbeddedUrl());
 		attributes.put("imageUrl", getImageUrl());
+		attributes.put("license", getLicense());
+		attributes.put("trl", getTrl());
 		attributes.put("elementStatus", getElementStatus());
 		attributes.put("subscriptionId", getSubscriptionId());
 
@@ -170,6 +172,18 @@ public class IoTComponentWrapper
 			setImageUrl(imageUrl);
 		}
 
+		String license = (String)attributes.get("license");
+
+		if (license != null) {
+			setLicense(license);
+		}
+
+		String trl = (String)attributes.get("trl");
+
+		if (trl != null) {
+			setTrl(trl);
+		}
+
 		String elementStatus = (String)attributes.get("elementStatus");
 
 		if (elementStatus != null) {
@@ -261,6 +275,16 @@ public class IoTComponentWrapper
 	@Override
 	public long getIotComponentId() {
 		return model.getIotComponentId();
+	}
+
+	/**
+	 * Returns the license of this io t component.
+	 *
+	 * @return the license of this io t component
+	 */
+	@Override
+	public String getLicense() {
+		return model.getLicense();
 	}
 
 	/**
@@ -361,6 +385,16 @@ public class IoTComponentWrapper
 	@Override
 	public long getSubscriptionId() {
 		return model.getSubscriptionId();
+	}
+
+	/**
+	 * Returns the trl of this io t component.
+	 *
+	 * @return the trl of this io t component
+	 */
+	@Override
+	public String getTrl() {
+		return model.getTrl();
 	}
 
 	/**
@@ -569,6 +603,16 @@ public class IoTComponentWrapper
 	}
 
 	/**
+	 * Sets the license of this io t component.
+	 *
+	 * @param license the license of this io t component
+	 */
+	@Override
+	public void setLicense(String license) {
+		model.setLicense(license);
+	}
+
+	/**
 	 * Sets the modified date of this io t component.
 	 *
 	 * @param modifiedDate the modified date of this io t component
@@ -666,6 +710,16 @@ public class IoTComponentWrapper
 	@Override
 	public void setSubscriptionId(long subscriptionId) {
 		model.setSubscriptionId(subscriptionId);
+	}
+
+	/**
+	 * Sets the trl of this io t component.
+	 *
+	 * @param trl the trl of this io t component
+	 */
+	@Override
+	public void setTrl(String trl) {
+		model.setTrl(trl);
 	}
 
 	/**

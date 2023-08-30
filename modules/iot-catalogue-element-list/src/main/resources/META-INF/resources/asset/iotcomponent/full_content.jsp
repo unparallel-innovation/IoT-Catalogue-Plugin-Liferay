@@ -5,6 +5,9 @@
 IoTComponent iotComponent = (IoTComponent) request.getAttribute("iot_component");
 AssetEntry assetEntry = (AssetEntry) request.getAttribute("asset_entry");
 
+List<ElementEntity> manufacturers = (List<ElementEntity>) request.getAttribute("manufacturers");
+List<ElementEntity> developers = (List<ElementEntity>) request.getAttribute("developers");
+
 HashMap<String, List<HashMap<String,String>>> vocabulariesCategories = (HashMap<String, List<HashMap<String,String>>>)request.getAttribute("vocabularies_categories");
 
 Object notFound =  request.getAttribute("not_found");
@@ -105,6 +108,47 @@ if(vocabulariesCategories!= null){
 	}
 }
 %>
+<% 
+if(manufacturers!= null){
+
+	
+%>
+		<div class="mb-2">
+		<div class="bg-light rounded p-2 h-100 d-flex align-items-center">
+			<h5 class="mb-0 mr-2">Manufacturer</h5>
+			<div>
+			<% for(ElementEntity manufacturer:manufacturers){ %>
+				<span class="label label-secondary label-lg bg-transparent"><span class="label-item label-item-expand"><a href="<%= manufacturer.getWebsite() %>" target="_blank"><%= manufacturer.getName() %></a></span></span>
+			<%} %>
+			</div>
+		</div>
+	</div>
+<%
+
+
+}
+%>
+
+<% 
+if(developers!= null){
+
+	
+%>
+		<div class="mb-2">
+		<div class="bg-light rounded p-2 h-100 d-flex align-items-center">
+			<h5 class="mb-0 mr-2">Developer</h5>
+			<div>
+			<% for(ElementEntity developer:developers){ %>
+				<span class="label label-secondary label-lg bg-transparent"><span class="label-item label-item-expand"><a href="<%= developer.getWebsite() %>" target="_blank"><%= developer.getName() %></a></span></span>
+			<%} %>
+			</div>
+		</div>
+	</div>
+<%
+
+
+}
+%>
 
 <% if(url!=null && urlHost!=null){ %>
 
@@ -115,9 +159,36 @@ if(vocabulariesCategories!= null){
 		</div>
 	</div>
 <%} %>
-	 
-	 
+<% 
+System.out.println("************");
+System.out.println(iotComponent.getLicense());
 
+%>
+
+<% if(iotComponent.getLicense()!=null && iotComponent.getLicense()!= ""){ %>
+
+	<div class="mb-2">
+		<div class="bg-light rounded p-2 h-100 d-flex align-items-center">
+			<h5 class="mb-0 mr-2">License</h5>
+			<div>
+				<span class="label label-secondary label-lg bg-transparent"><span class="label-item label-item-expand"><%= iotComponent.getLicense() %></span></span>
+			</div>
+		</div>
+	</div>
+
+<%} %>
+	 	 
+<% if(iotComponent.getTrl()!=null && iotComponent.getTrl()!= ""){ %>
+
+	<div class="mb-2">
+		<div class="bg-light rounded p-2 h-100 d-flex align-items-center">
+			<h5 class="mb-0 mr-2">TRL</h5>
+			<div>
+				<span class="label label-secondary label-lg bg-transparent"><span class="label-item label-item-expand"><%= iotComponent.getTrl() %></span></span>
+			</div>
+		</div>
+	</div>
+<%} %>
 <iframe id="iotCatalogueIframe" frameborder="0"
 	style="height: 0px;width: 100%; max-width: 100% !important"
 	src="<%=iotComponent.getEmbeddedUrl()%>"></iframe>

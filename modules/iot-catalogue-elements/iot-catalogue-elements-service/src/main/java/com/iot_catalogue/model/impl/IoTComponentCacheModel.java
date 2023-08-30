@@ -63,7 +63,7 @@ public class IoTComponentCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -99,6 +99,10 @@ public class IoTComponentCacheModel
 		sb.append(embeddedUrl);
 		sb.append(", imageUrl=");
 		sb.append(imageUrl);
+		sb.append(", license=");
+		sb.append(license);
+		sb.append(", trl=");
+		sb.append(trl);
 		sb.append(", elementStatus=");
 		sb.append(elementStatus);
 		sb.append(", subscriptionId=");
@@ -197,6 +201,20 @@ public class IoTComponentCacheModel
 			ioTComponentImpl.setImageUrl(imageUrl);
 		}
 
+		if (license == null) {
+			ioTComponentImpl.setLicense("");
+		}
+		else {
+			ioTComponentImpl.setLicense(license);
+		}
+
+		if (trl == null) {
+			ioTComponentImpl.setTrl("");
+		}
+		else {
+			ioTComponentImpl.setTrl(trl);
+		}
+
 		if (elementStatus == null) {
 			ioTComponentImpl.setElementStatus("");
 		}
@@ -236,6 +254,8 @@ public class IoTComponentCacheModel
 		description = objectInput.readUTF();
 		embeddedUrl = objectInput.readUTF();
 		imageUrl = objectInput.readUTF();
+		license = objectInput.readUTF();
+		trl = objectInput.readUTF();
 		elementStatus = objectInput.readUTF();
 
 		subscriptionId = objectInput.readLong();
@@ -316,6 +336,20 @@ public class IoTComponentCacheModel
 			objectOutput.writeUTF(imageUrl);
 		}
 
+		if (license == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(license);
+		}
+
+		if (trl == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(trl);
+		}
+
 		if (elementStatus == null) {
 			objectOutput.writeUTF("");
 		}
@@ -343,6 +377,8 @@ public class IoTComponentCacheModel
 	public String description;
 	public String embeddedUrl;
 	public String imageUrl;
+	public String license;
+	public String trl;
 	public String elementStatus;
 	public long subscriptionId;
 

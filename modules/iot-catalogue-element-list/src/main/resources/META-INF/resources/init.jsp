@@ -35,6 +35,8 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
 <%@ page import="com.iot_catalogue.model.Subscription" %>
 <%@ page import="com.iot_catalogue.service.SubscriptionLocalServiceUtil" %>
 
+<%@ page import="com.iot_catalogue.model.ElementEntity" %>
+
 <%@ page import="com.iot_catalogue.service.permission.IoTComponentModelPermission" %>
 <%@ page import="com.iot_catalogue.service.permission.IoTComponentPermission" %>
 

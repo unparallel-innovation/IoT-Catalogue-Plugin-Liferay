@@ -84,7 +84,8 @@ public class IoTComponentModelImpl
 		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP},
 		{"originalId", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"embeddedUrl", Types.VARCHAR},
-		{"imageUrl", Types.VARCHAR}, {"elementStatus", Types.VARCHAR},
+		{"imageUrl", Types.VARCHAR}, {"license", Types.VARCHAR},
+		{"trl", Types.VARCHAR}, {"elementStatus", Types.VARCHAR},
 		{"subscriptionId", Types.BIGINT}
 	};
 
@@ -109,12 +110,14 @@ public class IoTComponentModelImpl
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("embeddedUrl", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("imageUrl", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("license", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("trl", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("elementStatus", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("subscriptionId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table IoTCatalogue_IoTComponent (uuid_ VARCHAR(75) null,iotComponentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,originalId VARCHAR(75) null,name VARCHAR(1000) null,description TEXT null,embeddedUrl VARCHAR(2000) null,imageUrl VARCHAR(500) null,elementStatus VARCHAR(75) null,subscriptionId LONG)";
+		"create table IoTCatalogue_IoTComponent (uuid_ VARCHAR(75) null,iotComponentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,originalId VARCHAR(75) null,name VARCHAR(1000) null,description TEXT null,embeddedUrl VARCHAR(2000) null,imageUrl VARCHAR(500) null,license VARCHAR(75) null,trl VARCHAR(75) null,elementStatus VARCHAR(75) null,subscriptionId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table IoTCatalogue_IoTComponent";
@@ -220,6 +223,8 @@ public class IoTComponentModelImpl
 		model.setDescription(soapModel.getDescription());
 		model.setEmbeddedUrl(soapModel.getEmbeddedUrl());
 		model.setImageUrl(soapModel.getImageUrl());
+		model.setLicense(soapModel.getLicense());
+		model.setTrl(soapModel.getTrl());
 		model.setElementStatus(soapModel.getElementStatus());
 		model.setSubscriptionId(soapModel.getSubscriptionId());
 
@@ -445,6 +450,13 @@ public class IoTComponentModelImpl
 		attributeSetterBiConsumers.put(
 			"imageUrl",
 			(BiConsumer<IoTComponent, String>)IoTComponent::setImageUrl);
+		attributeGetterFunctions.put("license", IoTComponent::getLicense);
+		attributeSetterBiConsumers.put(
+			"license",
+			(BiConsumer<IoTComponent, String>)IoTComponent::setLicense);
+		attributeGetterFunctions.put("trl", IoTComponent::getTrl);
+		attributeSetterBiConsumers.put(
+			"trl", (BiConsumer<IoTComponent, String>)IoTComponent::setTrl);
 		attributeGetterFunctions.put(
 			"elementStatus", IoTComponent::getElementStatus);
 		attributeSetterBiConsumers.put(
@@ -844,6 +856,46 @@ public class IoTComponentModelImpl
 
 	@JSON
 	@Override
+	public String getLicense() {
+		if (_license == null) {
+			return "";
+		}
+		else {
+			return _license;
+		}
+	}
+
+	@Override
+	public void setLicense(String license) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_license = license;
+	}
+
+	@JSON
+	@Override
+	public String getTrl() {
+		if (_trl == null) {
+			return "";
+		}
+		else {
+			return _trl;
+		}
+	}
+
+	@Override
+	public void setTrl(String trl) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_trl = trl;
+	}
+
+	@JSON
+	@Override
 	public String getElementStatus() {
 		if (_elementStatus == null) {
 			return "";
@@ -1044,6 +1096,8 @@ public class IoTComponentModelImpl
 		ioTComponentImpl.setDescription(getDescription());
 		ioTComponentImpl.setEmbeddedUrl(getEmbeddedUrl());
 		ioTComponentImpl.setImageUrl(getImageUrl());
+		ioTComponentImpl.setLicense(getLicense());
+		ioTComponentImpl.setTrl(getTrl());
 		ioTComponentImpl.setElementStatus(getElementStatus());
 		ioTComponentImpl.setSubscriptionId(getSubscriptionId());
 
@@ -1229,6 +1283,22 @@ public class IoTComponentModelImpl
 			ioTComponentCacheModel.imageUrl = null;
 		}
 
+		ioTComponentCacheModel.license = getLicense();
+
+		String license = ioTComponentCacheModel.license;
+
+		if ((license != null) && (license.length() == 0)) {
+			ioTComponentCacheModel.license = null;
+		}
+
+		ioTComponentCacheModel.trl = getTrl();
+
+		String trl = ioTComponentCacheModel.trl;
+
+		if ((trl != null) && (trl.length() == 0)) {
+			ioTComponentCacheModel.trl = null;
+		}
+
 		ioTComponentCacheModel.elementStatus = getElementStatus();
 
 		String elementStatus = ioTComponentCacheModel.elementStatus;
@@ -1330,6 +1400,8 @@ public class IoTComponentModelImpl
 	private String _description;
 	private String _embeddedUrl;
 	private String _imageUrl;
+	private String _license;
+	private String _trl;
 	private String _elementStatus;
 	private long _subscriptionId;
 
@@ -1379,6 +1451,8 @@ public class IoTComponentModelImpl
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("embeddedUrl", _embeddedUrl);
 		_columnOriginalValues.put("imageUrl", _imageUrl);
+		_columnOriginalValues.put("license", _license);
+		_columnOriginalValues.put("trl", _trl);
 		_columnOriginalValues.put("elementStatus", _elementStatus);
 		_columnOriginalValues.put("subscriptionId", _subscriptionId);
 	}
@@ -1438,9 +1512,13 @@ public class IoTComponentModelImpl
 
 		columnBitmasks.put("imageUrl", 65536L);
 
-		columnBitmasks.put("elementStatus", 131072L);
+		columnBitmasks.put("license", 131072L);
 
-		columnBitmasks.put("subscriptionId", 262144L);
+		columnBitmasks.put("trl", 262144L);
+
+		columnBitmasks.put("elementStatus", 524288L);
+
+		columnBitmasks.put("subscriptionId", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -19,6 +19,8 @@ import com.iot_catalogue.service.IoTValidationLocalService;
 import com.iot_catalogue.service.IoTValidationLocalServiceUtil;
 import com.iot_catalogue.service.persistence.ComponentChildPersistence;
 import com.iot_catalogue.service.persistence.ElementCoordinatePersistence;
+import com.iot_catalogue.service.persistence.ElementEntityPersistence;
+import com.iot_catalogue.service.persistence.ElementStandardPersistence;
 import com.iot_catalogue.service.persistence.IoTComponentPersistence;
 import com.iot_catalogue.service.persistence.IoTValidationPersistence;
 import com.iot_catalogue.service.persistence.SubscriptionPersistence;
@@ -631,6 +633,12 @@ public abstract class IoTValidationLocalServiceBaseImpl
 
 	@Reference
 	protected ElementCoordinatePersistence elementCoordinatePersistence;
+
+	@Reference
+	protected ElementEntityPersistence elementEntityPersistence;
+
+	@Reference
+	protected ElementStandardPersistence elementStandardPersistence;
 
 	@Reference
 	protected IoTComponentPersistence ioTComponentPersistence;

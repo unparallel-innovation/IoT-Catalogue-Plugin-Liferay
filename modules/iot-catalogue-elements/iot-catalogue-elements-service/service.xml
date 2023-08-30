@@ -35,6 +35,8 @@
 		<column name="description" type="String" />
 		<column name="embeddedUrl" type="String" />
 		<column name="imageUrl" type="String" />
+		<column name="license" type="String" />
+		<column name="trl" type="String" />
 		<column name="elementStatus" type="String" />
 		<column name="subscriptionId" type="long" />
 		<finder name="GroupId" return-type="Collection">
@@ -193,6 +195,107 @@
 			<finder-column name="elementClassName" />
 		</finder>
 		
+		<finder name="Element" return-type="Collection">
+			<finder-column name="elementOriginalId" />
+			<finder-column name="elementClassName" />
+		</finder>
+		
+		<finder name="SubscriptionId" return-type="Collection">
+			<finder-column name="subscriptionId" />
+		</finder>
+				
+	</entity>
+	<entity name="ElementEntity" local-service="true" uuid="true">
+		<column name="elementEntityId" primary="true" type="long" />
+		
+		<column name="groupId" type="long" />
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Status fields -->
+
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+		
+		<column name="elementOriginalId" type="String"/>
+		<column name="elementClassName" type="String"/>
+		
+		<column name="name" type="String"/>
+		<column name="website" type="String"/>
+		<column name="label" type="String"/>
+		<column name="subscriptionId" type="long" />
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status" />
+		</finder>
+		
+		<finder name="S_E" return-type="Collection">
+			<finder-column name="subscriptionId" />
+			<finder-column name="elementOriginalId" />
+			<finder-column name="elementClassName" />
+		</finder>
+		<finder name="S_E_L" return-type="Collection">
+			<finder-column name="subscriptionId" />
+			<finder-column name="elementOriginalId" />
+			<finder-column name="elementClassName" />
+			<finder-column name="label" />
+		</finder>
+		<finder name="E_L" return-type="Collection">
+			<finder-column name="elementOriginalId" />
+			<finder-column name="elementClassName" />
+			<finder-column name="label" />
+		</finder>
+		<finder name="Element" return-type="Collection">
+			<finder-column name="elementOriginalId" />
+			<finder-column name="elementClassName" />
+		</finder>
+		
+		<finder name="SubscriptionId" return-type="Collection">
+			<finder-column name="subscriptionId" />
+		</finder>
+				
+	</entity>
+	<entity name="ElementStandard" local-service="true" uuid="true">
+		<column name="elementStandardId" primary="true" type="long" />
+		
+		<column name="groupId" type="long" />
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Status fields -->
+
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+		
+		<column name="elementOriginalId" type="String"/>
+		<column name="elementClassName" type="String"/>
+		
+		<column name="name" type="String"/>
+		<column name="subscriptionId" type="long" />
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status" />
+		</finder>
+		
+		<finder name="S_E" return-type="Collection">
+			<finder-column name="subscriptionId" />
+			<finder-column name="elementOriginalId" />
+			<finder-column name="elementClassName" />
+		</finder>
 		<finder name="Element" return-type="Collection">
 			<finder-column name="elementOriginalId" />
 			<finder-column name="elementClassName" />

@@ -37,6 +37,44 @@
 		<field name="longitude" type="double" />
 		<field name="subscriptionId" type="long" />
 	</model>
+	<model name="com.iot_catalogue.model.ElementEntity">
+		<field name="uuid" type="String" />
+		<field name="elementEntityId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+		<field name="elementOriginalId" type="String" />
+		<field name="elementClassName" type="String" />
+		<field name="name" type="String" />
+		<field name="website" type="String" />
+		<field name="label" type="String" />
+		<field name="subscriptionId" type="long" />
+	</model>
+	<model name="com.iot_catalogue.model.ElementStandard">
+		<field name="uuid" type="String" />
+		<field name="elementStandardId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+		<field name="elementOriginalId" type="String" />
+		<field name="elementClassName" type="String" />
+		<field name="name" type="String" />
+		<field name="subscriptionId" type="long" />
+	</model>
 	<model name="com.iot_catalogue.model.IoTComponent">
 		<field name="uuid" type="String" />
 		<field name="iotComponentId" type="long" />
@@ -63,6 +101,8 @@
 		<field name="imageUrl" type="String">
 			<hint name="max-length">500</hint>
 		</field>
+		<field name="license" type="String" />
+		<field name="trl" type="String" />
 		<field name="elementStatus" type="String" />
 		<field name="subscriptionId" type="long" />
 	</model>

@@ -110,6 +110,46 @@ create table IoTCatalogue_ElementCoordinate (
 	subscriptionId LONG
 );
 
+create table IoTCatalogue_ElementEntity (
+	uuid_ VARCHAR(75) null,
+	elementEntityId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null,
+	elementOriginalId VARCHAR(75) null,
+	elementClassName VARCHAR(75) null,
+	name VARCHAR(75) null,
+	website VARCHAR(75) null,
+	label VARCHAR(75) null,
+	subscriptionId LONG
+);
+
+create table IoTCatalogue_ElementStandard (
+	uuid_ VARCHAR(75) null,
+	elementStandardId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null,
+	elementOriginalId VARCHAR(75) null,
+	elementClassName VARCHAR(75) null,
+	name VARCHAR(75) null,
+	subscriptionId LONG
+);
+
 create table IoTCatalogue_IoTComponent (
 	uuid_ VARCHAR(75) null,
 	iotComponentId LONG not null primary key,
@@ -128,6 +168,8 @@ create table IoTCatalogue_IoTComponent (
 	description TEXT null,
 	embeddedUrl VARCHAR(2000) null,
 	imageUrl VARCHAR(500) null,
+	license VARCHAR(75) null,
+	trl VARCHAR(75) null,
 	elementStatus VARCHAR(75) null,
 	subscriptionId LONG
 );

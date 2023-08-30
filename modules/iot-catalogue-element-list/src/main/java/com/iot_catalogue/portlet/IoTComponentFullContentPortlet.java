@@ -14,8 +14,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import com.iot_catalogue.exception.NoSuchIoTComponentException;
+import com.iot_catalogue.model.ElementEntity;
 import com.iot_catalogue.model.IoTComponent;
 import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
+import com.iot_catalogue.service.ElementEntityLocalService;
 import com.iot_catalogue.service.IoTComponentLocalService;
 import com.iot_catalogue.service.permission.IoTComponentPermission;
 import com.iot_catalogue.utils.CategoryUtil;
@@ -72,8 +74,15 @@ public class IoTComponentFullContentPortlet extends MVCPortlet {
 							AssetEntry assetEntry = _assetEntryLocalService.getEntry(IoTComponent.class.getName(),iotComponent.getPrimaryKey());
 							HashMap<String, List<HashMap<String,String>>> vocabulariesCategories = CategoryUtil.getVocabulariesCategories(assetEntry);
 						
+							
+							List<ElementEntity> developers = _elementEntityLocalService.getElementEntities(iotComponent.getOriginalId(), IoTComponent.class.getName(), "Developer");
+							List<ElementEntity> manufacturers = _elementEntityLocalService.getElementEntities(iotComponent.getOriginalId(), IoTComponent.class.getName(), "Manufacturer");
+							
 							renderRequest.setAttribute("vocabularies_categories", vocabulariesCategories);
 							renderRequest.setAttribute("asset_entry", assetEntry);
+							renderRequest.setAttribute("developers", developers);
+							renderRequest.setAttribute("manufacturers", manufacturers);
+							
 						}catch(Exception e) {
 							e.printStackTrace();
 						}
@@ -93,6 +102,14 @@ public class IoTComponentFullContentPortlet extends MVCPortlet {
 	        super.render(renderRequest, renderResponse);
 	}
 	private static final Log _log = LogFactoryUtil.getLog(IoTComponentFullContentPortlet.class);
+	
+	@Reference(unbind = "-")
+	private void setElementEntityLocalService(ElementEntityLocalService elementEntityLocalService) {
+		_elementEntityLocalService = elementEntityLocalService;
+	}
+	
+	private ElementEntityLocalService _elementEntityLocalService;
+	
 	@Reference(unbind = "-")
 	protected void setIoTComponentLocalService(IoTComponentLocalService ioTComponentLocalService) {
 		_ioTComponentLocalService = ioTComponentLocalService;
