@@ -52,7 +52,9 @@
 		<field name="statusDate" type="Date" />
 		<field name="elementOriginalId" type="String" />
 		<field name="elementClassName" type="String" />
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
 		<field name="website" type="String" />
 		<field name="label" type="String" />
 		<field name="subscriptionId" type="long" />
@@ -72,7 +74,9 @@
 		<field name="statusDate" type="Date" />
 		<field name="elementOriginalId" type="String" />
 		<field name="elementClassName" type="String" />
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
 		<field name="subscriptionId" type="long" />
 	</model>
 	<model name="com.iot_catalogue.model.IoTComponent">

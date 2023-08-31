@@ -110,7 +110,7 @@ public class ElementStandardModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table IoTCatalogue_ElementStandard (uuid_ VARCHAR(75) null,elementStandardId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,elementOriginalId VARCHAR(75) null,elementClassName VARCHAR(75) null,name VARCHAR(75) null,subscriptionId LONG)";
+		"create table IoTCatalogue_ElementStandard (uuid_ VARCHAR(75) null,elementStandardId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,elementOriginalId VARCHAR(75) null,elementClassName VARCHAR(75) null,name VARCHAR(1000) null,subscriptionId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table IoTCatalogue_ElementStandard";

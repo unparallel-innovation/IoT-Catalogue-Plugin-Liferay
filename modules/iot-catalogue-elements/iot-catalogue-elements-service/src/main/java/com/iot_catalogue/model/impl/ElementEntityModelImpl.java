@@ -113,7 +113,7 @@ public class ElementEntityModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table IoTCatalogue_ElementEntity (uuid_ VARCHAR(75) null,elementEntityId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,elementOriginalId VARCHAR(75) null,elementClassName VARCHAR(75) null,name VARCHAR(75) null,website VARCHAR(75) null,label VARCHAR(75) null,subscriptionId LONG)";
+		"create table IoTCatalogue_ElementEntity (uuid_ VARCHAR(75) null,elementEntityId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,elementOriginalId VARCHAR(75) null,elementClassName VARCHAR(75) null,name VARCHAR(1000) null,website VARCHAR(75) null,label VARCHAR(75) null,subscriptionId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table IoTCatalogue_ElementEntity";

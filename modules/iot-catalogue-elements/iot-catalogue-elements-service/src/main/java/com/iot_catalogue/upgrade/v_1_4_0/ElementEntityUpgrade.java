@@ -20,7 +20,7 @@ public class ElementEntityUpgrade extends UpgradeProcess{
 				+ "	statusDate DATE null,\n"
 				+ "	elementOriginalId VARCHAR(75) null,\n"
 				+ "	elementClassName VARCHAR(75) null,\n"
-				+ "	name VARCHAR(75) null,\n"
+				+ "	name VARCHAR(1000) null,\n"
 				+ "	website VARCHAR(75) null,\n"
 				+ "	label VARCHAR(75) null,\n"
 				+ "	subscriptionId LONG\n"

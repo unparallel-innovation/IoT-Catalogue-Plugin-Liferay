@@ -125,7 +125,7 @@ create table IoTCatalogue_ElementEntity (
 	statusDate DATE null,
 	elementOriginalId VARCHAR(75) null,
 	elementClassName VARCHAR(75) null,
-	name VARCHAR(75) null,
+	name VARCHAR(1000) null,
 	website VARCHAR(75) null,
 	label VARCHAR(75) null,
 	subscriptionId LONG
@@ -146,7 +146,7 @@ create table IoTCatalogue_ElementStandard (
 	statusDate DATE null,
 	elementOriginalId VARCHAR(75) null,
 	elementClassName VARCHAR(75) null,
-	name VARCHAR(75) null,
+	name VARCHAR(1000) null,
 	subscriptionId LONG
 );
 
