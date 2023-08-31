@@ -61,6 +61,17 @@ public class ElementStandardLocalServiceUtil {
 		return getService().addElementStandard(elementStandard);
 	}
 
+	public static ElementStandard addElementStandard(
+			long userId, String originalId, String elementClassName,
+			String name, long subscriptionId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addElementStandard(
+			userId, originalId, elementClassName, name, subscriptionId,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new element standard with the primary key. Does not add the element standard to the database.
 	 *
@@ -114,6 +125,13 @@ public class ElementStandardLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteElementStandard(elementStandardId);
+	}
+
+	public static List<ElementStandard> deleteElementStandards(
+		long subscriptionId, String originalId, String elementClassName) {
+
+		return getService().deleteElementStandards(
+			subscriptionId, originalId, elementClassName);
 	}
 
 	/**
@@ -254,6 +272,10 @@ public class ElementStandardLocalServiceUtil {
 		return getService().getElementStandardByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static List<ElementStandard> getElementStandards() {
+		return getService().getElementStandards();
+	}
+
 	/**
 	 * Returns a range of all the element standards.
 	 *
@@ -269,6 +291,31 @@ public class ElementStandardLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getElementStandards(start, end);
+	}
+
+	public static List<ElementStandard> getElementStandards(
+		long subscriptionId, String originalId, String elementClassName) {
+
+		return getService().getElementStandards(
+			subscriptionId, originalId, elementClassName);
+	}
+
+	public static List<ElementStandard> getElementStandards(
+		String originalId, String elementClassName) {
+
+		return getService().getElementStandards(originalId, elementClassName);
+	}
+
+	public static List<ElementStandard> getElementStandardsByGroupId(
+		long groupId) {
+
+		return getService().getElementStandardsByGroupId(groupId);
+	}
+
+	public static List<ElementStandard> getElementStandardsBySubscriptionId(
+		long subscriptionId) {
+
+		return getService().getElementStandardsBySubscriptionId(subscriptionId);
 	}
 
 	/**

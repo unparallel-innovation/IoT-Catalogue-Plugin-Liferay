@@ -36,6 +36,7 @@ import com.iot_catalogue.exception.NoSuchIoTValidationException;
 import com.iot_catalogue.model.ComponentChild;
 import com.iot_catalogue.model.ElementCoordinate;
 import com.iot_catalogue.model.ElementEntity;
+import com.iot_catalogue.model.ElementStandard;
 import com.iot_catalogue.model.IoTComponent;
 import com.iot_catalogue.model.IoTValidation;
 import com.iot_catalogue.model.Subscription;
@@ -49,6 +50,7 @@ import com.iot_catalogue.portlet.utils.ZIPDownloader;
 import com.iot_catalogue.service.ComponentChildLocalService;
 import com.iot_catalogue.service.ElementCoordinateLocalService;
 import com.iot_catalogue.service.ElementEntityLocalService;
+import com.iot_catalogue.service.ElementStandardLocalService;
 import com.iot_catalogue.service.IoTComponentLocalService;
 import com.iot_catalogue.service.IoTValidationLocalService;
 import com.iot_catalogue.service.SubscriptionLocalService;
@@ -167,15 +169,20 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		for (ElementCoordinate elementCoordinate : elementCoordinates) {
 			_elementCoordinateLocalService.deleteElementCoordinate(elementCoordinate);
 		}
-		_log.info("******");
+	
 		List<ElementEntity> elementEntities = _elementEntityLocalService.getElementEntities();
-		_log.info(elementEntities.size());
+		
 		for(ElementEntity elementEntity : elementEntities) {
-			_log.info("deleting element entity");
-			_log.info(elementEntity.getName());
 			_elementEntityLocalService.deleteElementEntity(elementEntity);
 		}
 		
+		List<ElementStandard> elementStandards = _elementStandardLocalService.getElementStandards();
+		
+		
+		
+		for(ElementStandard elementStandard: elementStandards) {
+			_elementStandardLocalService.deleteElementStandard(elementStandard);
+		}
 		
 		List<Subscription> subscriptions = _subscriptionLocalService.getSubscriptions();
 
@@ -197,7 +204,6 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	}
 
 	private void closeAllConnection() {
-		_log.info("Closing all connections");
 		for (Entry<String, TPIData> entry : connections.entrySet()) {
 			TPIData tpiData = entry.getValue();
 			tpiData.disconnect();
@@ -640,12 +646,14 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		long userId = subscription.getUserId();
 		List<Map<String, String>> manufacturers = (List<Map<String, String>>) hashMap.get("_manufacturers");
 		List<Map<String, String>> developers = (List<Map<String, String>>) hashMap.get("_developers");
+		List<String> standards = (List<String>) hashMap.get("_standards");
 		if (iotComponent == null) {
 
 			IoTComponent newIoTComponent = _ioTComponentLocalService.addIoTComponent(userId, name, description, website,
 					embeddedUrl, imageUrl, status,license, trl, categoriesPaths, id, subscription.getSubscriptionId(),
 					serviceContext);
 			addElementEntities(subscription,newIoTComponent.getOriginalId(),developers,manufacturers,serviceContext);
+			addElementStandards(subscription,newIoTComponent.getOriginalId(),standards,serviceContext);
 
 		} else {
 
@@ -653,6 +661,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			_ioTComponentLocalService.updateIoTComponent(userId, iotComponentId, name, description, website,
 					embeddedUrl, imageUrl, status,license, trl, categoriesPaths, serviceContext);
 			addElementEntities(subscription, iotComponent.getOriginalId(),developers,manufacturers,serviceContext);
+			addElementStandards(subscription,iotComponent.getOriginalId(),standards,serviceContext);
 		}
 
 	}
@@ -774,7 +783,20 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		
 		
 	}
-	
+	private void addElementStandards(Subscription subscription, String originalId, List<String> standards,ServiceContext serviceContext) throws PortalException {
+		long userId = subscription.getUserId();
+
+
+		_elementStandardLocalService.deleteElementStandards(subscription.getSubscriptionId(), originalId, IoTComponent.class.getName());
+		if(standards != null) {
+			for(String standard :standards) {
+				_elementStandardLocalService.addElementStandard(userId, originalId, IoTComponent.class.getName(), standard,subscription.getSubscriptionId(),  serviceContext);
+			}
+		}
+
+		
+		
+	}
 	private void processValidationParent(String id, String parent, Subscription subscription,
 			ServiceContext serviceContext) {
 
@@ -903,7 +925,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 						.getElementCoordinatesBySubscriptionId(subscription.getSubscriptionId());
 
 				List<ElementEntity> elementEntities = _elementEntityLocalService.getElementEntitiesBySubscriptionId(subscription.getSubscriptionId());
-				
+				List<ElementStandard> elementStandards = _elementStandardLocalService.getElementStandardsBySubscriptionId(subscription.getSubscriptionId());
+						
 				for (IoTComponent iotComponent : iotComponents) {
 					_ioTComponentLocalService.deleteIoTComponent(iotComponent, serviceContext);
 				}
@@ -915,11 +938,15 @@ public class ElementListAdminPortlet extends MVCPortlet {
 					_elementCoordinateLocalService.deleteElementCoordinate(elementCoordinate);
 				}
 				
-				_log.info("Deleting entities");
-				_log.info(elementEntities.size());
+
+
 				for(ElementEntity elementEntity:elementEntities) {
-					_log.info(elementEntity.getName());
+
 					_elementEntityLocalService.deleteElementEntity(elementEntity);
+				}
+				
+				for(ElementStandard elementStandard:elementStandards) {
+					_elementStandardLocalService.deleteElementStandard(elementStandard);
 				}
 
 			} catch (Exception e) {
@@ -1075,7 +1102,12 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	
 	private ElementEntityLocalService _elementEntityLocalService;
 	
+	@Reference(unbind = "-")
+	private void setElementStandardLocalService(ElementStandardLocalService elementStandardLocalService) {
+		_elementStandardLocalService = elementStandardLocalService;
+	}
 	
+	private ElementStandardLocalService _elementStandardLocalService;
 	
 	@Reference(unbind = "-")
 	protected void setElementCoordinateLocalService(ElementCoordinateLocalService elementCoordinateLocalService) {

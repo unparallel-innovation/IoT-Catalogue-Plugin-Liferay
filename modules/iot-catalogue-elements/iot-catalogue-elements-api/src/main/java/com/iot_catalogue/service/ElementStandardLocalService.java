@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -77,6 +78,11 @@ public interface ElementStandardLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ElementStandard addElementStandard(ElementStandard elementStandard);
 
+	public ElementStandard addElementStandard(
+			long userId, String originalId, String elementClassName,
+			String name, long subscriptionId, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new element standard with the primary key. Does not add the element standard to the database.
 	 *
@@ -120,6 +126,9 @@ public interface ElementStandardLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public ElementStandard deleteElementStandard(long elementStandardId)
 		throws PortalException;
+
+	public List<ElementStandard> deleteElementStandards(
+		long subscriptionId, String originalId, String elementClassName);
 
 	/**
 	 * @throws PortalException
@@ -235,6 +244,9 @@ public interface ElementStandardLocalService
 			String uuid, long groupId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ElementStandard> getElementStandards();
+
 	/**
 	 * Returns a range of all the element standards.
 	 *
@@ -248,6 +260,21 @@ public interface ElementStandardLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ElementStandard> getElementStandards(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ElementStandard> getElementStandards(
+		long subscriptionId, String originalId, String elementClassName);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ElementStandard> getElementStandards(
+		String originalId, String elementClassName);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ElementStandard> getElementStandardsByGroupId(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ElementStandard> getElementStandardsBySubscriptionId(
+		long subscriptionId);
 
 	/**
 	 * Returns all the element standards matching the UUID and company.

@@ -14,9 +14,16 @@
 
 package com.iot_catalogue.service.impl;
 
+import com.iot_catalogue.model.ElementStandard;
 import com.iot_catalogue.service.base.ElementStandardLocalServiceBaseImpl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -40,6 +47,56 @@ import org.osgi.service.component.annotations.Component;
 public class ElementStandardLocalServiceImpl
 	extends ElementStandardLocalServiceBaseImpl {
 
+	public ElementStandard addElementStandard(long userId, String originalId, String elementClassName, String name, long subscriptionId,ServiceContext serviceContext) throws PortalException {
+		 User user = userLocalService.getUserById(userId);
+		 Date now = new Date();
+		 long elementStandarId = counterLocalService.increment();
+		 long groupId = serviceContext.getScopeGroupId();
+		 ElementStandard elementStandard = elementStandardPersistence.create(elementStandarId);
+		 elementStandard.setUuid(serviceContext.getUuid());
+		 elementStandard.setUserId(userId);
+		 elementStandard.setGroupId(groupId);
+		 elementStandard.setCompanyId(user.getCompanyId());
+		 elementStandard.setUserName(user.getFullName());
+		 elementStandard.setCreateDate(serviceContext.getCreateDate(now));
+		 elementStandard.setModifiedDate(serviceContext.getModifiedDate(now));
+		 elementStandard.setExpandoBridgeAttributes(serviceContext);		 
+		 elementStandard.setSubscriptionId(subscriptionId);
+		 elementStandard.setElementOriginalId(originalId);
+		 elementStandard.setElementClassName(elementClassName);
+		
+		 elementStandard.setName(name);		
+		 elementStandardPersistence.update(elementStandard);
+		 return elementStandard;
+	}
+	public List<ElementStandard> getElementStandards(){
+		 return elementStandardPersistence.findAll();
+	 }
+	
+	 public List<ElementStandard> getElementStandardsByGroupId(long groupId){
+		 return elementStandardPersistence.findByGroupId(groupId);
+	 }
+	 
+	public List<ElementStandard> getElementStandards(String originalId, String elementClassName){
+		return elementStandardPersistence.findByElement(originalId, elementClassName);
+	}
+	public List<ElementStandard> getElementStandards(long subscriptionId, String originalId, String elementClassName){
+		return elementStandardPersistence.findByS_E(subscriptionId, originalId, elementClassName);
+	}
+	public List<ElementStandard> getElementStandardsBySubscriptionId(long subscriptionId){
+
+		return elementStandardPersistence.findBySubscriptionId(subscriptionId);
+	}
+	
+	public List<ElementStandard> deleteElementStandards(long subscriptionId, String originalId, String elementClassName){
+
+		List<ElementStandard> elementStandards = this.getElementStandards(subscriptionId, originalId, elementClassName);
+		for(ElementStandard elementStandard: elementStandards) {
+			this.deleteElementStandard(elementStandard);
+		}
+		return elementStandards;
+	}
+	
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

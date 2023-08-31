@@ -15,9 +15,11 @@ import org.osgi.service.component.annotations.Reference;
 
 import com.iot_catalogue.exception.NoSuchIoTComponentException;
 import com.iot_catalogue.model.ElementEntity;
+import com.iot_catalogue.model.ElementStandard;
 import com.iot_catalogue.model.IoTComponent;
 import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
 import com.iot_catalogue.service.ElementEntityLocalService;
+import com.iot_catalogue.service.ElementStandardLocalService;
 import com.iot_catalogue.service.IoTComponentLocalService;
 import com.iot_catalogue.service.permission.IoTComponentPermission;
 import com.iot_catalogue.utils.CategoryUtil;
@@ -65,7 +67,7 @@ public class IoTComponentFullContentPortlet extends MVCPortlet {
 				try {
 					IoTComponent iotComponent = _ioTComponentLocalService.getIoTComponentByOriginalId(originalComponentId);
 					ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
+			
 					PermissionChecker permissionChecker = themeDisplay.getPermissionChecker();
 					long iotComponentId = iotComponent.getIotComponentId();
 					if(IoTComponentPermission.contains(permissionChecker, iotComponentId, ActionKeys.VIEW)) {
@@ -77,12 +79,12 @@ public class IoTComponentFullContentPortlet extends MVCPortlet {
 							
 							List<ElementEntity> developers = _elementEntityLocalService.getElementEntities(iotComponent.getOriginalId(), IoTComponent.class.getName(), "Developer");
 							List<ElementEntity> manufacturers = _elementEntityLocalService.getElementEntities(iotComponent.getOriginalId(), IoTComponent.class.getName(), "Manufacturer");
-							
+							List<ElementStandard> standards = _elementStandardLocalService.getElementStandards(iotComponent.getOriginalId(), IoTComponent.class.getName());
 							renderRequest.setAttribute("vocabularies_categories", vocabulariesCategories);
 							renderRequest.setAttribute("asset_entry", assetEntry);
 							renderRequest.setAttribute("developers", developers);
 							renderRequest.setAttribute("manufacturers", manufacturers);
-							
+							renderRequest.setAttribute("standards", standards);
 						}catch(Exception e) {
 							e.printStackTrace();
 						}
@@ -109,6 +111,14 @@ public class IoTComponentFullContentPortlet extends MVCPortlet {
 	}
 	
 	private ElementEntityLocalService _elementEntityLocalService;
+	
+	
+	@Reference(unbind = "-")
+	private void setElementStandardLocalService(ElementStandardLocalService elementStandardLocalService) {
+		_elementStandardLocalService = elementStandardLocalService;
+	}
+	
+	private ElementStandardLocalService _elementStandardLocalService;
 	
 	@Reference(unbind = "-")
 	protected void setIoTComponentLocalService(IoTComponentLocalService ioTComponentLocalService) {

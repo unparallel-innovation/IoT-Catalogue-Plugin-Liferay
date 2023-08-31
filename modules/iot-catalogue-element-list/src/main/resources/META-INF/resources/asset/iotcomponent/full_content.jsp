@@ -7,7 +7,7 @@ AssetEntry assetEntry = (AssetEntry) request.getAttribute("asset_entry");
 
 List<ElementEntity> manufacturers = (List<ElementEntity>) request.getAttribute("manufacturers");
 List<ElementEntity> developers = (List<ElementEntity>) request.getAttribute("developers");
-
+List<ElementStandard> standards = (List<ElementStandard>) request.getAttribute("standards");
 HashMap<String, List<HashMap<String,String>>> vocabulariesCategories = (HashMap<String, List<HashMap<String,String>>>)request.getAttribute("vocabularies_categories");
 
 Object notFound =  request.getAttribute("not_found");
@@ -108,8 +108,10 @@ if(vocabulariesCategories!= null){
 	}
 }
 %>
+
+
 <% 
-if(manufacturers!= null){
+if(manufacturers!= null && manufacturers.size()>0 ){
 
 	
 %>
@@ -130,7 +132,7 @@ if(manufacturers!= null){
 %>
 
 <% 
-if(developers!= null){
+if(developers!= null && developers.size()>0){
 
 	
 %>
@@ -149,7 +151,26 @@ if(developers!= null){
 
 }
 %>
+<% 
+if(standards!= null && standards.size()>0 ){
 
+	
+%>
+		<div class="mb-2">
+		<div class="bg-light rounded p-2 h-100 d-flex align-items-center">
+			<h5 class="mb-0 mr-2">Standards</h5>
+			<div>
+			<% for(ElementStandard standard:standards){ %>
+				<span class="label label-secondary label-lg bg-transparent"><span class="label-item label-item-expand"><%= standard.getName() %></span></span>
+			<%} %>
+			</div>
+		</div>
+	</div>
+<%
+
+
+}
+%>
 <% if(url!=null && urlHost!=null){ %>
 
 	<div class="mb-2">
@@ -159,11 +180,7 @@ if(developers!= null){
 		</div>
 	</div>
 <%} %>
-<% 
-System.out.println("************");
-System.out.println(iotComponent.getLicense());
 
-%>
 
 <% if(iotComponent.getLicense()!=null && iotComponent.getLicense()!= ""){ %>
 

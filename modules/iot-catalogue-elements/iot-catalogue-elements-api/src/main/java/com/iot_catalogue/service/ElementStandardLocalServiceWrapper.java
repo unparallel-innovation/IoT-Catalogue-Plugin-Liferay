@@ -50,6 +50,18 @@ public class ElementStandardLocalServiceWrapper
 		return _elementStandardLocalService.addElementStandard(elementStandard);
 	}
 
+	@Override
+	public com.iot_catalogue.model.ElementStandard addElementStandard(
+			long userId, String originalId, String elementClassName,
+			String name, long subscriptionId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _elementStandardLocalService.addElementStandard(
+			userId, originalId, elementClassName, name, subscriptionId,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new element standard with the primary key. Does not add the element standard to the database.
 	 *
@@ -111,6 +123,15 @@ public class ElementStandardLocalServiceWrapper
 
 		return _elementStandardLocalService.deleteElementStandard(
 			elementStandardId);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ElementStandard>
+		deleteElementStandards(
+			long subscriptionId, String originalId, String elementClassName) {
+
+		return _elementStandardLocalService.deleteElementStandards(
+			subscriptionId, originalId, elementClassName);
 	}
 
 	/**
@@ -279,6 +300,13 @@ public class ElementStandardLocalServiceWrapper
 			uuid, groupId);
 	}
 
+	@Override
+	public java.util.List<com.iot_catalogue.model.ElementStandard>
+		getElementStandards() {
+
+		return _elementStandardLocalService.getElementStandards();
+	}
+
 	/**
 	 * Returns a range of all the element standards.
 	 *
@@ -295,6 +323,39 @@ public class ElementStandardLocalServiceWrapper
 		getElementStandards(int start, int end) {
 
 		return _elementStandardLocalService.getElementStandards(start, end);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ElementStandard>
+		getElementStandards(
+			long subscriptionId, String originalId, String elementClassName) {
+
+		return _elementStandardLocalService.getElementStandards(
+			subscriptionId, originalId, elementClassName);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ElementStandard>
+		getElementStandards(String originalId, String elementClassName) {
+
+		return _elementStandardLocalService.getElementStandards(
+			originalId, elementClassName);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ElementStandard>
+		getElementStandardsByGroupId(long groupId) {
+
+		return _elementStandardLocalService.getElementStandardsByGroupId(
+			groupId);
+	}
+
+	@Override
+	public java.util.List<com.iot_catalogue.model.ElementStandard>
+		getElementStandardsBySubscriptionId(long subscriptionId) {
+
+		return _elementStandardLocalService.getElementStandardsBySubscriptionId(
+			subscriptionId);
 	}
 
 	/**
