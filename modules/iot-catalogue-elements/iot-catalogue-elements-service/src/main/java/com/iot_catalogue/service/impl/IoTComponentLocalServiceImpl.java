@@ -229,9 +229,7 @@ public class IoTComponentLocalServiceImpl extends IoTComponentLocalServiceBaseIm
 			iotComponent.setLicense(license);
 		}
 		if(trl != null && trl.length() > 0) {
-			System.out.println("iotComponent.setTrl(trl);");
-			System.out.println(trl);
-			
+			iotComponent.setTrl(trl);
 		}
 		String prevElementStatus = iotComponent.getElementStatus();
 		if(

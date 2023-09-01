@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iot_catalogue.exception.NoSuchIoTValidationException;
 import com.iot_catalogue.model.IoTValidation;
 import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
@@ -63,6 +64,15 @@ public class IoTValidationFullContentPortlet extends MVCPortlet {
 							HashMap<String, List<HashMap<String,String>>> vocabulariesCategories = CategoryUtil.getVocabulariesCategories(assetEntry);
 							renderRequest.setAttribute("vocabularies_categories", vocabulariesCategories);
 							renderRequest.setAttribute("asset_entry", assetEntry);
+							ObjectMapper mapper = new ObjectMapper();
+							try {
+								String vocabulariesCategoriesJSON = mapper.writeValueAsString(vocabulariesCategories);
+								renderRequest.setAttribute("vocabulariesCategoriesJSON", vocabulariesCategoriesJSON);
+					
+								
+							}catch(Exception e) {
+								
+							}
 						}catch(Exception e) {
 							e.printStackTrace();
 						}

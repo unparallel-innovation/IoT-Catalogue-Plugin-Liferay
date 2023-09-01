@@ -16,6 +16,7 @@ if (iotValidation != null) {
 
 String url = null;
 String urlHost = null;
+
 if(assetEntry != null){
 	url = assetEntry.getUrl();
 
@@ -28,6 +29,7 @@ if(assetEntry != null){
 		}
 	}
 }
+String vocabulariesCategoriesJSON = (String)request.getAttribute("vocabulariesCategoriesJSON");
 
 %>
 <script>
@@ -74,42 +76,28 @@ if (notFound != null) {
 	<b><%=iotValidation.getName()%></b>
 </h2>
 
+<section class="d-flex w-100 justify-content-center flex-wrap">
 
+<%if(url!=null && urlHost!=null){ 
+
+%>
+	<span class="font-weight-normal rounded-pill text-white bg-primary h5 pl-3 pr-3 pt-0 pb-0 d-inline-flex ml-2 mr-2" >
+		<p class="mb-1 mt-1">Website</p>
+		<div class="ml-2 mr-2 iot-catalogue-separator"></div> 
+		<p class="mb-1 mt-1"><a class="text-white" target="_blank" href="<%=url%>"><%=urlHost%></a></p>
+	</span>
+	
+
+
+<%} %>
+</section>
 <p class="text-justify d-flex justify-content-center"><%=iotValidation.getDescription()%></p>
 
-<%
-if(vocabulariesCategories!= null){
-	for(Map.Entry<String, List<HashMap<String,String>>> entry:vocabulariesCategories.entrySet()) {
+<liferay-util:include page="/asset/visualelements/element_intro.jsp"  servletContext="<%= application %>">
+	<liferay-util:param name="vocabulariesCategoriesJSON" value="<%= vocabulariesCategoriesJSON %>"/>
 	
-%>
-		<div class="mb-2">
-		<liferay-util:include page="/asset/visualelements/vocabulary_tags.jsp" servletContext="<%= application %>">
-	 			<liferay-util:param name="vocabularyTitle" value="<%= entry.getKey() %>"/>
-	 			<%
-					for(HashMap<String,String> category: entry.getValue()){
-				%>
-						<liferay-util:param name="category" value="<%=category.toString() %>"/>
-				<%
-					}
-				%>
-		 </liferay-util:include>
-		</div>
-<%
+</liferay-util:include>
 
-	}
-}
-%>
-
-<% if(url!=null && urlHost!=null){ %>
-
-	<div class="mb-2">
-		<div class="bg-light rounded p-2 h-100 d-flex align-items-center">
-			<h5 class="mb-0 mr-2">Website</h5>
-			<a href="<%= url%>" target="_blank"><%= urlHost %></a>
-		</div>
-	</div>
-<%} %>
-	 
 <iframe id="iotCatalogueIframe" frameborder="0"
 	style="height: 0px; width: 100%; max-width: 100% !important"
 	src="<%=iotValidation.getEmbeddedUrl()%>"></iframe>

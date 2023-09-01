@@ -93,20 +93,7 @@ public class IoTComponentFullContentPortlet extends MVCPortlet {
 							try {
 								String vocabulariesCategoriesJSON = mapper.writeValueAsString(vocabulariesCategories);
 								renderRequest.setAttribute("vocabulariesCategoriesJSON", vocabulariesCategoriesJSON);
-								System.out.println("xxxxxx");
-								System.out.println(vocabulariesCategoriesJSON);
-								JsonNode jsonNode = mapper.readTree(vocabulariesCategoriesJSON);
-								System.out.println("jsonNode");
-								
-								List<Object> categories = mapper.readValue("[{ \"color\" : \"Black\", \"type\" : \"BMW\" }, { \"color\" : \"Red\", \"type\" : \"FIAT\" }]", new TypeReference<List<Object>>(){});
-						
-								//jsonNode.get("xxx").asText()
-								Iterator<String> fieldNames = jsonNode.fieldNames();
-						
-								while(fieldNames.hasNext()) {
-									System.out.println(fieldNames.next());
-								}
-								
+					
 								
 							}catch(Exception e) {
 								

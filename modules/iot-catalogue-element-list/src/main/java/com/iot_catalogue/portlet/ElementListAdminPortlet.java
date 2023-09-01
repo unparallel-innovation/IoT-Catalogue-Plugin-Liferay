@@ -609,7 +609,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			throws PortalException {
 
 		IoTComponent iotComponent = null;
-		System.out.println(fields);
+
 		try {
 			long groupId = subscription.getGroupId();
 			iotComponent = _ioTComponentLocalService.getIoTComponentByOriginalId(id, subscription.getSubscriptionId());

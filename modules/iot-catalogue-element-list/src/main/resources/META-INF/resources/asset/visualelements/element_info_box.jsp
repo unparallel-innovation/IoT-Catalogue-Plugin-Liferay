@@ -4,11 +4,6 @@
 	String title = (String)request.getParameter("title");
 	String className = (String)request.getParameter("box-classname");
 	String[] values = request.getParameterValues("value");
-	System.out.println("valuex");
-	System.out.println(values.toString());
-	for(String value:values){
-		System.out.println(value);
-	}
 
 %>
 

@@ -22,10 +22,10 @@
 		
 		
 	}catch(Exception e) {
-		
+		System.out.println(e);
 	}
 
-	System.out.println(fieldNames);
+
 %>
 
 <section class="iot-catalogue-element-page-intro-container bg-light mb-2 pt-3">
@@ -44,11 +44,8 @@
 			}
 			inc++;
 			String json = jsonNode.get(fieldName).asText();
-			System.out.println("json");
-			System.out.println(jsonNode.get(fieldName).toString());
 			List<HashMap<String,String>> categories = mapper.readValue(jsonNode.get(fieldName).toString(), new TypeReference<List<HashMap<String,String>>>(){});
-			System.out.println("categories");
-			System.out.println(categories);
+
 			List<String> values = new ArrayList<String>();
 			for(HashMap<String,String> category:categories){
 				String parentCategoryName = category.get("parentCategoryName");
