@@ -55,4 +55,5 @@ public interface ElementCoordinateService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+
 }

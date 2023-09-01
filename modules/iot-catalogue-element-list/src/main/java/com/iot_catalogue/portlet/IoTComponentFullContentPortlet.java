@@ -2,6 +2,7 @@ package com.iot_catalogue.portlet;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.portlet.Portlet;
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iot_catalogue.exception.NoSuchIoTComponentException;
 import com.iot_catalogue.model.ElementEntity;
 import com.iot_catalogue.model.ElementStandard;
@@ -85,6 +89,30 @@ public class IoTComponentFullContentPortlet extends MVCPortlet {
 							renderRequest.setAttribute("developers", developers);
 							renderRequest.setAttribute("manufacturers", manufacturers);
 							renderRequest.setAttribute("standards", standards);
+							var mapper = new ObjectMapper();
+							try {
+								String vocabulariesCategoriesJSON = mapper.writeValueAsString(vocabulariesCategories);
+								renderRequest.setAttribute("vocabulariesCategoriesJSON", vocabulariesCategoriesJSON);
+								System.out.println("xxxxxx");
+								System.out.println(vocabulariesCategoriesJSON);
+								JsonNode jsonNode = mapper.readTree(vocabulariesCategoriesJSON);
+								System.out.println("jsonNode");
+								
+								List<Object> categories = mapper.readValue("[{ \"color\" : \"Black\", \"type\" : \"BMW\" }, { \"color\" : \"Red\", \"type\" : \"FIAT\" }]", new TypeReference<List<Object>>(){});
+						
+								//jsonNode.get("xxx").asText()
+								Iterator<String> fieldNames = jsonNode.fieldNames();
+						
+								while(fieldNames.hasNext()) {
+									System.out.println(fieldNames.next());
+								}
+								
+								
+							}catch(Exception e) {
+								
+							}
+							
+							
 						}catch(Exception e) {
 							e.printStackTrace();
 						}

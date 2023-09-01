@@ -9,7 +9,7 @@ List<ElementEntity> manufacturers = (List<ElementEntity>) request.getAttribute("
 List<ElementEntity> developers = (List<ElementEntity>) request.getAttribute("developers");
 List<ElementStandard> standards = (List<ElementStandard>) request.getAttribute("standards");
 HashMap<String, List<HashMap<String,String>>> vocabulariesCategories = (HashMap<String, List<HashMap<String,String>>>)request.getAttribute("vocabularies_categories");
-
+String vocabulariesCategoriesJSON = (String)request.getAttribute("vocabulariesCategoriesJSON");
 Object notFound =  request.getAttribute("not_found");
 Object notAuthorized =  request.getAttribute("not_authorized");
 
@@ -28,9 +28,22 @@ if(assetEntry != null){
 	}
 }
 
+
+
 if (iotComponent != null) {
 	iotComponent = iotComponent.toEscapedModel();
 }
+List<String> categories = new ArrayList<String>();
+
+List<String> standardNames = new ArrayList<String>();
+if(standards != null){
+	
+	for(ElementStandard standard:standards){
+		standardNames.add(standard.getName());
+	}
+}
+System.out.println("standardNames");
+
 
 %>
 
@@ -86,8 +99,21 @@ if (notFound!=null) {
 </h2>
 <p class="text-justify d-flex justify-content-center"><%=iotComponent.getDescription()%></p>
 
+<liferay-util:include page="/asset/visualelements/element_intro.jsp"  servletContext="<%= application %>">
+	<liferay-util:param name="vocabulariesCategoriesJSON" value="<%= vocabulariesCategoriesJSON %>"/>
+	<liferay-util:param name="trl" value="<%= iotComponent.getTrl() %>"/>
+	<liferay-util:param name="license" value="<%= iotComponent.getLicense() %>"/>
+	<% for(String standardName:standardNames){ %>
+		<liferay-util:param name="standard" value="<%= standardName %>"/>
+	<% } %>
+	
+</liferay-util:include>
+
+
 <% 
 if(vocabulariesCategories!= null){
+	System.out.println("**********************  vocabulariesCategories");
+	System.out.println(vocabulariesCategoriesJSON);
 	for(Map.Entry<String, List<HashMap<String,String>>> entry:vocabulariesCategories.entrySet()) {
 	
 %>

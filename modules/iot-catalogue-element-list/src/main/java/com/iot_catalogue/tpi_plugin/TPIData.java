@@ -60,7 +60,8 @@ public class TPIData {
 			onTPIChanged(data, action, collectionNames);
 			
 		}else if(!collectionName.equals(queueCollectionName)) {
-
+			System.out.println("onQueueChanged");
+			System.out.println(fields);
 			onElementChanged(collectionName, id, fields, action);
 		}
 

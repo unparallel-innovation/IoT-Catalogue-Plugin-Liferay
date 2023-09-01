@@ -18,6 +18,7 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Iterator" %>
 
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
@@ -45,6 +46,9 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
 <%@ page import="com.iot_catalogue.service.permission.IoTValidationPermission" %>
 
 <%@ page import="com.iot_catalogue.portlet.utils.DataUtils" %>
+<%@ page import="com.fasterxml.jackson.databind.ObjectMapper" %>
+<%@ page import="com.fasterxml.jackson.databind.JsonNode" %>
+<%@ page import="com.fasterxml.jackson.core.type.TypeReference" %>
 
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %>

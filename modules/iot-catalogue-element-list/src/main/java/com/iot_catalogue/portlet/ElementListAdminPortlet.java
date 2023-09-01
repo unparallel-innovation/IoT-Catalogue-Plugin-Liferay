@@ -122,6 +122,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 				renderRequest.setAttribute("entries", entries);
 			}
 
+
 		} catch (Exception e) {
 			throw new PortletException(e);
 		}
@@ -608,7 +609,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			throws PortalException {
 
 		IoTComponent iotComponent = null;
-
+		System.out.println(fields);
 		try {
 			long groupId = subscription.getGroupId();
 			iotComponent = _ioTComponentLocalService.getIoTComponentByOriginalId(id, subscription.getSubscriptionId());
@@ -767,8 +768,10 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	
 	private void addElementEntities(Subscription subscription, String originalId, List<Map<String, String>> developers, List<Map<String, String>> manufacturers, ServiceContext serviceContext) throws PortalException {
 		long userId = subscription.getUserId();
-
-		_elementEntityLocalService.deleteElementEntities(subscription.getSubscriptionId(),originalId,IoTComponent.class.getName());
+		if(developers != null || manufacturers != null) {
+			_elementEntityLocalService.deleteElementEntities(subscription.getSubscriptionId(),originalId,IoTComponent.class.getName());
+		}
+		
 		
 		if(developers != null) {
 			for(Map<String, String> developer :developers) {
@@ -785,10 +788,9 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	}
 	private void addElementStandards(Subscription subscription, String originalId, List<String> standards,ServiceContext serviceContext) throws PortalException {
 		long userId = subscription.getUserId();
-
-
-		_elementStandardLocalService.deleteElementStandards(subscription.getSubscriptionId(), originalId, IoTComponent.class.getName());
+		
 		if(standards != null) {
+			_elementStandardLocalService.deleteElementStandards(subscription.getSubscriptionId(), originalId, IoTComponent.class.getName());
 			for(String standard :standards) {
 				_elementStandardLocalService.addElementStandard(userId, originalId, IoTComponent.class.getName(), standard,subscription.getSubscriptionId(),  serviceContext);
 			}
