@@ -116,10 +116,10 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			if (getEntries && !subscriptionId.equals("")) {
 				Subscription subscription = _subscriptionLocalService.getSubscription(Long.parseLong(subscriptionId));
 				String token = subscription.getToken();
-				Connection connection = connections.get(subscriptionId).getConnection();
-				List<Map<String, Object>> entries = PDFGeneration.getQueueEntries(connection, token, true);
+			//	Connection connection = connections.get(subscriptionId).getConnection();
+				//List<Map<String, Object>> entries = PDFGeneration.getQueueEntries(connection, token, true);
 
-				renderRequest.setAttribute("entries", entries);
+			//	renderRequest.setAttribute("entries", entries);
 			}
 
 
@@ -215,7 +215,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 	public void addFilesToQueue(ActionRequest request, ActionResponse response)
 			throws InterruptedException, NumberFormatException, PortalException, ExecutionException {
-		boolean includeComponents = ParamUtil.getString(request, "includeComponents").equals("on")
+	/*	boolean includeComponents = ParamUtil.getString(request, "includeComponents").equals("on")
 				|| ParamUtil.getString(request, "includeComponents").equals("true");
 		boolean includeValidations = ParamUtil.getString(request, "includeValidations").equals("on")
 				|| ParamUtil.getString(request, "includeValidations").equals("true");
@@ -233,12 +233,12 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			// response.setRenderParameter("addedToQueue", "true");
 		} catch (TimeoutException e) {
 			SessionErrors.add(request, e.getClass());
-		}
+		}*/
 
 	}
 	
 	public void deleteExportedDocuments(ActionRequest request, ActionResponse response) throws NumberFormatException, PortalException, InterruptedException, ExecutionException {
-		String subcriptionId = ParamUtil.getString(request, "subscriptionId");
+	/*	String subcriptionId = ParamUtil.getString(request, "subscriptionId");
 		String requestId = ParamUtil.getString(request, "requestId");
 		
 		Subscription subscription = _subscriptionLocalService.getSubscription(Long.parseLong(subcriptionId));
@@ -248,7 +248,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			PDFGeneration.deleteExportedDocuments(connection, requestId, token);
 		}catch (TimeoutException e) {
 			SessionErrors.add(request, e.getClass());
-		}
+		}*/
 		
 	}
 
@@ -454,8 +454,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 				TPIData tpiData = new TPIData(host, port, useSSL, token, props) {
 
 					@Override
-					public void onConnected(String sessionId, Object serviceInfo) {
-						super.onConnected(sessionId, serviceInfo);
+					public void onConnected(String sessionId) {
+						
 						_log.info("Connected to IoTCatalogue, host:" + host + " port:" + port);
 						try {
 
@@ -467,11 +467,12 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 							e.printStackTrace();
 						}
+						super.onConnected(sessionId);
 					}
 
 					@Override
 					public void onDisconnectedFromRemote() {
-						_log.info("Disconnected from IoT Catalogue");
+						_log.info("***************Disconnected from IoT Catalogue");
 						try {
 							_subscriptionLocalService.setSubscriptionConnectionState(subscription.getSubscriptionId(),
 									String.valueOf(this.getConnectionState()));
@@ -493,6 +494,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 					@Override
 					public void onTPIChanged(Map<String, Object> data, String action,
 							ArrayList<String> collectionNames) {
+					/*	System.out.println("******onTPIChanged");
+						System.out.println(data);
 						ServiceContext serviceContext;
 						try {
 							serviceContext = getServiceContextFromSubscription(subscription);
@@ -503,31 +506,48 @@ public class ElementListAdminPortlet extends MVCPortlet {
 							e.printStackTrace();
 						}
 						_log.info("Subscribe to collections on IoT Catalogue");
-						this.subscribeToCollections();
+						this.subscribeToCollections();*/
 
 					}
 
 					@Override
 					public void onElementChanged(String collectionName, String id, Object fields, String action) {
-
-						_log.info("Element " + action + " on IoT Catalogue collection: " + collectionName + ", id: "
-								+ id);
+						/*System.out.println("********onElementChanged");
+						System.out.println(collectionName);
+						System.out.println(id);
+						System.out.println(fields);
+						System.out.println(action);*/
+						_log.info("Element " + action + " on IoT Catalogue collection: " + collectionName + ", id: "+ id);
+						System.out.println("xxxxx");
 						try {
+							_log.info(1);
 							ServiceContext serviceContext = getServiceContextFromSubscription(subscription);
+							_log.info(2);
 							if (collectionName.equals(componentsCollectionName)) {
+								_log.info(3);
 								timer.reset(false);
+								_log.info(4);
 								if (action.equals(TPIData.ADDED) || action.equals(TPIData.CHANGED)) {
+									_log.info(5);
 									updateIoTComponent(id, fields, serviceContext, subscription);
+									_log.info(6);
 								} else if (action.equals(TPIData.REMOVED)) {
+									_log.info(7);
 									deleteIoTComponent(id, subscription, serviceContext);
 								}
 							}
 							if (collectionName.equals(validationsCollectionName)) {
+								_log.info(8);
 								timer.reset(false);
+								_log.info(9);
 								if (action.equals(TPIData.ADDED) || action.equals(TPIData.CHANGED)) {
+									_log.info(10);
 									updateIoTValidation(id, fields, serviceContext, subscription);
+									_log.info(11);
 								} else if (action.equals(TPIData.REMOVED)) {
+									_log.info(12);
 									deleteIoTValidation(id, subscription, serviceContext);
+									_log.info(13);
 								}
 							}
 
@@ -573,8 +593,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			throws PortalException {
 		IoTValidation iotValidation = null;
 		try {
-			long groupId = subscription.getGroupId();
-			iotValidation = _iotValidationLocalService.getIoTValidationByOriginalId(id, groupId);
+
+			iotValidation = _iotValidationLocalService.getIoTValidationByOriginalId(id, subscription.getSubscriptionId());
 		} catch (NoSuchIoTValidationException e) {
 			// TODO Auto-generated catch block
 
@@ -590,14 +610,17 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			throws PortalException {
 		IoTComponent ioTComponent = null;
 
+		_log.info("deleteIoTComponent");
 		try {
-			long groupId = subscription.getGroupId();
-			ioTComponent = _ioTComponentLocalService.getIoTComponentByOriginalId(id, groupId);
+
+			ioTComponent = _ioTComponentLocalService.getIoTComponentByOriginalId(id, subscription.getSubscriptionId());
+			
 		} catch (NoSuchIoTComponentException e) {
 			// TODO Auto-generated catch block
-
+			_log.error(e);
 		}
-
+		_log.info(ioTComponent==null?"null":"not null");
+		_log.info(subscription.getSubscriptionId());
 		if (ioTComponent != null) {
 			_elementCoordinateLocalService.deleteElementCoordinates(subscription.getSubscriptionId(),
 					ioTComponent.getOriginalId(), IoTComponent.class.getName());
@@ -615,6 +638,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			iotComponent = _ioTComponentLocalService.getIoTComponentByOriginalId(id, subscription.getSubscriptionId());
 		} catch (NoSuchIoTComponentException e) {
 			// TODO Auto-generated catch block
+			_log.error(e);
 
 		}
 		
@@ -710,6 +734,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 					subscription.getSubscriptionId());
 		} catch (NoSuchIoTValidationException e) {
 			// TODO Auto-generated catch block
+			_log.error(e);
 
 		}
 
@@ -976,6 +1001,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 				tpiData.disconnect();
 				Thread.sleep(delay);
+				System.out.println(tpiData.getConnectionState());
 				_subscriptionLocalService.setSubscriptionConnectionState(subscription.getSubscriptionId(),
 						String.valueOf(tpiData.getConnectionState()));
 			} catch (Exception e) {
@@ -1012,7 +1038,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
 
-		String subscriptionId = ParamUtil.getString(resourceRequest, "subscriptionId");
+	/*	String subscriptionId = ParamUtil.getString(resourceRequest, "subscriptionId");
 		String requestId = ParamUtil.getString(resourceRequest, "requestId");
 		if (!subscriptionId.equals("") && !requestId.equals("")) {
 
@@ -1052,7 +1078,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 				e.printStackTrace();
 			}
 
-		}
+		}*/
 
 	}
 
@@ -1164,5 +1190,5 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	private AssetLinkLocalService _assetLinkLocalService = null;
 	private static final Log _log = LogFactoryUtil.getLog(ElementListAdminPortlet.class);
 	private HashMap<String, ResettableTimer> timers = new HashMap<String, ResettableTimer>();
-	private static final int timeout = 5000;
+	private static final int timeout = 10000;
 }

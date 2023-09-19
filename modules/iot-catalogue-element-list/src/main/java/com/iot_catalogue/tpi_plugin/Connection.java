@@ -39,7 +39,7 @@ public class Connection extends DDPClient{
 		},0,pingInterval);
 		observeQueue();
 	}
-	
+
 	public Connection(String meteorServerIp, Integer meteorServerPort, boolean useSSL, String serviceId, String token, Object props) throws URISyntaxException, InterruptedException {
 		this(meteorServerIp, meteorServerPort, useSSL, serviceId, token, props, false );
 
