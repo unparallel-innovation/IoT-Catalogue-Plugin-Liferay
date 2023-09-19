@@ -153,7 +153,7 @@ Liferay.provide(
 		
 		 <%
  if (subscription.getConnectionState().equals("Connected")) {
- %> 
+ %> <!-- 
  <liferay-ui:icon
 	
 		 ariaRole="button" 
@@ -164,7 +164,7 @@ Liferay.provide(
 		 ariaRole="button" 
 			image="all_pages" cssClass="icon-monospaced cursor-pointer"    markupView="lexicon" url="<%=openQueueURL%>"
 			message="See PDF queue for this subscription"  />		
-			
+			 -->
  <liferay-ui:icon image="unsubscribe" linkCssClass="icon-monospaced"
 		markupView="lexicon" message="Disconnect"
 		url="<%=disconnectActionUrl%>" /> 

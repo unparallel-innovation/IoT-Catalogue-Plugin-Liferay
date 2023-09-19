@@ -19,9 +19,10 @@ import java.util.concurrent.TimeoutException;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.iot_catalogue.portlet.utils.RestUtils;
 import com.keysolutions.ddpclient.DDPClient;
 import com.keysolutions.ddpclient.DDPClient.CONNSTATE;
-import com.keysolutions.ddpclient.DDPListener;
+
 
 
 
@@ -30,23 +31,36 @@ public class TPIData {
 	public TPIData(String meteorServerIp, Integer meteorServerPort, boolean useSSL, String token, Object props) throws URISyntaxException, InterruptedException {
 		
 		String protocol = useSSL?"https":"http";
+		this.token = token;
 		this.baseUrl = protocol + "://" + meteorServerIp + ":" + meteorServerPort;
-		System.out.println("***********");
 		this.tpiIds = new HashMap<String, IDInformation[]>() ; 
 		this.connectionId = UUID.randomUUID().toString();
 		this.connectionState = CONNSTATE.Connected;
 		this.onConnected(connectionId);
+		this.setTimer();
+
 		
-		//http://127.0.0.1:3000/api/getTPIIds?pageName=components&access_token=9XvzDS--Uzk9OISrlTPC9zWQplF8k9aGBMV1QfTfjE_
-		//http://127.0.0.1:3000/api/getTPIElement?pageName=components&access_token=9XvzDS--Uzk9OISrlTPC9zWQplF8k9aGBMV1QfTfjE_&id=5f75f650357f1b002daa1a3d
-		TPIData that = this;
 		
+		
+	
+
+	}
+	
+	private void setTimer() {
+		System.out.println("setTimer");
+		try {
+			if(this.timer != null) this.timer.cancel();
+		}catch(Exception e) {
+			
+		}
+
 		
 		this.timer = new Timer();
-		timer.schedule(new TimerTask() {
+		TPIData that = this;
+		
+		this.timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				System.out.println("*********** init");
 				try {
 					that.updateTPIData();
 				} catch (IOException | InterruptedException | ExecutionException | TimeoutException e) {
@@ -55,7 +69,7 @@ public class TPIData {
 				}
 				
 			}
-		}, 80000, 60000);
+		}, this.updateTPIDataDelay, this.updateTPIDataInterval);
 		
 		
 		this.token = token;
@@ -66,32 +80,14 @@ public class TPIData {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-	/*	connection = new Connection(meteorServerIp, meteorServerPort, useSSL, this.token, props) {
-			@Override
-			public void onConnected(String sessionId, Object serviceInfo) {
-				//that.onConnected(sessionId, serviceInfo);
-			
-			}
-			
-			@Override
-			public void onDisconnectedFromRemote() {
-				//that.onDisconnectedFromRemote();
-			}
-			
-			@Override
-			public void onQueueChanged(String collectionName, String id, Object fields, String action) {
-				//that.onQueueChanged(collectionName, id, fields, action);
-
-			}
-		};*/
 	}
 	
 	private void getTPIData() throws IOException, InterruptedException, ExecutionException, TimeoutException {
-		for(String collectionName:_collectionNames) {
+		for(String collectionName:collectionNames) {
 			this.setCollectionIds(collectionName);
 		}
 	
-		for(String collectionName:_collectionNames) {
+		for(String collectionName:collectionNames) {
 			IDInformation[] ids = tpiIds.get(collectionName);
 			if(ids==null) continue;
 			for(IDInformation id: ids) {
@@ -104,7 +100,7 @@ public class TPIData {
 	}
 	
 	private void updateTPIData() throws IOException, InterruptedException, ExecutionException, TimeoutException {
-		for(String collectionName:_collectionNames) {
+		for(String collectionName:collectionNames) {
 			boolean updateTPIIds = false;
 			IDInformation[] newIds = this.getCollectionIds(collectionName);
 			IDInformation[] oldIds = this.tpiIds.get(collectionName);
@@ -122,10 +118,10 @@ public class TPIData {
 				long timestamp = id.get_lastUpdateTimestamp();
 				String action = null;;
 				if(oldTimestamp == null) {
-					System.out.println("added");
+			
 					action = TPIData.ADDED;
 				}else if(timestamp > oldTimestamp) {
-					System.out.println("changed");
+		
 					action = TPIData.CHANGED;
 				}
 				if(action !=null) {
@@ -136,10 +132,7 @@ public class TPIData {
 			
 			for(IDInformation id:oldIds) {
 				Long newTimestamp = newIdsHM.get(id.get_id());
-				if(collectionName.equals("components")) {
-					System.out.println(id.get_id());
-					System.out.println(newIdsHM.get(id.get_id()));
-				}
+	
 				if(newTimestamp ==null) {
 					updateTPIIds = true;
 					onElementChanged(collectionName, id.get_id(),null,TPIData.REMOVED);
@@ -164,7 +157,7 @@ public class TPIData {
 	
 	private IDInformation[] getCollectionIds(String collectionName) throws IOException, InterruptedException, ExecutionException, TimeoutException {
 		String url = this.baseUrl + "/api/getTPIElementsId?ignoreTPIFilter=true&pageName=" + collectionName + "&access_token=" + this.token;
-		String response = TPIData.get(url);
+		String response = RestUtils.get(url);
 		
 		if(response !=null && response.startsWith("[")) {
 	
@@ -188,7 +181,7 @@ public class TPIData {
 	
 	private Object getDataElement(String id, String collectionName) throws IOException, InterruptedException, ExecutionException, TimeoutException {
 		String url = this.baseUrl + "/api/getTPIElement?ignoreTPIFilter=true&pageName=" + collectionName + "&id=" + id+ "&access_token=" + this.token;
-		String response = TPIData.get(url);
+		String response = RestUtils.get(url);
 	
 		
 		if(response != null && !response.equals("{}")) {
@@ -198,34 +191,7 @@ public class TPIData {
 		return null;
 	}
 	
-	private static String get(String url) throws IOException, InterruptedException, ExecutionException, TimeoutException {
-		URL obj = new URL(url);
-		CompletableFuture<String> completableFuture = new CompletableFuture<String>();
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-		con.setRequestMethod("GET");
-		//con.setRequestProperty("User-Agent", USER_AGENT);
-		int responseCode = con.getResponseCode();
-		System.out.println("GET Response Code :: " + responseCode);
-		if (responseCode == HttpURLConnection.HTTP_OK) { // success
-			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			String inputLine;
-			StringBuffer response = new StringBuffer();
-
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine);
-			}
-			in.close();
-
-			// print result
-			completableFuture.complete(response.toString());
-		} else {
-			completableFuture.complete(null);
-		}
-		return completableFuture.get(60, TimeUnit.SECONDS);
-
 	
-
-	}
 	
 	public TPIData(String meteorServerIp, Integer meteorServerPort, boolean useSSL, String token) throws URISyntaxException, InterruptedException {
 		this(meteorServerIp, meteorServerPort, useSSL, token, null);
@@ -240,30 +206,24 @@ public class TPIData {
 	}
 	
 	
-	
-	private void onQueueChanged(String collectionName, String id, Object fields, String action) {
-	
-		if(collectionName.equals(tpiCollectionName)) {
-			Map<String, Object> hashMap = (Map<String, Object>) fields;
-			Map<String, Object> data = (Map<String, Object>) hashMap.get("data");
 
-			onTPIChanged(data, action, collectionNames);
-			
-		}else if(!collectionName.equals(queueCollectionName)) {
-			//onElementChanged(collectionName, id, fields, action);
-		}
-
-	}
 	
 	
 	public void disconnect() {
 		this.connectionState = CONNSTATE.Disconnected;
-		this.timer.cancel();
+		try {
+			if(this.timer != null) this.timer.cancel();
+		}catch(Exception e) {
+			
+		}
+
 		//connection.disconnect();
 	}
 	
 	public void connect() {
 		this.connectionState = CONNSTATE.Connected;
+		this.setTimer();
+
 		//connection.connect();
 
 	}
@@ -292,9 +252,8 @@ public class TPIData {
 	//private Connection connection = null;
 	private String tpiId = null;
 	
-	private ArrayList<String> collectionNames = null;
 	
-	private String[] _collectionNames = {"components", "problems", "userEnities", "validations", "projectPages", "userEntities"};
+	private String[] collectionNames = {"components", "problems", "userEnities", "validations", "projectPages", "userEntities"};
 	
 	private HashMap<String, Integer> subscriptionHashMap = new HashMap<String, Integer>();
 	
@@ -311,7 +270,8 @@ public class TPIData {
 	private String baseUrl;
 
 	private String connectionId; 
-	
+	private long updateTPIDataDelay = 120000L;
+	private long updateTPIDataInterval = 600000L;
 	
 	private CONNSTATE connectionState;
 	

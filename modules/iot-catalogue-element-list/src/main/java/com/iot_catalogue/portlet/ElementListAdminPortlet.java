@@ -251,6 +251,53 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		}*/
 		
 	}
+	@Override
+	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws IOException, PortletException {
+
+	/*	String subscriptionId = ParamUtil.getString(resourceRequest, "subscriptionId");
+		String requestId = ParamUtil.getString(resourceRequest, "requestId");
+		if (!subscriptionId.equals("") && !requestId.equals("")) {
+
+			Connection connection = connections.get(subscriptionId).getConnection();
+
+			try {
+				Subscription subscription = _subscriptionLocalService.getSubscription(Long.parseLong(subscriptionId));
+				_log.info("Starting download");
+				Map<String, Object> entry = PDFGeneration
+						.getQueueEntries(connection, subscription.getToken(), false, requestId).get(0);
+				String status = (String) entry.get("status");
+				if (status.equals("Finished")) {
+					String requestDateStr = (String)entry.get("requestDateStr");
+					List<Map<String, String>> files = (List<Map<String, String>>) entry.get("files");
+					ArrayList<FileRequest> fileRequests = new ArrayList<FileRequest>();
+					for (Map<String, String> file : files) {
+						String url = file.get("url");
+						String filename = file.get("filename");
+						String path = file.get("path");
+						FileRequest fileRequest = new FileRequest(url, filename, path);
+						fileRequests.add(fileRequest);
+					}
+
+					resourceResponse.setContentType("application/application-download");
+					resourceResponse.setProperty("Content-disposition", "attachement; filename=GeneratedDocuments_" + requestDateStr +".zip");
+
+					OutputStream outputStream = resourceResponse.getPortletOutputStream();
+					ZIPDownloader zipDownloader = new ZIPDownloader(outputStream, fileRequests);
+					zipDownloader.start();
+					outputStream.flush();
+					outputStream.close();
+					resourceResponse.setContentType("application/zip");
+				}
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}*/
+
+	}
 
 	public void addSubscription(ActionRequest request, ActionResponse response)
 			throws PortalException, InterruptedException, ExecutionException {
@@ -472,7 +519,6 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 					@Override
 					public void onDisconnectedFromRemote() {
-						_log.info("***************Disconnected from IoT Catalogue");
 						try {
 							_subscriptionLocalService.setSubscriptionConnectionState(subscription.getSubscriptionId(),
 									String.valueOf(this.getConnectionState()));
@@ -518,36 +564,23 @@ public class ElementListAdminPortlet extends MVCPortlet {
 						System.out.println(fields);
 						System.out.println(action);*/
 						_log.info("Element " + action + " on IoT Catalogue collection: " + collectionName + ", id: "+ id);
-						System.out.println("xxxxx");
+				
 						try {
-							_log.info(1);
 							ServiceContext serviceContext = getServiceContextFromSubscription(subscription);
-							_log.info(2);
 							if (collectionName.equals(componentsCollectionName)) {
-								_log.info(3);
 								timer.reset(false);
-								_log.info(4);
 								if (action.equals(TPIData.ADDED) || action.equals(TPIData.CHANGED)) {
-									_log.info(5);
 									updateIoTComponent(id, fields, serviceContext, subscription);
-									_log.info(6);
 								} else if (action.equals(TPIData.REMOVED)) {
-									_log.info(7);
 									deleteIoTComponent(id, subscription, serviceContext);
 								}
 							}
 							if (collectionName.equals(validationsCollectionName)) {
-								_log.info(8);
 								timer.reset(false);
-								_log.info(9);
 								if (action.equals(TPIData.ADDED) || action.equals(TPIData.CHANGED)) {
-									_log.info(10);
 									updateIoTValidation(id, fields, serviceContext, subscription);
-									_log.info(11);
 								} else if (action.equals(TPIData.REMOVED)) {
-									_log.info(12);
 									deleteIoTValidation(id, subscription, serviceContext);
-									_log.info(13);
 								}
 							}
 
@@ -617,10 +650,9 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			
 		} catch (NoSuchIoTComponentException e) {
 			// TODO Auto-generated catch block
-			_log.error(e);
+		//	_log.error(e);
 		}
-		_log.info(ioTComponent==null?"null":"not null");
-		_log.info(subscription.getSubscriptionId());
+
 		if (ioTComponent != null) {
 			_elementCoordinateLocalService.deleteElementCoordinates(subscription.getSubscriptionId(),
 					ioTComponent.getOriginalId(), IoTComponent.class.getName());
@@ -638,7 +670,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 			iotComponent = _ioTComponentLocalService.getIoTComponentByOriginalId(id, subscription.getSubscriptionId());
 		} catch (NoSuchIoTComponentException e) {
 			// TODO Auto-generated catch block
-			_log.error(e);
+			//_log.error(e);
 
 		}
 		
@@ -734,7 +766,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 					subscription.getSubscriptionId());
 		} catch (NoSuchIoTValidationException e) {
 			// TODO Auto-generated catch block
-			_log.error(e);
+		//	_log.error(e);
 
 		}
 
@@ -1001,7 +1033,6 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 				tpiData.disconnect();
 				Thread.sleep(delay);
-				System.out.println(tpiData.getConnectionState());
 				_subscriptionLocalService.setSubscriptionConnectionState(subscription.getSubscriptionId(),
 						String.valueOf(tpiData.getConnectionState()));
 			} catch (Exception e) {
@@ -1034,53 +1065,6 @@ public class ElementListAdminPortlet extends MVCPortlet {
 	}
 
 
-	@Override
-	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-			throws IOException, PortletException {
-
-	/*	String subscriptionId = ParamUtil.getString(resourceRequest, "subscriptionId");
-		String requestId = ParamUtil.getString(resourceRequest, "requestId");
-		if (!subscriptionId.equals("") && !requestId.equals("")) {
-
-			Connection connection = connections.get(subscriptionId).getConnection();
-
-			try {
-				Subscription subscription = _subscriptionLocalService.getSubscription(Long.parseLong(subscriptionId));
-				_log.info("Starting download");
-				Map<String, Object> entry = PDFGeneration
-						.getQueueEntries(connection, subscription.getToken(), false, requestId).get(0);
-				String status = (String) entry.get("status");
-				if (status.equals("Finished")) {
-					String requestDateStr = (String)entry.get("requestDateStr");
-					List<Map<String, String>> files = (List<Map<String, String>>) entry.get("files");
-					ArrayList<FileRequest> fileRequests = new ArrayList<FileRequest>();
-					for (Map<String, String> file : files) {
-						String url = file.get("url");
-						String filename = file.get("filename");
-						String path = file.get("path");
-						FileRequest fileRequest = new FileRequest(url, filename, path);
-						fileRequests.add(fileRequest);
-					}
-
-					resourceResponse.setContentType("application/application-download");
-					resourceResponse.setProperty("Content-disposition", "attachement; filename=GeneratedDocuments_" + requestDateStr +".zip");
-
-					OutputStream outputStream = resourceResponse.getPortletOutputStream();
-					ZIPDownloader zipDownloader = new ZIPDownloader(outputStream, fileRequests);
-					zipDownloader.start();
-					outputStream.flush();
-					outputStream.close();
-					resourceResponse.setContentType("application/zip");
-				}
-
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}*/
-
-	}
 
 	public void test(ActionRequest request, ActionResponse resourceResponse)
 			throws PortalException, InterruptedException, ExecutionException {
