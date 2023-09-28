@@ -19,7 +19,7 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Iterator" %>
-
+<%@ page import="org.apache.commons.text.StringEscapeUtils" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.petra.string.StringPool" %>

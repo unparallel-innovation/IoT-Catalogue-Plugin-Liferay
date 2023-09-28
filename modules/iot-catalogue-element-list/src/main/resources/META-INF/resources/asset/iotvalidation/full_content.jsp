@@ -91,7 +91,7 @@ if (notFound != null) {
 
 <%} %>
 </section>
-<p class="text-justify d-flex justify-content-center"><%=iotValidation.getDescription()%></p>
+<p class="text-justify d-flex justify-content-center"><%= StringEscapeUtils.unescapeHtml4(iotValidation.getDescription())%></p>
 
 <liferay-util:include page="/asset/visualelements/element_intro.jsp"  servletContext="<%= application %>">
 	<liferay-util:param name="vocabulariesCategoriesJSON" value="<%= vocabulariesCategoriesJSON %>"/>

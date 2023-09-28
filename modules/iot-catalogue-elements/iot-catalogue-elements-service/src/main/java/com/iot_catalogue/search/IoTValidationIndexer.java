@@ -13,6 +13,7 @@ import com.iot_catalogue.exception.NoSuchIoTValidationException;
 import com.iot_catalogue.model.IoTValidation;
 import com.iot_catalogue.service.IoTValidationLocalService;
 import com.iot_catalogue.service.permission.IoTValidationPermission;
+import com.iot_catalogue.utils.StringUtils;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -95,7 +96,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 	            PortalUtil.getSiteDefaultLocale(iotValidation.getGroupId());
 
 	        document.addText(Field.TITLE, iotValidation.getName());
-	        document.addText(Field.CONTENT, iotValidation.getDescription());
+	        document.addText(Field.CONTENT, StringUtils.StripHTML( iotValidation.getDescription()));
 	        return document;
 	    }
 	    

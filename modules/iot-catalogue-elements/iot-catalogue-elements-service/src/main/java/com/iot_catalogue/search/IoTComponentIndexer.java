@@ -12,6 +12,7 @@ import com.iot_catalogue.exception.NoSuchIoTComponentException;
 import com.iot_catalogue.model.IoTComponent;
 import com.iot_catalogue.service.IoTComponentLocalService;
 import com.iot_catalogue.service.permission.IoTComponentPermission;
+import com.iot_catalogue.utils.StringUtils;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -87,7 +88,7 @@ public class IoTComponentIndexer extends BaseIndexer<IoTComponent> {
 		document.addDate(Field.MODIFIED_DATE, iotComponent.getModifiedDate());
 
 		document.addText(Field.TITLE, iotComponent.getName());
-		document.addText(Field.CONTENT, iotComponent.getDescription());
+		document.addText(Field.CONTENT, StringUtils.StripHTML( iotComponent.getDescription()));
 	
 		return document;
 	}

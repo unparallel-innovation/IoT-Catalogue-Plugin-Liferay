@@ -19,6 +19,7 @@ import com.iot_catalogue.service.ElementCoordinateLocalServiceUtil;
 import com.iot_catalogue.service.SubscriptionLocalServiceUtil;
 import com.iot_catalogue.service.permission.IoTValidationPermission;
 import com.iot_catalogue.utils.CategoryUtil;
+import com.iot_catalogue.utils.StringUtils;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
@@ -120,12 +121,12 @@ public class IoTValidationAssetRenderer extends BaseJSPAssetRenderer<IoTValidati
 
 	@Override
 	public String getSummary(PortletRequest portletRequest, PortletResponse portletResponse) {
-		return _iotValidation.getDescription();
+		return  StringUtils.StripHTML(_iotValidation.getDescription());
 	}
 	
 	@Override
 	public String getSearchSummary(Locale locale) {
-		return _iotValidation.getDescription();
+		return  StringUtils.StripHTML(_iotValidation.getDescription());
 	}
 	
 	@Override

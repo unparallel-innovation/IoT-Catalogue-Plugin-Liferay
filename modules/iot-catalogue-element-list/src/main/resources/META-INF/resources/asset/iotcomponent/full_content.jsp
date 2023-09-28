@@ -173,16 +173,7 @@ if (notFound!=null) {
 
 
 
-
-
-
-
-
-
-
-
-
-<p class="text-justify d-flex justify-content-center"><%=iotComponent.getDescription()%></p>
+<p class="text-justify d-flex justify-content-center"><%=StringEscapeUtils.unescapeHtml4(iotComponent.getDescription()) %></p>
 
 <liferay-util:include page="/asset/visualelements/element_intro.jsp"  servletContext="<%= application %>">
 	<liferay-util:param name="vocabulariesCategoriesJSON" value="<%= vocabulariesCategoriesJSON %>"/>
