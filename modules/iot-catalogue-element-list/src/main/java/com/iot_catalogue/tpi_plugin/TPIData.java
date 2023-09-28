@@ -47,7 +47,7 @@ public class TPIData {
 	}
 	
 	private void setTimer() {
-		System.out.println("setTimer");
+
 		try {
 			if(this.timer != null) this.timer.cancel();
 		}catch(Exception e) {
@@ -71,8 +71,6 @@ public class TPIData {
 			}
 		}, this.updateTPIDataDelay, this.updateTPIDataInterval);
 		
-		
-		this.token = token;
 	
 		try {
 			this.getTPIData();
