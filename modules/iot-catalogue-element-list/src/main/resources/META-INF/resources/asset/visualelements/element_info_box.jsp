@@ -9,7 +9,7 @@
 
 
 <span class="label label-lg label-secondary pt-2 pb-0 iot-catalogue-element-label align-items-center d-flex m-0 flex-wrap <%= className!=null?className:"" %>" >
-	<span class="text-primary mr-2"><%= title %></span>
+	<span class="text-primary mr-2 mb-2"><%= title %></span>
 	<%
 	int inc = 0;  
 	for(String value:values){ 
