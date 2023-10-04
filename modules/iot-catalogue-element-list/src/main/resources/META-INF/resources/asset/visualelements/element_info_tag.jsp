@@ -5,7 +5,7 @@
 	String value = (String)request.getParameter("tag-value");
 
 %>
-<span class="label label-lg label-secondary iot-catalogue-element-label m-0 <%= className!=null?className:"" %>" >
+<span class="label label-lg label-secondary iot-catalogue-element-label m-0 text-nowrap <%= className!=null?className:"" %>" >
 	<%=value %>
 </span>
 

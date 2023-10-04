@@ -8,14 +8,14 @@
 %>
 
 
-<span class="label label-lg label-secondary iot-catalogue-element-label align-items-center d-flex m-0 <%= className!=null?className:"" %>" >
+<span class="label label-lg label-secondary pt-2 pb-0 iot-catalogue-element-label align-items-center d-flex m-0 flex-wrap <%= className!=null?className:"" %>" >
 	<span class="text-primary mr-2"><%= title %></span>
 	<%
 	int inc = 0;  
 	for(String value:values){ 
-		String _className = "";
+		String _className = "mb-2";
 		if(inc < (values.length - 1)){
-			_className = "mr-2";
+			_className = "mb-2 mr-2";
 		}
 		inc++;
 	
