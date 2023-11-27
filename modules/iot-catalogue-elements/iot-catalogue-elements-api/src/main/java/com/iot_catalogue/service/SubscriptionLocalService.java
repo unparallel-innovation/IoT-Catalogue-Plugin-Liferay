@@ -67,7 +67,8 @@ public interface SubscriptionLocalService
 	 */
 	public Subscription addSubscription(
 			long userId, long groupId, String token, String host,
-			String componentPagePath, String validationPagePath, Integer port,
+			String componentPagePath, String validationPagePath,
+			String manufacturerLabel, String developerLabel, Integer port,
 			boolean useSSL, ServiceContext serviceContext)
 		throws PortalException;
 

@@ -85,8 +85,9 @@ public class SubscriptionModelImpl
 		{"connectionId", Types.VARCHAR}, {"connectionState", Types.VARCHAR},
 		{"token", Types.VARCHAR}, {"host", Types.VARCHAR},
 		{"componentPagePath", Types.VARCHAR},
-		{"validationPagePath", Types.VARCHAR}, {"port", Types.INTEGER},
-		{"useSSL", Types.BOOLEAN}
+		{"validationPagePath", Types.VARCHAR},
+		{"manufacturerLabel", Types.VARCHAR}, {"developerLabel", Types.VARCHAR},
+		{"port", Types.INTEGER}, {"useSSL", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -111,12 +112,14 @@ public class SubscriptionModelImpl
 		TABLE_COLUMNS_MAP.put("host", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("componentPagePath", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("validationPagePath", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("manufacturerLabel", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("developerLabel", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("port", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("useSSL", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table IoTCatalogue_Subscription (uuid_ VARCHAR(75) null,subscriptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,connectionId VARCHAR(75) null,connectionState VARCHAR(75) null,token VARCHAR(75) null,host VARCHAR(75) null,componentPagePath VARCHAR(75) null,validationPagePath VARCHAR(75) null,port INTEGER,useSSL BOOLEAN)";
+		"create table IoTCatalogue_Subscription (uuid_ VARCHAR(75) null,subscriptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,connectionId VARCHAR(75) null,connectionState VARCHAR(75) null,token VARCHAR(75) null,host VARCHAR(75) null,componentPagePath VARCHAR(75) null,validationPagePath VARCHAR(75) null,manufacturerLabel VARCHAR(75) null,developerLabel VARCHAR(75) null,port INTEGER,useSSL BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table IoTCatalogue_Subscription";
@@ -204,6 +207,8 @@ public class SubscriptionModelImpl
 		model.setHost(soapModel.getHost());
 		model.setComponentPagePath(soapModel.getComponentPagePath());
 		model.setValidationPagePath(soapModel.getValidationPagePath());
+		model.setManufacturerLabel(soapModel.getManufacturerLabel());
+		model.setDeveloperLabel(soapModel.getDeveloperLabel());
 		model.setPort(soapModel.getPort());
 		model.setUseSSL(soapModel.isUseSSL());
 
@@ -436,6 +441,17 @@ public class SubscriptionModelImpl
 			"validationPagePath",
 			(BiConsumer<Subscription, String>)
 				Subscription::setValidationPagePath);
+		attributeGetterFunctions.put(
+			"manufacturerLabel", Subscription::getManufacturerLabel);
+		attributeSetterBiConsumers.put(
+			"manufacturerLabel",
+			(BiConsumer<Subscription, String>)
+				Subscription::setManufacturerLabel);
+		attributeGetterFunctions.put(
+			"developerLabel", Subscription::getDeveloperLabel);
+		attributeSetterBiConsumers.put(
+			"developerLabel",
+			(BiConsumer<Subscription, String>)Subscription::setDeveloperLabel);
 		attributeGetterFunctions.put("port", Subscription::getPort);
 		attributeSetterBiConsumers.put(
 			"port", (BiConsumer<Subscription, Integer>)Subscription::setPort);
@@ -843,6 +859,46 @@ public class SubscriptionModelImpl
 
 	@JSON
 	@Override
+	public String getManufacturerLabel() {
+		if (_manufacturerLabel == null) {
+			return "";
+		}
+		else {
+			return _manufacturerLabel;
+		}
+	}
+
+	@Override
+	public void setManufacturerLabel(String manufacturerLabel) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_manufacturerLabel = manufacturerLabel;
+	}
+
+	@JSON
+	@Override
+	public String getDeveloperLabel() {
+		if (_developerLabel == null) {
+			return "";
+		}
+		else {
+			return _developerLabel;
+		}
+	}
+
+	@Override
+	public void setDeveloperLabel(String developerLabel) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_developerLabel = developerLabel;
+	}
+
+	@JSON
+	@Override
 	public Integer getPort() {
 		return _port;
 	}
@@ -1035,6 +1091,8 @@ public class SubscriptionModelImpl
 		subscriptionImpl.setHost(getHost());
 		subscriptionImpl.setComponentPagePath(getComponentPagePath());
 		subscriptionImpl.setValidationPagePath(getValidationPagePath());
+		subscriptionImpl.setManufacturerLabel(getManufacturerLabel());
+		subscriptionImpl.setDeveloperLabel(getDeveloperLabel());
 		subscriptionImpl.setPort(getPort());
 		subscriptionImpl.setUseSSL(isUseSSL());
 
@@ -1230,6 +1288,22 @@ public class SubscriptionModelImpl
 			subscriptionCacheModel.validationPagePath = null;
 		}
 
+		subscriptionCacheModel.manufacturerLabel = getManufacturerLabel();
+
+		String manufacturerLabel = subscriptionCacheModel.manufacturerLabel;
+
+		if ((manufacturerLabel != null) && (manufacturerLabel.length() == 0)) {
+			subscriptionCacheModel.manufacturerLabel = null;
+		}
+
+		subscriptionCacheModel.developerLabel = getDeveloperLabel();
+
+		String developerLabel = subscriptionCacheModel.developerLabel;
+
+		if ((developerLabel != null) && (developerLabel.length() == 0)) {
+			subscriptionCacheModel.developerLabel = null;
+		}
+
 		Integer port = getPort();
 
 		if (port != null) {
@@ -1330,6 +1404,8 @@ public class SubscriptionModelImpl
 	private String _host;
 	private String _componentPagePath;
 	private String _validationPagePath;
+	private String _manufacturerLabel;
+	private String _developerLabel;
 	private Integer _port;
 	private boolean _useSSL;
 
@@ -1380,6 +1456,8 @@ public class SubscriptionModelImpl
 		_columnOriginalValues.put("host", _host);
 		_columnOriginalValues.put("componentPagePath", _componentPagePath);
 		_columnOriginalValues.put("validationPagePath", _validationPagePath);
+		_columnOriginalValues.put("manufacturerLabel", _manufacturerLabel);
+		_columnOriginalValues.put("developerLabel", _developerLabel);
 		_columnOriginalValues.put("port", _port);
 		_columnOriginalValues.put("useSSL", _useSSL);
 	}
@@ -1441,9 +1519,13 @@ public class SubscriptionModelImpl
 
 		columnBitmasks.put("validationPagePath", 131072L);
 
-		columnBitmasks.put("port", 262144L);
+		columnBitmasks.put("manufacturerLabel", 262144L);
 
-		columnBitmasks.put("useSSL", 524288L);
+		columnBitmasks.put("developerLabel", 524288L);
+
+		columnBitmasks.put("port", 1048576L);
+
+		columnBitmasks.put("useSSL", 2097152L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

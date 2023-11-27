@@ -63,7 +63,7 @@ public class SubscriptionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -101,6 +101,10 @@ public class SubscriptionCacheModel
 		sb.append(componentPagePath);
 		sb.append(", validationPagePath=");
 		sb.append(validationPagePath);
+		sb.append(", manufacturerLabel=");
+		sb.append(manufacturerLabel);
+		sb.append(", developerLabel=");
+		sb.append(developerLabel);
 		sb.append(", port=");
 		sb.append(port);
 		sb.append(", useSSL=");
@@ -206,6 +210,20 @@ public class SubscriptionCacheModel
 			subscriptionImpl.setValidationPagePath(validationPagePath);
 		}
 
+		if (manufacturerLabel == null) {
+			subscriptionImpl.setManufacturerLabel("");
+		}
+		else {
+			subscriptionImpl.setManufacturerLabel(manufacturerLabel);
+		}
+
+		if (developerLabel == null) {
+			subscriptionImpl.setDeveloperLabel("");
+		}
+		else {
+			subscriptionImpl.setDeveloperLabel(developerLabel);
+		}
+
 		subscriptionImpl.setPort(port);
 		subscriptionImpl.setUseSSL(useSSL);
 
@@ -240,6 +258,8 @@ public class SubscriptionCacheModel
 		host = objectInput.readUTF();
 		componentPagePath = objectInput.readUTF();
 		validationPagePath = objectInput.readUTF();
+		manufacturerLabel = objectInput.readUTF();
+		developerLabel = objectInput.readUTF();
 
 		port = objectInput.readInt();
 
@@ -328,6 +348,20 @@ public class SubscriptionCacheModel
 			objectOutput.writeUTF(validationPagePath);
 		}
 
+		if (manufacturerLabel == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(manufacturerLabel);
+		}
+
+		if (developerLabel == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(developerLabel);
+		}
+
 		objectOutput.writeInt(port);
 
 		objectOutput.writeBoolean(useSSL);
@@ -351,6 +385,8 @@ public class SubscriptionCacheModel
 	public String host;
 	public String componentPagePath;
 	public String validationPagePath;
+	public String manufacturerLabel;
+	public String developerLabel;
 	public int port;
 	public boolean useSSL;
 

@@ -10,6 +10,9 @@ List<ElementEntity> developers = (List<ElementEntity>) request.getAttribute("dev
 List<ElementStandard> standards = (List<ElementStandard>) request.getAttribute("standards");
 HashMap<String, List<HashMap<String,String>>> vocabulariesCategories = (HashMap<String, List<HashMap<String,String>>>)request.getAttribute("vocabularies_categories");
 String vocabulariesCategoriesJSON = (String)request.getAttribute("vocabulariesCategoriesJSON");
+
+String manufacturerLabel = (String)request.getAttribute("manufacturerLabel");
+String developerLabel = (String)request.getAttribute("developerLabel");
 Object notFound =  request.getAttribute("not_found");
 Object notAuthorized =  request.getAttribute("not_authorized");
 
@@ -106,15 +109,6 @@ if (notFound!=null) {
 
 
 
-
-
-
-
-
-
-
-
-
 <section class="d-flex w-100 justify-content-center flex-wrap">
 
 <%if(url!=null && urlHost!=null){ 
@@ -132,7 +126,7 @@ if (notFound!=null) {
 <%if(manufacturers != null && manufacturers.size() >0){ %>
 
 	<span class="font-weight-normal rounded-pill text-white bg-primary h5 pl-3 pr-3 pt-0 pb-0 d-inline-flex mr-2" >
-	<p class="mb-1 mt-1">Manufacturers</p>
+	<p class="mb-1 mt-1"><%=manufacturerLabel %></p>
 	<div class="ml-2 mr-2 iot-catalogue-separator"></div> 
 	<%
 	int inc = 0;
@@ -152,7 +146,7 @@ if (notFound!=null) {
 <%if(developers != null && developers.size() >0){ %>
 
 	<span class="font-weight-normal rounded-pill text-white bg-primary h5 pl-3 pr-3 pt-0 pb-0 d-inline-flex mr-2" >
-	<p class="mb-1 mt-1">Developers</p>
+	<p class="mb-1 mt-1"><%= developerLabel %></p>
 	<div class="ml-2 mr-2 iot-catalogue-separator"></div> 
 	<%
 	int inc = 0;

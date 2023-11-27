@@ -56,10 +56,13 @@ public class SubscriptionLocalServiceImpl
 	extends SubscriptionLocalServiceBaseImpl {
 
 	
-	public Subscription addSubscription(long userId, long groupId, String token, String host, String componentPagePath, String validationPagePath, Integer port, boolean useSSL, ServiceContext serviceContext) throws PortalException {
+	public Subscription addSubscription(long userId, long groupId, String token, String host, String componentPagePath, String validationPagePath,String manufacturerLabel, String developerLabel, Integer port, boolean useSSL, ServiceContext serviceContext) throws PortalException {
 		
 		
-		
+		System.out.println("manufacturer");
+		System.out.println(manufacturerLabel);
+		System.out.println("developer");
+		System.out.println(developerLabel);
 		User user = userLocalService.getUserById(userId);
 
 		validate(token, host, port, useSSL);
@@ -79,11 +82,13 @@ public class SubscriptionLocalServiceImpl
 		subscription.setExpandoBridgeAttributes(serviceContext);
 		
 		
-		
+	
 		subscription.setToken(token);
 		subscription.setHost(host);
 		subscription.setComponentPagePath(componentPagePath);
 		subscription.setValidationPagePath(validationPagePath);
+		subscription.setManufacturerLabel(manufacturerLabel);
+		subscription.setDeveloperLabel(developerLabel);
 		subscription.setPort(port);
 		subscription.setUseSSL(useSSL);
 		

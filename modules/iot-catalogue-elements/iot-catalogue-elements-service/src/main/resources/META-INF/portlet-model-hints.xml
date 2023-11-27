@@ -158,6 +158,8 @@
 		<field name="host" type="String" />
 		<field name="componentPagePath" type="String" />
 		<field name="validationPagePath" type="String" />
+		<field name="manufacturerLabel" type="String" />
+		<field name="developerLabel" type="String" />
 		<field name="port" type="Integer" />
 		<field name="useSSL" type="boolean" />
 	</model>

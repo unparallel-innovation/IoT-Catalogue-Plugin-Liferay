@@ -51,6 +51,8 @@ public class SubscriptionSoap implements Serializable {
 		soapModel.setHost(model.getHost());
 		soapModel.setComponentPagePath(model.getComponentPagePath());
 		soapModel.setValidationPagePath(model.getValidationPagePath());
+		soapModel.setManufacturerLabel(model.getManufacturerLabel());
+		soapModel.setDeveloperLabel(model.getDeveloperLabel());
 		soapModel.setPort(model.getPort());
 		soapModel.setUseSSL(model.isUseSSL());
 
@@ -250,6 +252,22 @@ public class SubscriptionSoap implements Serializable {
 		_validationPagePath = validationPagePath;
 	}
 
+	public String getManufacturerLabel() {
+		return _manufacturerLabel;
+	}
+
+	public void setManufacturerLabel(String manufacturerLabel) {
+		_manufacturerLabel = manufacturerLabel;
+	}
+
+	public String getDeveloperLabel() {
+		return _developerLabel;
+	}
+
+	public void setDeveloperLabel(String developerLabel) {
+		_developerLabel = developerLabel;
+	}
+
 	public Integer getPort() {
 		return _port;
 	}
@@ -288,6 +306,8 @@ public class SubscriptionSoap implements Serializable {
 	private String _host;
 	private String _componentPagePath;
 	private String _validationPagePath;
+	private String _manufacturerLabel;
+	private String _developerLabel;
 	private Integer _port;
 	private boolean _useSSL;
 

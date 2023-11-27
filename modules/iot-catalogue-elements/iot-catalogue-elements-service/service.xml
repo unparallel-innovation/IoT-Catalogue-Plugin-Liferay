@@ -150,6 +150,8 @@
 		<column name="host" type="String" />
 		<column name="componentPagePath" type="String" />
 		<column name="validationPagePath" type="String" />
+		<column name="manufacturerLabel" type="String" />
+		<column name="developerLabel" type="String" />
 		<column name="port" type="Integer" />
 		<column name="useSSL" type="boolean" />
 		<finder name="groupId" return-type="Collection">

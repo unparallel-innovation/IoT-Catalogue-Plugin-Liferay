@@ -308,7 +308,8 @@ public class ElementListAdminPortlet extends MVCPortlet {
 
 		String componentPagePath = ParamUtil.getString(request, "componentPagePath");
 		String validationPagePath = ParamUtil.getString(request, "validationPagePath");
-
+		String manufacturerLabel = ParamUtil.getString(request, "manufacturerLabel");
+		String developerLabel = ParamUtil.getString(request, "developerLabel");
 		Integer port = ParamUtil.getInteger(request, "port");
 		long userId = ParamUtil.getLong(request, "User");
 		long groupId = ParamUtil.getLong(request, "Site");
@@ -317,7 +318,7 @@ public class ElementListAdminPortlet extends MVCPortlet {
 		long[] ids = serviceContext.getAssetCategoryIds();
 
 		Subscription subscription = _subscriptionLocalService.addSubscription(userId, groupId, token, host,
-				componentPagePath, validationPagePath, port, useSSL, serviceContext);
+				componentPagePath, validationPagePath, manufacturerLabel,developerLabel,port, useSSL, serviceContext);
 
 		CompletableFuture<String> completableFuture = syncDataWithIoTCatalogue(subscription);
 		try {

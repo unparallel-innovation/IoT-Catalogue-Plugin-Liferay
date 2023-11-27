@@ -377,6 +377,36 @@ public interface SubscriptionModel
 	public void setValidationPagePath(String validationPagePath);
 
 	/**
+	 * Returns the manufacturer label of this subscription.
+	 *
+	 * @return the manufacturer label of this subscription
+	 */
+	@AutoEscape
+	public String getManufacturerLabel();
+
+	/**
+	 * Sets the manufacturer label of this subscription.
+	 *
+	 * @param manufacturerLabel the manufacturer label of this subscription
+	 */
+	public void setManufacturerLabel(String manufacturerLabel);
+
+	/**
+	 * Returns the developer label of this subscription.
+	 *
+	 * @return the developer label of this subscription
+	 */
+	@AutoEscape
+	public String getDeveloperLabel();
+
+	/**
+	 * Sets the developer label of this subscription.
+	 *
+	 * @param developerLabel the developer label of this subscription
+	 */
+	public void setDeveloperLabel(String developerLabel);
+
+	/**
 	 * Returns the port of this subscription.
 	 *
 	 * @return the port of this subscription

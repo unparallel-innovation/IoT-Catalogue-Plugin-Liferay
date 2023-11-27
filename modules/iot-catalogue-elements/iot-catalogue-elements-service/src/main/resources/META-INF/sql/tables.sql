@@ -215,6 +215,8 @@ create table IoTCatalogue_Subscription (
 	host VARCHAR(75) null,
 	componentPagePath VARCHAR(75) null,
 	validationPagePath VARCHAR(75) null,
+	manufacturerLabel VARCHAR(75) null,
+	developerLabel VARCHAR(75) null,
 	port INTEGER,
 	useSSL BOOLEAN
 );

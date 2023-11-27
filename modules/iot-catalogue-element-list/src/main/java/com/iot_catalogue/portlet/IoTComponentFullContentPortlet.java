@@ -21,14 +21,17 @@ import com.iot_catalogue.exception.NoSuchIoTComponentException;
 import com.iot_catalogue.model.ElementEntity;
 import com.iot_catalogue.model.ElementStandard;
 import com.iot_catalogue.model.IoTComponent;
+import com.iot_catalogue.model.Subscription;
 import com.iot_catalogue.portlet.constants.ElementListPortletKeys;
 import com.iot_catalogue.service.ElementEntityLocalService;
 import com.iot_catalogue.service.ElementStandardLocalService;
 import com.iot_catalogue.service.IoTComponentLocalService;
+import com.iot_catalogue.service.SubscriptionLocalService;
 import com.iot_catalogue.service.permission.IoTComponentPermission;
 import com.iot_catalogue.utils.CategoryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -74,6 +77,7 @@ public class IoTComponentFullContentPortlet extends MVCPortlet {
 			
 					PermissionChecker permissionChecker = themeDisplay.getPermissionChecker();
 					long iotComponentId = iotComponent.getIotComponentId();
+					Subscription subscription = _subscriptionLocalService.getSubscription(iotComponent.getSubscriptionId());
 					if(IoTComponentPermission.contains(permissionChecker, iotComponentId, ActionKeys.VIEW)) {
 						renderRequest.setAttribute("iot_component", iotComponent);
 						try {
@@ -89,6 +93,19 @@ public class IoTComponentFullContentPortlet extends MVCPortlet {
 							renderRequest.setAttribute("developers", developers);
 							renderRequest.setAttribute("manufacturers", manufacturers);
 							renderRequest.setAttribute("standards", standards);
+							
+							String manufacturerLabel =  subscription.getManufacturerLabel();
+							if(manufacturerLabel == null || manufacturerLabel.equals("")) {
+								manufacturerLabel = "Manufacturers";
+							} 
+							String developerLabel =  subscription.getDeveloperLabel();
+							if(developerLabel == null || developerLabel.equals("")) {
+								 developerLabel = "Developers";
+							}						
+							renderRequest.setAttribute("manufacturerLabel", manufacturerLabel);
+							renderRequest.setAttribute("developerLabel", developerLabel);
+
+							iotComponent.getSubscriptionId();
 							var mapper = new ObjectMapper();
 							try {
 								String vocabulariesCategoriesJSON = mapper.writeValueAsString(vocabulariesCategories);
@@ -108,7 +125,7 @@ public class IoTComponentFullContentPortlet extends MVCPortlet {
 						renderRequest.setAttribute("not_authorized", true);
 					}
 
-				} catch (NoSuchIoTComponentException e) {
+				} catch (PortalException e) {
 					renderRequest.setAttribute("not_found", true);
 					// TODO Auto-generated catch block
 
@@ -151,5 +168,11 @@ public class IoTComponentFullContentPortlet extends MVCPortlet {
 
 	private AssetEntryLocalService _assetEntryLocalService = null;
 
+	@Reference(unbind = "-")
+	protected void serSubscriptionLocalService(SubscriptionLocalService subscriptionLocalService) {
+
+		_subscriptionLocalService = subscriptionLocalService;
+	}
+	private SubscriptionLocalService _subscriptionLocalService = null;
 
 }

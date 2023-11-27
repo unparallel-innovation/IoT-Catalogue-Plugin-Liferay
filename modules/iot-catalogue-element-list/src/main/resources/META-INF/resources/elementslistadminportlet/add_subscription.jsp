@@ -13,6 +13,8 @@ boolean hideInputs = true;
 String host = "www.iot-catalogue.com";
 String port = "443";
 boolean useSSL = true;
+String defaultManufacturerLabel = "Manufacturers";
+String defaultDeveloperLabel = "Developers";
 %>
 
 
@@ -46,7 +48,9 @@ boolean useSSL = true;
 						<aui:input type="<%=hideInputs?"hidden":"text" %>"  name="host"   value="<%= host %>" />
 						<aui:input    name="port" type="<%=hideInputs?"hidden":"text" %>" value="<%= port %>" />
 						<aui:input title="Component page path" name="componentPagePath" helpMessage="componentPagePathHelp" />
-						<aui:input title="Validation page path" name="validationPagePath"  helpMessage="validationPagePathHelp"  />
+						<aui:input title="Validation page path" name="validationPagePath"  helpMessage="validationPagePathHelp"/>
+						<aui:input title="Manufacturer label" name="manufacturerLabel" helpMessage="manufacturerLabelHelp"  value="<%= defaultManufacturerLabel %>"  />
+						<aui:input title="Developer label" name="developerLabel"  helpMessage="developerLabelHelp" value="<%= defaultDeveloperLabel %>"   />
 						<aui:select name="User" helpMessage="userHelp">
 							<%
 							for (User usr: users) {

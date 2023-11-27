@@ -22,6 +22,7 @@ import com.iot_catalogue.upgrade.v_1_3_0.AddElementStatusField;
 import com.iot_catalogue.upgrade.v_1_4_0.AddIoTComponentFields;
 import com.iot_catalogue.upgrade.v_1_4_0.ElementEntityUpgrade;
 import com.iot_catalogue.upgrade.v_1_4_0.ElementStandardUpgrade;
+import com.iot_catalogue.upgrade.v_1_5_0.AddSubscriptionFields;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,7 +45,7 @@ public class Upgrade implements UpgradeStepRegistrator{
 		registry.register("1.1.0", "1.2.0", new ComponentChildUpgrade(), new ValidationChildUpgrade());
 		registry.register("1.2.0", "1.3.0", new AddElementStatusField());
 		registry.register("1.3.0", "1.4.0", new AddIoTComponentFields(), new ElementEntityUpgrade(), new ElementStandardUpgrade());
-
+		registry.register("1.4.0", "1.5.0", new AddSubscriptionFields());
 	}
 	
 

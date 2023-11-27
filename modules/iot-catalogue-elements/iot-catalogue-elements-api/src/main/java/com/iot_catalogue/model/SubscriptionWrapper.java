@@ -61,6 +61,8 @@ public class SubscriptionWrapper
 		attributes.put("host", getHost());
 		attributes.put("componentPagePath", getComponentPagePath());
 		attributes.put("validationPagePath", getValidationPagePath());
+		attributes.put("manufacturerLabel", getManufacturerLabel());
+		attributes.put("developerLabel", getDeveloperLabel());
 		attributes.put("port", getPort());
 		attributes.put("useSSL", isUseSSL());
 
@@ -178,6 +180,18 @@ public class SubscriptionWrapper
 			setValidationPagePath(validationPagePath);
 		}
 
+		String manufacturerLabel = (String)attributes.get("manufacturerLabel");
+
+		if (manufacturerLabel != null) {
+			setManufacturerLabel(manufacturerLabel);
+		}
+
+		String developerLabel = (String)attributes.get("developerLabel");
+
+		if (developerLabel != null) {
+			setDeveloperLabel(developerLabel);
+		}
+
 		Integer port = (Integer)attributes.get("port");
 
 		if (port != null) {
@@ -242,6 +256,16 @@ public class SubscriptionWrapper
 	}
 
 	/**
+	 * Returns the developer label of this subscription.
+	 *
+	 * @return the developer label of this subscription
+	 */
+	@Override
+	public String getDeveloperLabel() {
+		return model.getDeveloperLabel();
+	}
+
+	/**
 	 * Returns the group ID of this subscription.
 	 *
 	 * @return the group ID of this subscription
@@ -259,6 +283,16 @@ public class SubscriptionWrapper
 	@Override
 	public String getHost() {
 		return model.getHost();
+	}
+
+	/**
+	 * Returns the manufacturer label of this subscription.
+	 *
+	 * @return the manufacturer label of this subscription
+	 */
+	@Override
+	public String getManufacturerLabel() {
+		return model.getManufacturerLabel();
 	}
 
 	/**
@@ -567,6 +601,16 @@ public class SubscriptionWrapper
 	}
 
 	/**
+	 * Sets the developer label of this subscription.
+	 *
+	 * @param developerLabel the developer label of this subscription
+	 */
+	@Override
+	public void setDeveloperLabel(String developerLabel) {
+		model.setDeveloperLabel(developerLabel);
+	}
+
+	/**
 	 * Sets the group ID of this subscription.
 	 *
 	 * @param groupId the group ID of this subscription
@@ -584,6 +628,16 @@ public class SubscriptionWrapper
 	@Override
 	public void setHost(String host) {
 		model.setHost(host);
+	}
+
+	/**
+	 * Sets the manufacturer label of this subscription.
+	 *
+	 * @param manufacturerLabel the manufacturer label of this subscription
+	 */
+	@Override
+	public void setManufacturerLabel(String manufacturerLabel) {
+		model.setManufacturerLabel(manufacturerLabel);
 	}
 
 	/**
